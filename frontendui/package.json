@@ -1,0 +1,30 @@
+{
+  "name": "frontendui",
+  "version": "0.5.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create:component": "node scripts/createcomponent.js",
+    "create:scalar": "node scripts/createscalar.js",
+    "create:vector": "node scripts/createvector.js",
+    "build:apps": "npm workspaces foreach --include=apps/* npm run build",
+    "publish:packages": "npm workspaces foreach --include=packages/* npm publish --access public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "jsdoc": "^4.0.4",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-pwa": "^0.21.1"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "react-bootstrap": "^2.10.6"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@hrbolek/uoisfrontend-shared",
+  "version": "0.5.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+
+  "dependencies": {
+    "bootstrap-icons": "1.11.3",
+    "react-bootstrap-icons": "^1.11.5",
+    "@hrbolek/uoisfrontend-gql-shared": "*"
+  }
+}
