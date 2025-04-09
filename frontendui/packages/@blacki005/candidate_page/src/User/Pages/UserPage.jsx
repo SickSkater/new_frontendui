@@ -28,66 +28,108 @@ import { UserPageNavbar } from "./UserPageNavbar"
  * <UserPageContent user={userEntity} />
  */
 
-import { UserPaymentInfoAttribute } from "../Scalars/UserPaymentInfoAttribute"
-import { UserAdmissionAttribute } from "../Scalars/UserAdmissionAttribute"
-const temp_data = {
-      "userById": {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
-        "name": "John",
-        "surname": "Doe",
-        "studies": [
-          {
-            "payments": [
-              {
-                "paymentInfo": {
-                  "amount": 700,
-                  "admission": {
-                    "applicationStartDate": "2025-01-01",
-                    "applicationLastDate": "2025-01-31",
-                    "endDate": "2025-06-30",
-                    "conditionDate": "2025-01-10",
-                    "paymentDate": "2025-02-01",
-                    "examStartDate": "2025-05-01",
-                    "examLastDate": "2025-05-15",
-                    "studentEntryDate": "2025-02-01",
-                    "createdBy": [
-                      "123e4567-e89b-12d3-a456-426614174000",
-                    ],
-                    "program": {
-                      "name": "Kybernetická bezpečnost"
-                    },
-                    "paymentInfo": {
-                      "amount": 700,
-                      "accountNumber": "1234567890",
-                      "specificSymbol": "AB123",
-                      "constantSymbol": "XYZ987",
-                      "IBAN": "GB29NWBK60161331926819",
-                      "SWIFT": "NWBKGB2L"
-                    }
-                  }
-                }
+export const temp_data = {
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "John",
+  "surname": "Doe",
+  "studies": [
+    {
+      "id" : "8e157256-16c0-461b-a3f8-a5419cee2a5b",
+      "payments": [
+        {
+          "paymentInfo": {
+            "amount": 700,
+            "admission": {
+              "id" : "995a0dd2-3697-4e40-ae68-5bc3d9fe8c81",
+              "applicationStartDate": "2025-01-01",
+              "applicationLastDate": "2025-01-31",
+              "endDate": "2025-06-30",
+              "conditionDate": "2025-01-10",
+              "paymentDate": "2025-02-01",
+              "examStartDate": "2025-05-01",
+              "examLastDate": "2025-05-15",
+              "studentEntryDate": "2025-02-01",
+              "createdBy": [
+                "123e4567-e89b-12d3-a456-426614174000",
+              ],
+              "program": {
+                "name": "Kybernetická bezpečnost"
+              },
+              "paymentInfo": {
+                "amount": 700,
+                "accountNumber": "1234567890",
+                "specificSymbol": "AB123",
+                "constantSymbol": "XYZ987",
+                "IBAN": "GB29NWBK60161331926819",
+                "SWIFT": "NWBKGB2L"
               }
-            ],
-            "evaluations": [
-              {
-                "points": 95,
-                "grade": "A",
-                "description": "Excellent performance in the final exam.",
-                "passed": true
-              }
-            ]
+            }
           }
-        ]
-      }
+        }
+      ],
+      "evaluations": [
+        {
+          "points": 95,
+          "grade": "A",
+          "description": "Excellent performance in the final exam.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id" : "45aef0f9-62c9-4be2-9ae7-0c9e85cd31fb",
+      "payments": [
+        {
+          "paymentInfo": {
+            "amount": 700,
+            "admission": {
+              "id" : "154c0b8e-4f2d-4a3b-9c5e-1f7a2d3e4b5f",
+              "applicationStartDate": "2025-01-01",
+              "applicationLastDate": "2025-01-31",
+              "endDate": "2025-06-30",
+              "conditionDate": "2025-01-10",
+              "paymentDate": "2025-02-01",
+              "examStartDate": "2025-05-01",
+              "examLastDate": "2025-05-15",
+              "studentEntryDate": "2025-02-01",
+              "createdBy": [
+                "123e4567-e89b-12d3-a456-426614174000",
+              ],
+              "program": {
+                "name": "Techno"
+              },
+              "paymentInfo": {
+                "amount": 700,
+                "accountNumber": "1234567890",
+                "specificSymbol": "AB123",
+                "constantSymbol": "XYZ987",
+                "IBAN": "GB29NWBK60161331926819",
+                "SWIFT": "NWBKGB2L"
+              }
+            }
+          }
+        }
+      ],
+      "evaluations": [
+        {
+          "points": 85,
+          "grade": "B",
+          "description": "Nevim",
+          "passed": true
+        }
+      ]
     }
+  ]
+}
   
-  
-const UserPageContent = ({user}) => {
-    return (<>
-        <UserPageNavbar user={user} />
-        <UserLargeCard user={user}>
-        </UserLargeCard>
-    </>)
+export function getDataById(id, data_location) {
+  for ( let index = 0; index < data_location.length; index++ ) {
+    if ( data_location[index].id === id ) {
+      return data_location[index]
+    }
+  }
+  throw new Error(`Data with id ${id} not found in the provided data location.`)
+
 }
 
 /**
@@ -152,6 +194,14 @@ const UserPageContentLazy = ({user}) => {
  *
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
+
+const UserPageContent = ({user}) => {
+  return (<>
+      <UserPageNavbar user={user} />
+      <UserLargeCard user={user}>
+      </UserLargeCard>
+  </>)
+}
 export const UserPage = () => {
     const {id} = useParams()
     const user = {id}

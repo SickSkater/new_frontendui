@@ -11,3 +11,5 @@ export const App = () => {
         </AppCanvas>    
     )
 }
+
+// user --> vector přihlášek --> uvnitř konkrétní platba + výsledky

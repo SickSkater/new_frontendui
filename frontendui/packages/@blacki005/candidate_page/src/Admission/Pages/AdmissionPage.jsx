@@ -28,23 +28,10 @@ import { AdmissionPageNavbar } from "./AdmissionPageNavbar"
  * <AdmissionPageContent admission={admissionEntity} />
  */
 
+import { getDataById, temp_data } from "../../User"
 
-const admission_temp = {
-    "applicationStartDate": "2025-01-01",
-    "applicationLastDate": "2025-01-31",
-    "endDate": "2025-06-30",
-    "conditionDate": "2025-01-10",
-    "paymentDate": "2025-02-01",
-    "examStartDate": "2025-05-01",
-    "examLastDate": "2025-05-15",
-    "studentEntryDate": "2025-02-01",
-    "createdBy": [
-        "123e4567-e89b-12d3-a456-426614174000",
-    ],
-    "program": {
-      "name": "Kybernetická bezpečnost"
-    }
-}
+
+
 const AdmissionPageContent = ({admission}) => {
     return (<>
         <AdmissionPageNavbar admission={admission} />
@@ -55,8 +42,8 @@ const AdmissionPageContent = ({admission}) => {
 
 export const AdmissionPage = () => {
     const {id} = useParams()
-    const admission = {id}
-    return <AdmissionPageContent admission={admission_temp} />
+    //console.log(getDataById(id, [temp_data.studies[0].payments[0].paymentInfo.admission, temp_data.studies[1].payments[0].paymentInfo.admission]))
+    return <AdmissionPageContent admission={getDataById(id, [temp_data.studies[0].payments[0].paymentInfo.admission, temp_data.studies[1].payments[0].paymentInfo.admission])} />
 }
 
 /**

@@ -36,9 +36,7 @@ export const EvaluationLargeCard = ({evaluation, children}) => {
         <EvaluationCardCapsule evaluation={evaluation} >
             <Row>
                 <LeftColumn>
-                    <UserCardCapsule>
-                        <UserLink user={evaluation} />
-                    </UserCardCapsule>
+                    <ButtonsMediumCard buttons={evaluation} />
                 </LeftColumn>
                 <MiddleColumn>
                 <EvaluationMediumCard evaluation={evaluation}/>

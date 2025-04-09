@@ -1,6 +1,6 @@
 import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
 
-export const EvaluationURI = `/evaluation/evaluation/view/`;
+export const EvaluationURI = `/evaluation/`;
 
 /**
  * A React component that renders a `ProxyLink` to an "evaluation" entity's view page.
@@ -30,5 +30,5 @@ export const EvaluationURI = `/evaluation/evaluation/view/`;
  * @see ProxyLink - The base component used for rendering the link.
  */
 export const EvaluationLink = ({evaluation, ...props}) => {
-    return <ProxyLink to={EvaluationURI + evaluation.id} {...props}>{evaluation.name}</ProxyLink>
+    return <ProxyLink to={EvaluationURI + evaluation.id}> Výsledky</ProxyLink>
 }

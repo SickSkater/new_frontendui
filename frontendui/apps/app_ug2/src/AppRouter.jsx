@@ -34,7 +34,7 @@ export const Routes = [
         element: <AdmissionPage/>
     },
     {
-        // http://localhost:5173/
+        // http://localhost:5173/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/evaluation/:id",
         element: <EvaluationPage/>
     },

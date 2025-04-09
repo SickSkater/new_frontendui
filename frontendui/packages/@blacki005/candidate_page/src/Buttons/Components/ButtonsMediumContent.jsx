@@ -1,4 +1,8 @@
 import { Button } from "react-bootstrap";
+import { AdmissionLink } from "../../Admission/Components/AdmissionLink";
+import { PaymentInfoLink } from "../../PaymentInfo/Components";
+import { UserLink } from "../../User/Components/UserLink";
+import { EvaluationLink } from "../../Evaluation/Components/EvaluationLink";
 
 /**
  * A component that displays medium-level content for an buttons entity.
@@ -28,11 +32,22 @@ function getURLKey(url) {
     const key = urlParts[1];
     return key;
 }
+const temp_id = {
+    "id":"6a6ca6e9-2222-498f-b270-b7b07c2afa41",
+    "name": "placeholder"
 
+}
 export const ButtonsMediumContent = ({buttons, children}) => {
+    buttons = temp_id
     return (
         <>
-
+        <UserLink user = {temp_id}/>
+        <br/>
+        <EvaluationLink evaluation = {temp_id}/>
+        <br/>
+        <PaymentInfoLink paymentinfo = {temp_id}/>
+        <br/>
+        <AdmissionLink admission = {temp_id}/>
         </>
     )
 }

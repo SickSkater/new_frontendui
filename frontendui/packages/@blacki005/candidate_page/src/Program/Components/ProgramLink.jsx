@@ -1,6 +1,6 @@
 import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
 
-export const ProgramURI = '/program/program/view/';
+export const ProgramURI = '/program/';
 
 /**
  * A React component that renders a `ProxyLink` to an "program" entity's view page.

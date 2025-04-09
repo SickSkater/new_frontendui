@@ -2,6 +2,7 @@ import Row from "react-bootstrap/Row"
 import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { AdmissionCardCapsule } from "./AdmissionCardCapsule"
 import { AdmissionMediumCard } from "./AdmissionMediumCard"
+import { ButtonsMediumCard } from "../../Buttons/Components"
 
 /**
  * A large card component for displaying detailed content and layout for an admission entity.
@@ -35,7 +36,6 @@ export const AdmissionLargeCard = ({admission, children}) => {
         <AdmissionCardCapsule admission={admission} >
             <Row>
                 <LeftColumn>
-                    místo pro buttony pro další srandy
                 </LeftColumn>
                 <MiddleColumn>
                 <AdmissionMediumCard admission={admission}/>

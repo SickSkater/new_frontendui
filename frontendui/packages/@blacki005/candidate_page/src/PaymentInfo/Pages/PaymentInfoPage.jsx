@@ -49,7 +49,7 @@ const PaymentInfoPageContent = ({paymentinfo}) => {
 
 export const PaymentInfoPage = () => {
     const {id} = useParams()
-    const paymentinfo = {id}
+    paymentinfo_temp.id = {id}
     return <PaymentInfoPageContent paymentinfo={paymentinfo_temp} />
 }
 

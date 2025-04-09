@@ -2,6 +2,7 @@ import Row from "react-bootstrap/Row"
 import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { PaymentInfoCardCapsule } from "./PaymentInfoCardCapsule"
 import { PaymentInfoMediumCard } from "./PaymentInfoMediumCard"
+import { ButtonsMediumContent } from "../../Buttons/Components/ButtonsMediumContent"
 
 /**
  * A large card component for displaying detailed content and layout for an paymentinfo entity.
@@ -32,7 +33,7 @@ export const PaymentInfoLargeCard = ({paymentinfo, children}) => {
         <PaymentInfoCardCapsule paymentinfo={paymentinfo} >
             <Row>
                 <LeftColumn>
-                    zde budou buttony pro další srandy
+                    <ButtonsMediumContent buttons={paymentinfo} /> 
                 </LeftColumn>
                 <MiddleColumn>
                 <PaymentInfoMediumCard paymentinfo={paymentinfo}/>

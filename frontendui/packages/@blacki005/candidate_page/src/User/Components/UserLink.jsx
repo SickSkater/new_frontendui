@@ -30,5 +30,5 @@ export const UserURI = '/user/';
  * @see ProxyLink - The base component used for rendering the link.
  */
 export const UserLink = ({user}) => {
-    return <ProxyLink to={UserURI + user.id}> text text text</ProxyLink>
+    return <ProxyLink to={UserURI + user.id}>Uživatel</ProxyLink>
 }
