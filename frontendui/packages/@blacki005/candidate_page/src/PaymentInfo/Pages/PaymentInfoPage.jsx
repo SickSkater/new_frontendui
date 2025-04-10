@@ -29,15 +29,7 @@ import {PaymentInfoAdmissionAttribute} from "../Scalars/PaymentInfoAdmissionAttr
  * <PaymentInfoPageContent paymentinfo={paymentinfoEntity} />
  */
 
-const paymentinfo_temp = {
-                    "amount": 700,
-                    "accountNumber": "1234567890",
-                    "specificSymbol": "AB123",
-                    "constantSymbol": "XYZ987",
-                    "IBAN": "GB29NWBK60161331926819",
-                    "SWIFT": "NWBKGB2L"
-                }
-
+import { getDataById, temp_data } from "../../User"
 
 const PaymentInfoPageContent = ({paymentinfo}) => {
     return (<>
@@ -49,8 +41,7 @@ const PaymentInfoPageContent = ({paymentinfo}) => {
 
 export const PaymentInfoPage = () => {
     const {id} = useParams()
-    paymentinfo_temp.id = {id}
-    return <PaymentInfoPageContent paymentinfo={paymentinfo_temp} />
+    return <PaymentInfoPageContent paymentinfo={getDataById(id, [temp_data.studies[0].payments[0].paymentInfo.admission.paymentInfo,temp_data.studies[1].payments[0].paymentInfo.admission.paymentInfo ])} />
 }
 
 /**

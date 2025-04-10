@@ -28,7 +28,6 @@ import { EvaluationMediumCard } from "./EvaluationMediumCard"
  * </EvaluationLargeCard>
  */
 
-import { ButtonsMediumCard } from "../../Buttons/Components"
 import { UserCardCapsule, UserLink } from "../../User"
 
 export const EvaluationLargeCard = ({evaluation, children}) => {
@@ -36,7 +35,7 @@ export const EvaluationLargeCard = ({evaluation, children}) => {
         <EvaluationCardCapsule evaluation={evaluation} >
             <Row>
                 <LeftColumn>
-                    <ButtonsMediumCard buttons={evaluation} />
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </LeftColumn>
                 <MiddleColumn>
                 <EvaluationMediumCard evaluation={evaluation}/>

@@ -24,6 +24,7 @@
 export const PaymentInfoMediumContent = ({paymentinfo}) => {
     return (
         <>
+            ID: {paymentinfo.id} <br />
             Částka: {paymentinfo.amount}
             <br />
             Číslo účtu: {paymentinfo.accountNumber}

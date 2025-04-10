@@ -28,6 +28,8 @@ import { EvaluationMediumContent } from "./EvaluationMediumContent"
  *   <p>Additional details or actions for the entity.</p>
  * </EvaluationMediumCard>
  */
+
+
 export const EvaluationMediumCard = ({evaluation, children}) => {
     return (
         <EvaluationCardCapsule title="Výsledky zkoušek">

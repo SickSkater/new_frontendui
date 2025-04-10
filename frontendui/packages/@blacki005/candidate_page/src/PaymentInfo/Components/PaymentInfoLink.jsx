@@ -30,5 +30,5 @@ export const PaymentInfoURI = '/paymentinfo/';
  * @see ProxyLink - The base component used for rendering the link.
  */
 export const PaymentInfoLink = ({paymentinfo}) => {
-    return <ProxyLink to={PaymentInfoURI + paymentinfo.id}>Zaplacené příspěvky</ProxyLink>
+    return <ProxyLink to={PaymentInfoURI + paymentinfo.id}>platba</ProxyLink>
 }

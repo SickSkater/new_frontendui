@@ -27,13 +27,8 @@ import { EvaluationPageNavbar } from "./EvaluationPageNavbar"
  * 
  * <EvaluationPageContent evaluation={evaluationEntity} />
  */
-const evaluation_temp = {
-        "points": 95,
-        "grade": "A",
-        "description": "Excellent performance in the final exam.",
-        "passed": true
-      }
 
+import { getDataById, temp_data } from "../../User"
 
 const EvaluationPageContent = ({evaluation}) => {
     return (<>
@@ -45,8 +40,7 @@ const EvaluationPageContent = ({evaluation}) => {
 
 export const EvaluationPage = () => {
     const { id } = useParams()
-    evaluation_temp.id = id
-    return <EvaluationPageContent evaluation={evaluation_temp} />
+    return <EvaluationPageContent evaluation={getDataById(id, [temp_data.studies[0].evaluations[0], temp_data.studies[1].evaluations[0]])} />
 }
 
 /**

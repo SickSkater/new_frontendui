@@ -25,7 +25,7 @@ import { Button } from "react-bootstrap"
  */
 export const EvaluationMediumContent = ({evaluation, children}) => {
     return (
-        console.log(evaluation),
+        console.log("Eval:", {evaluation}),
         <>
             Body: {evaluation.points} <br />
             Známka: {evaluation.grade} <br />
