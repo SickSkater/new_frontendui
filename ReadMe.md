@@ -65,6 +65,3 @@ This document outlines the timeline of commits, problems encountered, discoverie
 - Workarounds can be implemented for incomplete or poorly structured databases, but they may not always be ideal or efficient.
 
 ---
-=======
-Hello world
->>>>>>> 3716fbc899ad6c936b53ddd4219e39f3f603e63c
