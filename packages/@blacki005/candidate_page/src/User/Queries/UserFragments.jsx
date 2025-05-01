@@ -15,8 +15,10 @@ export const UserMediumFragment = createQueryStrLazy(
 fragment UserMedium on UserGQLModel {
   ...UserLink
   __typename
+  lastchange
   id
   name
+  email
 }
 `, UserLinkFragment)
 

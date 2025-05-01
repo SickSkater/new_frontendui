@@ -7,3 +7,4 @@ export * from './UserMediumContent'
 export * from './UserMediumCard'
 
 export * from './UserMediumEditableContent'
+export * from './UserData'
