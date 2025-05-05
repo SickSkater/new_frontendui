@@ -23,6 +23,8 @@ import { AdmissionProgramAttribute } from "../Scalars/AdmissionProgramAttribute"
  *   <p>Additional information about the entity.</p>
  * </AdmissionMediumContent>
  */
+import Table from 'react-bootstrap/Table';  
+
 export const AdmissionMediumContent = ({admission, children}) => {
     return (
         <Table responsive bordered hover striped > 
@@ -99,18 +101,7 @@ export const AdmissionMediumContent = ({admission, children}) => {
                 {admission.program.name}
                 </th>
             </tr>      
-            <tr>
-                <th>
-                Vytvořeno: 
-                </th>
-                <th>
-                {admission.createdBy[0]}
-                </th>
-            </tr> 
-            
             </tbody>
-
-            
         </Table>
     )
 }
