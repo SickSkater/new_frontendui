@@ -224,12 +224,26 @@ export const NewAdmission = ({user}) => {
     
             
         //TODO: Error handling
-            await fetchStudentInsert(studentInsertParams)
-            await fetchPaymentInfoInsert(paymentInfoInsertParams);     
-            await fetchPaymentInsert(paymentInsertParams); 
-            fetchAdmissionInsert(admissionInsertParams).then(
-            json=>refetchUser({ id: user.id })
-        )
+        await fetchStudentInsert(studentInsertParams)
+        if (errorStudentInsert) {
+            console.error("Error inserting student:", errorStudentInsert);
+            return;
+        }
+        await fetchPaymentInfoInsert(paymentInfoInsertParams);
+        if (errorPaymentInfoInsert) {
+            console.error("Error inserting payment info:", errorPaymentInfoInsert);
+            return;
+        }  
+        await fetchPaymentInsert(paymentInsertParams);
+        if (errorPaymentInsert) {
+            console.error("Error inserting payment:", errorPaymentInsert);
+            return;
+        }
+        fetchAdmissionInsert(admissionInsertParams).then(
+        json=>refetchUser({ id: user.id })
+        ).catch(
+            error => console.error("Error inserting admission:", error)
+        );
       };
 
     const onChange = (e) => {

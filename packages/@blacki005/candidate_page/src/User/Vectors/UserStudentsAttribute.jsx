@@ -34,6 +34,16 @@ import {DeleteAdmission} from "../Components/DeleteAdmission"
 export const UserStudentsAttribute = ({studies, user}) => {
     if (typeof studies === 'undefined') return null
 
+    // Filter out students that do not have an id, program name, or payment info
+    studies = studies.filter(student => 
+        student.id && 
+        student.program &&
+        student.payments &&
+        student.payments?.paymentInfo &&
+        student.payments?.paymentInfo?.admission
+    )
+    if (studies.length === 0) return null
+
     return (
         <>
             {
