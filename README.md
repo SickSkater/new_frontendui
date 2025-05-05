@@ -51,6 +51,22 @@ This document outlines the timeline of commits, problems encountered, discoverie
 
 ---
 
+### **6. Incomplete `studentInsert` Mutation**
+- **Problem Definition**:  
+  The `studentInsert` mutation was incomplete, which resulted in the inability to add new users to the database.
+- **Resolution**:  
+  The issue was resolved by updating the Docker containers to ensure all necessary components were properly configured.
+
+---
+
+### **7. Inability to Get ID of Inserted Entity**
+- **Problem Definition**:  
+  After inserting a new entity, it was not possible to retrieve its ID, which caused issues in subsequent operations.
+- **Resolution**:  
+  We resolved this by generating the ID on the client side and storing it in a variable before performing the insertion.
+
+---
+
 ## Problems That Could Not Be Resolved
 - The indirect querying of admissions remains a structural issue with the database. While we implemented a workaround, the underlying problem persists and would require a redesign of the database schema to resolve fully.
 
@@ -59,6 +75,7 @@ This document outlines the timeline of commits, problems encountered, discoverie
 ## Lessons Learned
 - Proper naming conventions and adherence to camelCase are critical when working with entity generation scripts.
 - Understanding the structure of the database and the relationships between entities is essential for efficient querying.
-- Workarounds can be implemented for incomplete or poorly structured databases, but they may not always be ideal or efficient.
 
 ---
+
+
