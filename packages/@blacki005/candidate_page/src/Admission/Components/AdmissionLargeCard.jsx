@@ -28,14 +28,13 @@ import { AdmissionMediumCard } from "./AdmissionMediumCard"
  * </AdmissionLargeCard>
  */
 import { AdmissionPaymentInfosAttribute } from "../Vectors/AdmissionPaymentInfosAttribute"
-import { temp_data } from "../../User"
 export const AdmissionLargeCard = ({admission, children}) => {
 console.log(admission)
     return (
         <AdmissionCardCapsule admission={admission} >
             <Row>
                 <LeftColumn>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Odstraneni prihlasky button- asi dame na userlarge
                 </LeftColumn>
                 <MiddleColumn>
                 <AdmissionMediumCard admission={admission}/>

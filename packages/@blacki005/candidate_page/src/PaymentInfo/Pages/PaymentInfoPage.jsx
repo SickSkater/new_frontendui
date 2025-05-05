@@ -29,8 +29,6 @@ import {PaymentInfoAdmissionAttribute} from "../Scalars/PaymentInfoAdmissionAttr
  * <PaymentInfoPageContent paymentinfo={paymentinfoEntity} />
  */
 
-import { getDataById, temp_data } from "../../User"
-
 const PaymentInfoPageContent = ({paymentinfo}) => {
     return (<>
         <PaymentInfoPageNavbar paymentinfo={paymentinfo} />
@@ -39,9 +37,11 @@ const PaymentInfoPageContent = ({paymentinfo}) => {
     </>)
 }
 
+
 export const PaymentInfoPage = () => {
     const {id} = useParams()
-    return <PaymentInfoPageContent paymentinfo={getDataById(id, [temp_data.studies[0].payments[0].paymentInfo.admission.paymentInfo,temp_data.studies[1].payments[0].paymentInfo.admission.paymentInfo ])} />
+    const paymentinfo = {id}
+    return <PaymentInfoPageContent paymentinfo={paymentinfo} />
 }
 
 /**

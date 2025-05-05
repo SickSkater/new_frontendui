@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 
 import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import { UserData, UserLargeCard, UserMediumCard } from "../Components"
+import { UserLargeCard } from "../Components"
 import { UserReadAsyncAction, UserReadPageAsyncAction } from "../Queries"
 import { UserPageNavbar } from "./UserPageNavbar"
 
@@ -27,116 +27,6 @@ import { UserPageNavbar } from "./UserPageNavbar"
  * 
  * <UserPageContent user={userEntity} />
  */
-
-export const temp_data = {
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "name": "John",
-  "surname": "Doe",
-  "studies": [
-    {
-      "id" : "8e157256-16c0-461b-a3f8-a5419cee2a5b",
-      "payments": [
-        {
-          "paymentInfo": {
-            "id" : "2dd560b8-7c4c-41a5-aaeb-75f9f8e30409",
-            "amount": 700,
-            "admission": {
-              "id" : "995a0dd2-3697-4e40-ae68-5bc3d9fe8c81",
-              "applicationStartDate": "2025-01-01",
-              "applicationLastDate": "2025-01-31",
-              "endDate": "2025-06-30",
-              "conditionDate": "2025-01-10",
-              "paymentDate": "2025-02-01",
-              "examStartDate": "2025-05-01",
-              "examLastDate": "2025-05-15",
-              "studentEntryDate": "2025-02-01",
-              "createdBy": [
-                "123e4567-e89b-12d3-a456-426614174000",
-              ],
-              "program": {
-                "name": "Kybernetická bezpečnost"
-              },
-              "paymentInfo": {
-                "id" : "2dd560b8-7c4c-41a5-aaeb-75f9f8e30409",
-                "amount": 700,
-                "accountNumber": "1234567890",
-                "specificSymbol": "AB123",
-                "constantSymbol": "XYZ987",
-                "IBAN": "GB29NWBK60161331926819",
-                "SWIFT": "NWBKGB2L"
-              }
-            }
-          }
-        }
-      ],
-      "evaluations": [
-        {
-          "id" : "b5f0c04a-028c-4b9b-b767-16d4ea2495e2",
-          "points": 95,
-          "grade": "A",
-          "description": "Excellent performance in the final exam.",
-          "passed": true
-        }
-      ]
-    },
-    {
-      "id" : "45aef0f9-62c9-4be2-9ae7-0c9e85cd31fb",
-      "payments": [
-        {
-          "paymentInfo": {
-            "id" : "987654321-0abc-def0-1234-56789abcdef0",
-            "amount": 700,
-            "admission": {
-              "id" : "154c0b8e-4f2d-4a3b-9c5e-1f7a2d3e4b5f",
-              "applicationStartDate": "2025-01-01",
-              "applicationLastDate": "2025-01-31",
-              "endDate": "2025-06-30",
-              "conditionDate": "2025-01-10",
-              "paymentDate": "2025-02-01",
-              "examStartDate": "2025-05-01",
-              "examLastDate": "2025-05-15",
-              "studentEntryDate": "2025-02-01",
-              "createdBy": [
-                "123e4567-e89b-12d3-a456-426614174000",
-              ],
-              "program": {
-                "name": "Techno"
-              },
-              "paymentInfo": {
-                "id" : "987654321-0abc-def0-1234-56789abcdef0",
-                "amount": 700,
-                "accountNumber": "1234567890",
-                "specificSymbol": "AB123",
-                "constantSymbol": "XYZ987",
-                "IBAN": "GB29NWBK60161331926819",
-                "SWIFT": "NWBKGB2L"
-              }
-            }
-          }
-        }
-      ],
-      "evaluations": [
-        {
-          "id" : "skibidi-bop-1234-5678-90ab-cdef12345678", 
-          "points": 85,
-          "grade": "B",
-          "description": "Nevim",
-          "passed": true
-        }
-      ]
-    }
-  ]
-}
-  
-export function getDataById(id, data_location) {
-  for ( let index = 0; index < data_location.length; index++ ) {
-    if ( data_location[index].id === id ) {
-      return data_location[index]
-    }
-  }
-  throw new Error(`Data with id ${id} not found in the provided data location.`)
-
-}
 
 /**
  * A lazy-loading component for displaying content of an user entity.

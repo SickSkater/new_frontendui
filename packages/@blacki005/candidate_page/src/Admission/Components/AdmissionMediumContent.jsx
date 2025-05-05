@@ -1,3 +1,5 @@
+import { AdmissionProgramAttribute } from "../Scalars/AdmissionProgramAttribute"
+
 /**
  * A component that displays medium-level content for an admission entity.
  *
@@ -24,6 +26,10 @@
 export const AdmissionMediumContent = ({admission, children}) => {
     return (
         <>
+            id: {admission.id}
+            <br/>
+            lastchange: {admission.lastchange}
+            <br/>
             Datum zahájení podávání přihlášek: {admission.applicationStartDate}
             <br />
             Datum ukončení podávání přihlášek: {admission.applicationLastDate}
@@ -40,11 +46,7 @@ export const AdmissionMediumContent = ({admission, children}) => {
             <br/>
             Datum ukončení programu: {admission.endDate}
             <br/>
-            Studijní program: {admission.program.name}
-            <br/>
-            Vytvořeno: {admission.createdBy[0]}
-            
-
+            Studijní program: <AdmissionProgramAttribute program={admission.program}/>
             
         </>
     )

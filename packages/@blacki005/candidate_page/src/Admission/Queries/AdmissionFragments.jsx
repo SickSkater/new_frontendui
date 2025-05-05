@@ -16,6 +16,8 @@ export const AdmissionMediumFragment = createQueryStrLazy(
 `
 fragment AdmissionMedium on AdmissionGQLModel {
   ...AdmissionLink
+  __typename
+  id
 }
 `, AdmissionLinkFragment)
 
@@ -23,6 +25,26 @@ export const AdmissionLargeFragment = createQueryStrLazy(
 `
 fragment AdmissionLarge on AdmissionGQLModel {
   ...AdmissionMedium
+  __typename
+  id
+  name
+  applicationStartDate
+  applicationLastDate
+  endDate
+  conditionDate
+  paymentDate
+  conditionExtendedDate
+  requestConditionExtendDate
+  requestExtraConditionsDate
+  requestExtraDateDate
+  examStartDate
+  examLastDate
+  studentEntryDate
+  program {
+    __typename
+    id
+    name
+  }
 }
 `, AdmissionMediumFragment)
   

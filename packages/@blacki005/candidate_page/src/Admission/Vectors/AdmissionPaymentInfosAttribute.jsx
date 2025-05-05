@@ -28,7 +28,6 @@ import { InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
  * <AdmissionPaymentinfosAttribute admission={admissionEntity} />
  */
 
-import { getDataById, temp_data } from "../../User"
 import { PaymentInfoLink } from "../../PaymentInfo"
 export const AdmissionPaymentInfosAttribute = ({payment_info}) => {
     console.log(payment_info)

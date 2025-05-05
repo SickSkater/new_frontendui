@@ -5,7 +5,8 @@ export const UserLinkFragment = createQueryStrLazy(
 fragment UserLink on UserGQLModel {
   __typename
   id
-  fullname
+  name
+  surname
 }
 `)
 
@@ -15,9 +16,10 @@ export const UserMediumFragment = createQueryStrLazy(
 fragment UserMedium on UserGQLModel {
   ...UserLink
   __typename
-  lastchange
   id
+  lastchange
   name
+  surname
   email
 }
 `, UserLinkFragment)
@@ -30,13 +32,54 @@ fragment UserLarge on UserGQLModel {
   id
   name
   surname
-  studies {
+  lastchange
+    studies {
+    __typename
+    id
+    lastchange
+    program {
+      __typename
+      id
+      name
+    }
     payments {
+      __typename
+      id
+      amount
+      lastchange
+      created
+      bankUniqueData
+      variableSymbol
       paymentInfo {
+        __typename
+        id
+        lastchange
+        accountNumber
+        specificSymbol
+        constantSymbol
+        IBAN
+        SWIFT
         amount
         admission {
+          __typename
           id
+          lastchange
+          name
+          applicationStartDate
+          applicationLastDate
+          endDate
+          conditionDate
+          paymentDate
+          conditionExtendedDate
+          requestConditionExtendDate
+          requestExtraConditionsDate
+          requestExtraDateDate
+          examStartDate
+          examLastDate
+          studentEntryDate
           program {
+            __typename
+            id
             name
           }
         }
@@ -45,4 +88,3 @@ fragment UserLarge on UserGQLModel {
   }
 }
 `, UserMediumFragment)
-  

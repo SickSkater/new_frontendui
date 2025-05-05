@@ -3,6 +3,7 @@ import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
 import { AdmissionLink } from "../../Admission"
 import { EvaluationLink } from "../../Evaluation"
 import { PaymentInfoLink } from "../../PaymentInfo"
+import {DeleteAdmission} from "../Components/DeleteAdmission"
 
 /**
  * A component for displaying the `students` attribute of an user entity.
@@ -30,26 +31,55 @@ import { PaymentInfoLink } from "../../PaymentInfo"
  *
  * <UserStudentsAttribute user={userEntity} />
  */
-export const UserStudentsAttribute = ({studies}) => {
-    //if (typeof students === 'undefined') return null
+export const UserStudentsAttribute = ({studies, user}) => {
+    if (typeof studies === 'undefined') return null
+
     return (
         <>
             {
             studies.map(
                 student => <div id={student.id} key={student.id}>
-                    <CardCapsule>
-                    Přihláška: &emsp; 
-                    <AdmissionLink admission={student.payments[0].paymentInfo.admission} />
+                    <CardCapsule title={`${student.program.name}`}>
+                    Přihláška: &emsp;
+                    <AdmissionLink admission={student.payments.paymentInfo.admission} />
                     <br/>
                     Zkouška: &emsp;
-                    <EvaluationLink evaluation={student.evaluations[0]}/>
+                    TODO
+                    {/* <EvaluationLink evaluation={student.evaluations[0]}/> */}
                     <br/>
-                    Platba: &emsp;&emsp;
-                    <PaymentInfoLink paymentinfo={student.payments[0].paymentInfo}/>
+                    <PaymentStatus payment={student.payments}/>
+                    Zpetvzeti prihlasky: 
+                    <DeleteAdmission student={student} user={user}/>
                     </CardCapsule>
                 </div>
             )}
         </>
+    )
+}
+
+
+/**
+ * A functional component that displays the payment status of a student.
+ *
+ * This component checks if the `payment` object is defined. If it is undefined,
+ * the component returns `null` and renders nothing. Otherwise, it determines
+ * the payment status based on the `amount` property of the `payment` object.
+ * If the `amount` is not zero, the status is set to "zaplaceno" (paid),
+ * otherwise it defaults to "nezaplaceno" (unpaid).
+ */ 
+const PaymentStatus = ({payment}) => {
+    if (typeof payment === 'undefined') return null
+
+    var status = "nezaplaceno"
+    if (payment.amount != 0) {
+        console.log(payment)
+        status = "zaplaceno"
+    }
+
+    return (
+        <div>
+                Platba: {status}
+        </div>
     )
 }
 
