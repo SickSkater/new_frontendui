@@ -1,3 +1,5 @@
+import Table from 'react-bootstrap/Table';  
+
 /**
  * A component that displays medium-level content for an admission entity.
  *
@@ -23,29 +25,92 @@
  */
 export const AdmissionMediumContent = ({admission, children}) => {
     return (
-        <>
-            Datum zahájení podávání přihlášek: {admission.applicationStartDate}
-            <br />
-            Datum ukončení podávání přihlášek: {admission.applicationLastDate}
-            <br/>
-            Datum splnění podmínek: {admission.conditionDate}
-            <br/>
-            Datum platby: {admission.paymentDate}
-            <br/>
-            Datum nástupu do studia: {admission.studentEntryDate}
-            <br/>
-            Datum zahájení zkoušek: {admission.examStartDate}
-            <br/>
-            Datum ukončení zkoušek: {admission.examLastDate}
-            <br/>
-            Datum ukončení programu: {admission.endDate}
-            <br/>
-            Studijní program: {admission.program.name}
-            <br/>
-            Vytvořeno: {admission.createdBy[0]}
+        <Table responsive bordered hover striped > 
+        <tbody>
+            <tr>
+                <th>
+                Datum zahájení podávání přihlášek:
+                </th>
+                <th>
+                {admission.applicationStartDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum ukončení podávání přihlášek: 
+                </th>
+                <th>
+                {admission.applicationLastDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum splnění podmínek: 
+                </th>
+                <th>
+                {admission.conditionDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum platby:               
+                 </th>
+                <th>
+                {admission.paymentDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum nástupu do studia:
+                </th>
+                <th>
+                {admission.studentEntryDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum zahájení zkoušek: 
+                </th>
+                <th>
+                {admission.examStartDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum ukončení zkoušek:
+                </th>
+                <th>
+                {admission.examLastDate}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                Datum ukončení programu: 
+                </th>
+                <th>
+                {admission.endDate}
+                </th>
+            </tr>            
+            <tr>
+                <th>
+                Studijní program: 
+                </th>
+                <th>
+                {admission.program.name}
+                </th>
+            </tr>      
+            <tr>
+                <th>
+                Vytvořeno: 
+                </th>
+                <th>
+                {admission.createdBy[0]}
+                </th>
+            </tr> 
             
+            </tbody>
 
             
-        </>
+        </Table>
     )
 }

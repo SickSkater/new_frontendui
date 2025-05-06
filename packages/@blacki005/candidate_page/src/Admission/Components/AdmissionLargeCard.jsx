@@ -30,7 +30,6 @@ import { AdmissionMediumCard } from "./AdmissionMediumCard"
 import { AdmissionPaymentInfosAttribute } from "../Vectors/AdmissionPaymentInfosAttribute"
 import { temp_data } from "../../User"
 export const AdmissionLargeCard = ({admission, children}) => {
-console.log(admission)
     return (
         <AdmissionCardCapsule admission={admission} >
             <Row>
