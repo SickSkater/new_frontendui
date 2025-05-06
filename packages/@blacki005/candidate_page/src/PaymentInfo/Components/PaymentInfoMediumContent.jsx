@@ -1,3 +1,6 @@
+
+import Table from "react-bootstrap/Table";
+
 /**
  * A component that displays medium-level content for an paymentinfo entity.
  *
@@ -21,21 +24,75 @@
  *   <p>Additional information about the entity.</p>
  * </PaymentInfoMediumContent>
  */
-export const PaymentInfoMediumContent = ({paymentinfo}) => {
+export const PaymentInfoMediumContent = ({ paymentinfo }) => {
     return (
-        <>
-            ID: {paymentinfo.id} <br />
-            Částka: {paymentinfo.amount}
-            <br />
-            Číslo účtu: {paymentinfo.accountNumber}
-            <br/>
-            variabilní symbol: {paymentinfo.specificSymbol}
-            <br/>
-            konstantní symbol: {paymentinfo.constantSymbol}
-            <br/>
-            IBAN: {paymentinfo.IBAN}
-            <br/>
-            SWIFT: {paymentinfo.SWIFT}
-        </>
+        <Table striped bordered hover responsive>
+            <tbody>
+                <tr>
+                    <th>
+                        ID:
+                    </th>
+                    <th>
+                        {paymentinfo.id}
+
+                    </th>
+                </tr>
+
+                <tr>
+                    <th>
+                        Částka:
+                    </th>
+                    <th>
+                        {paymentinfo.amount}
+
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Číslo účtu:
+                    </th>
+                    <th>
+                        {paymentinfo.accountNumber}
+
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        variabilní symbol:
+                    </th>
+                    <th>
+                        {paymentinfo.specificSymbol}
+
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        konstantní symbol:
+
+                    </th>
+                    <th>
+                        {paymentinfo.constantSymbol}
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        IBAN:
+                    </th>
+                    <th>
+                        {paymentinfo.IBAN}
+
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        SWIFT:
+
+                    </th>
+                    <th>
+                        {paymentinfo.SWIFT}
+                    </th>
+                </tr>
+            </tbody>
+        </Table>
     )
 }

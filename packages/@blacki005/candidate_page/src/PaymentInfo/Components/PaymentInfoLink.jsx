@@ -1,5 +1,5 @@
 import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
-
+import { uri_btn } from "../../../URI_btn"
 export const PaymentInfoURI = '/paymentinfo/';
 
 /**
@@ -30,5 +30,6 @@ export const PaymentInfoURI = '/paymentinfo/';
  * @see ProxyLink - The base component used for rendering the link.
  */
 export const PaymentInfoLink = ({paymentinfo}) => {
-    return <ProxyLink to={PaymentInfoURI + paymentinfo.id}>platba</ProxyLink>
+    //return <ProxyLink to={PaymentInfoURI + paymentinfo.id}>platba</ProxyLink>
+    return uri_btn(paymentinfo, PaymentInfoURI, "platba")
 }

@@ -1,5 +1,5 @@
-import { Button } from "react-bootstrap"
-
+import { Button, Tab } from "react-bootstrap"
+import Table from "react-bootstrap/Table"
 /**
  * A component that displays medium-level content for an evaluation entity.
  *
@@ -23,16 +23,50 @@ import { Button } from "react-bootstrap"
  *   <p>Additional information about the entity.</p>
  * </EvaluationMediumContent>
  */
-export const EvaluationMediumContent = ({evaluation, children}) => {
+export const EvaluationMediumContent = ({ evaluation, children }) => {
     return (
-        console.log("Eval:", {evaluation}),
-        <>
-            Body: {evaluation.points} <br />
-            Známka: {evaluation.grade} <br />
-            Popis: {evaluation.description} <br />
-            Prošel: {evaluation.passed ? "ano" : "ne"} <br />
+        console.log("Eval:", { evaluation }),
+        <Table striped bordered hover responsive>
+            <tbody >
+                <tr>
+                    <th>
+                    Body: 
+                    </th>
+                    <th>
+                    {evaluation.points}
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    Známka: 
 
-        </>
+                    </th>
+                    <th>
+                    {evaluation.grade} 
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    Popis: 
+
+                    </th>
+                    <th>
+                    {evaluation.description} 
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                    Prošel: 
+
+                    </th>
+                    <th className={ evaluation.passed ? 'table-success' : 'table-danger'}> 
+                    {evaluation.passed ? "ano" : "ne"} 
+                    </th>
+                </tr>
+            </tbody>
+            
+
+        </Table>
     )
 }
 
