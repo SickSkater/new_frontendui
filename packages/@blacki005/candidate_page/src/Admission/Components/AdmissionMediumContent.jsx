@@ -1,4 +1,4 @@
-import Table from 'react-bootstrap/Table';  
+import { AdmissionProgramAttribute } from "../Scalars/AdmissionProgramAttribute"
 
 /**
  * A component that displays medium-level content for an admission entity.

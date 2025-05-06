@@ -25,26 +25,10 @@ import { UserLink } from "./UserLink"
  * </UserMediumContent>
  */
 import { UserData } from "./UserData"
-import { DeleteButton } from "@hrbolek/uoisfrontend-shared"
 export const UserMediumContent = ({user, children}) => {
     return (
-        <>
         <div>
-            Data:
-            <UserData user={user}/>
-            {/* Data 2:
-            <UserData user={user}/> */}
-            Jméno: {user.name}
-            <br />
-            Příjmení: {user.surname}
-            <br />
-            ID: {user.id}
-            <br />
-            Studuje: {user.study} { user.study == null ? "Prázdné" : user.study}
-            <br />
-            Email: 
-            {user.email}
-        </div>        
-        </>
-    )
+            {JSON.stringify(user, null, 2)}
+        </div>
+    );
 }
