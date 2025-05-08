@@ -39,10 +39,6 @@ export const UserLargeCard = ({user, children}) => {
                 </LeftColumn>
 
                 <MiddleColumn>
-                Podat novou prihlasku:
-                <br/>
-                <NewAdmission user={user}/>
-                <br/>
                 <UserStudentsAttribute studies={user.studies} user={user} />
                 </MiddleColumn>
 

@@ -1,10 +1,11 @@
 import { createAsyncGraphQLAction, ItemActions, useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
-import { CreateDelayer, DeleteButton } from "@hrbolek/uoisfrontend-shared";
+import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
 import { useState } from "react";
 import {UserReadAsyncAction, UserUpdateAsyncAction} from "../Queries"
 import {useDispatch} from "react-redux"
 import {UserMediumEditableContent} from "."
 import { Pass } from "react-bootstrap-icons";
+import {Button} from "react-bootstrap"
 
 
 export const updateAdmissionsForUser = (jsonData) => async (dispatch, getState, next = (jsonResult)=>jsonResult) => {
@@ -60,6 +61,7 @@ mutation admissionDelete($id: UUID!, $lastchange: DateTime!) {
 `)
 
 
+
 export const DeleteAdmission = ({student, user}) => {
     const {loading:  loadingAdmissionDelete, error: errorAdmissionDelete, fetch: fetchAdmissionDelete} = useAsyncAction(AdmissionDeleteAsyncAction, {}, {deffered: true});
     const {loading: loadingPaymentInfoDelete, error: errorPaymentInfoDelete, fetch: fetchPaymentInfoDelete} = useAsyncAction(PaymentInfoDeleteAsyncAction, {}, {deffered: true});
@@ -69,7 +71,7 @@ export const DeleteAdmission = ({student, user}) => {
     const [programs, setPrograms] = useState([]);
 
     const onDelete = async () => {
-        console.log("UserData.onDelete")
+        //console.log("UserData.onDelete")
         //delete everything
         const studentDeleteParams = {
             id: student.id,
@@ -101,7 +103,26 @@ export const DeleteAdmission = ({student, user}) => {
 
     return (
         <div>
-            <DeleteButton onClick={onDelete}>Delete</DeleteButton>
+            {toggleButton()}
         </div>
     )
+
+    function toggleButton() {
+      const [isToggled, setIsToggled] = useState(false);
+    
+      const handleToggle = () => {
+        setIsToggled(toggle => !toggle);
+        if (isToggled) {
+          onDelete();
+        }
+      };
+    
+      return (<Button 
+          onClick={handleToggle}
+          variant={isToggled ? 'primary' : 'danger'}
+        >
+          {isToggled ? 'Potvrdit smazání' : ' Smazat přihlášku'}
+        </Button>
+      );
+    }
 }

@@ -3,7 +3,8 @@ import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
 import { AdmissionLink } from "../../Admission"
 import { EvaluationLink } from "../../Evaluation"
 import { PaymentInfoLink } from "../../PaymentInfo"
-import {DeleteAdmission} from "../Components/DeleteAdmission"
+import { DeleteAdmission } from "../Components/DeleteAdmission"
+import { Table } from "react-bootstrap"
 
 /**
  * A component for displaying the `students` attribute of an user entity.
@@ -31,38 +32,66 @@ import {DeleteAdmission} from "../Components/DeleteAdmission"
  *
  * <UserStudentsAttribute user={userEntity} />
  */
-export const UserStudentsAttribute = ({studies, user}) => {
+export const UserStudentsAttribute = ({ studies, user }) => {
     if (typeof studies === 'undefined') return null
 
     // Filter out students that do not have an id, program name, or payment info
-    studies = studies.filter(student => 
-        student.id && 
+    studies = studies.filter(student =>
+        student.id &&
         student.program &&
         student.payments &&
         student.payments?.paymentInfo &&
         student.payments?.paymentInfo?.admission
     )
+
     if (studies.length === 0) return null
 
     return (
         <>
             {
-            studies.map(
-                student => <div id={student.id} key={student.id}>
-                    <CardCapsule title={`${student.program.name}`}>
-                    Přihláška: &emsp;
-                    <AdmissionLink admission={student.payments.paymentInfo.admission} />
-                    <br/>
-                    Zkouška: &emsp;
-                    TODO
-                    {/* <EvaluationLink evaluation={student.evaluations[0]}/> */}
-                    <br/>
-                    <PaymentStatus payment={student.payments}/>
-                    Zpetvzeti prihlasky: 
-                    <DeleteAdmission student={student} user={user}/>
-                    </CardCapsule>
-                </div>
-            )}
+                studies.map(
+                    student => <div id={student.id} key={student.id} style={{width: "60%", margin: "auto"}}>
+                        <CardCapsule title={`${student.program.name}`}>
+                            <Table striped bordered hover size="sm" className="mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td style={{ padding: "10px", width: "30%" }}>
+                                            Přihláška:
+                                        </td>
+                                        <td style={{ padding: "10px", width: "70%" }}>
+                                            <AdmissionLink admission={student.payments.paymentInfo.admission} />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ padding: "10px", width: "30%" }}>
+                                            Zkouška:
+                                        </td>
+                                        <td style={{ padding: "10px", width: "70%" }}>
+                                            TODO
+                                            {/* <EvaluationLink evaluation={student.evaluations[0]} /> */}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ padding: "10px", width: "30%" }}>
+                                            Platba:
+                                        </td>
+                                        <td style={{ padding: "10px", width: "70%" }}>
+                                            <PaymentStatus payment={student.payments} />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ padding: "10px", width: "30%" }}>
+                                            Smazat přihlášku:
+                                        </td>
+                                        <td style={{ padding: "10px", width: "70%" }}>
+                                            <DeleteAdmission student={student} user={user} />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </CardCapsule>
+                    </div >
+                )}
         </>
     )
 }
@@ -76,8 +105,8 @@ export const UserStudentsAttribute = ({studies, user}) => {
  * the payment status based on the `amount` property of the `payment` object.
  * If the `amount` is not zero, the status is set to "zaplaceno" (paid),
  * otherwise it defaults to "nezaplaceno" (unpaid).
- */ 
-const PaymentStatus = ({payment}) => {
+ */
+const PaymentStatus = ({ payment }) => {
     if (typeof payment === 'undefined') return null
 
     var status = "nezaplaceno"
@@ -88,7 +117,7 @@ const PaymentStatus = ({payment}) => {
 
     return (
         <div>
-                Platba: {status}
+            Platba: {status}
         </div>
     )
 }
@@ -111,13 +140,13 @@ const StudentsAttributeAsyncAction = createAsyncGraphQLAction(
     processVectorAttributeFromGraphQLResult("students")
 )
 
-export const UserStudentsAttributeInifite = ({user}) => { 
-    const {students} = user
+export const UserStudentsAttributeInifite = ({ user }) => {
+    const { students } = user
 
     return (
-        <InfiniteScroll 
-            Visualiser={'StudentMediumCard'} 
-            actionParams={{skip: 0, limit: 10}}
+        <InfiniteScroll
+            Visualiser={'StudentMediumCard'}
+            actionParams={{ skip: 0, limit: 10 }}
             asyncAction={StudentsAttributeAsyncAction}
         />
     )

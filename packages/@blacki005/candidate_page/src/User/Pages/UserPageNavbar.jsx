@@ -2,6 +2,9 @@ import Nav from 'react-bootstrap/Nav'
 import { ProxyLink, MyNavbar, useHash } from '@hrbolek/uoisfrontend-shared';
 
 import { UserURI } from '../Components'
+
+import { NewAdmission } from '../Components';
+
 /**
  * A navigation button component that generates a URL based on the user's ID and a specific segment.
  * The button uses a `ProxyLink` to navigate while preserving hash and query parameters.
@@ -70,11 +73,13 @@ export const UserPageNavbar = ({ user, onSearchChange }) => {
     const [currentHash, setHash] = useHash(); // Use the custom hook to manage hash
 
     const segments = [
+        /*
         { segment: 'history', label: 'Historie'},
         // { segment: 'permissions', label: 'Práva' },
         { segment: 'roles', label: 'Role' },
         // { segment: 'library', label: 'Knihovna' },
         { segment: 'graph', label: 'Stavy' },
+         */
     ]
     return (
         <div className='screen-only'>
@@ -89,7 +94,8 @@ export const UserPageNavbar = ({ user, onSearchChange }) => {
                     />
                 </Nav.Item>
             ))}
-      </MyNavbar>
-      </div>
-    );
-};
+            <NewAdmission user={user}/>
+        </MyNavbar>
+        </div>
+
+)}
