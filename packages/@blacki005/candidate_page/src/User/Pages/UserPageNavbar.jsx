@@ -5,6 +5,7 @@ import { UserURI } from '../Components'
 
 import { NewAdmission } from '../Components';
 
+
 /**
  * A navigation button component that generates a URL based on the user's ID and a specific segment.
  * The button uses a `ProxyLink` to navigate while preserving hash and query parameters.
@@ -80,6 +81,7 @@ export const UserPageNavbar = ({ user, onSearchChange }) => {
         // { segment: 'library', label: 'Knihovna' },
         { segment: 'graph', label: 'Stavy' },
          */
+
     ]
     return (
         <div className='screen-only'>
