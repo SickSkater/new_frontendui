@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 
 import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import { UserLargeCard } from "../Components"
+import { NewAdmission, UserLargeCard } from "../Components"
 import { UserReadAsyncAction, UserReadPageAsyncAction } from "../Queries"
 import { UserPageNavbar } from "./UserPageNavbar"
 
@@ -91,9 +91,11 @@ const UserPageContentLazy = ({user}) => {
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
 
-const UserPageContent = ({user}) => {
+const UserPageContent = ({user, onChange, onBlur}) => {
   return (<>
-      <UserPageNavbar user={user} />
+      <UserPageNavbar user={user}>
+        <NewAdmission user={user} onChange={onChange} onBlur={onBlur}/>
+      </UserPageNavbar>
       <UserLargeCard user={user}>
       </UserLargeCard>
   </>)

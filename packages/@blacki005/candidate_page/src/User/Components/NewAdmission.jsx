@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux"
 import { UserMediumEditableContent } from "."
 import { ProgramLink } from "../../Program";
 
+
+//TODO odstranit
 //nutny import knihovny uoistfrontend-gql-shared
 const QueryGroupAsyncAction = createAsyncGraphQLAction(`
 query ($pattern: String!) {
@@ -17,17 +19,95 @@ query ($pattern: String!) {
 }
 `);
 
-//zapise usera do cache
-export const updateMembershipsForUser = (jsonData) => async (dispatch, getState, next = (jsonResult) => jsonResult) => {
-  const program = jsonData?.data?.programInsert;
-  if (program) {
-    const { __typename } = program
-    if (__typename === "ProgramGQLModel") {
-      const { user } = program.user;
-      dispatch(ItemActions.item_update(user))
+
+const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
+query ($pattern: String!) {
+  admissionPage(where: {name: {_ilike: $pattern}}) {
+    __typename
+    id
+    name
+    program {
+      __typename
+      id
+      name
+      nameEn
+    }
+    paymentInfo {
+      __typename
+      id
     }
   }
 }
+`)
+
+const ExamInsertAsyncAction = createAsyncGraphQLAction(`
+mutation examInsert(
+  $name: String,
+  $nameEn: String,
+  $description: String,
+  $descriptionEn: String,
+  $minScore: Int,
+  $maxScore: Int,
+  $typeId: UUID,
+  $parentId: UUID,
+  $planId: UUID,
+  $id: UUID) {
+  examInsert(exam: {name: $name, nameEn: $nameEn, description: $description, descriptionEn: $descriptionEn, minScore: $minScore, maxScore: $maxScore, typeId: $typeId, parentId: $parentId, planId: $planId, id: $id}) {
+    ... on ExamGQLModel {
+      __typename
+      id
+    }
+    ... on InsertError {...InsertError}
+  }
+}
+
+
+fragment InsertError on InsertError {
+  __typename
+  msg
+  failed
+  input
+  }
+`)
+
+const EvaluationInsertAsyncAction = createAsyncGraphQLAction(`
+mutation evaluationInsert(
+  $id: UUID,
+  $semesterId: UUID, 
+  $userId: UUID, 
+  $order: Int, 
+  $points: Int, 
+  $passed: Boolean, 
+  $description: String, 
+  $grade: String, 
+  $classificationlevelId: UUID, 
+  $classificationplanId: UUID, 
+  $eventId: UUID, 
+  $parentId: UUID, 
+  $studentId: UUID, 
+  $examinerId: UUID, 
+  $examId: UUID) {
+  evaluationInsert(
+    evaluation: {id: $id, semesterId: $semesterId, userId: $userId, order: $order, points: $points, passed: $passed, description: $description, grade: $grade, classificationlevelId: $classificationlevelId, classificationplanId: $classificationplanId, eventId: $eventId, parentId: $parentId, studentId: $studentId, examinerId: $examinerId, examId: $examId}
+  ) {
+    ... on EvaluationGQLModel {
+      __typename
+      id
+      grade
+    }
+    ... on InsertError {
+      ...InsertError
+    }
+  }
+}
+
+fragment InsertError on InsertError {
+  __typename
+  msg
+  failed
+  input
+}
+`)
 
 const StudentInsertAsyncAction = createAsyncGraphQLAction(`
 mutation studentInsert(
@@ -86,104 +166,33 @@ fragment InsertError on InsertError {
   }
 `)
 
-const PaymentInfoInsertAsyncAction = createAsyncGraphQLAction(`
-mutation paymentInfoInsert(
-  $id: UUID,
-  $accountNumber: String,
-  $specificSymbol: String,
-  $constantSymbol: String,
-  $IBAN: String,
-  $SWIFT: String,
-  $amount: Float
-) {
-  paymentInfoInsert(paymentInfo: {id: $id, accountNumber: $accountNumber, specificSymbol: $specificSymbol, constantSymbol: $constantSymbol, IBAN: $IBAN, SWIFT: $SWIFT, amount: $amount}) {
-    ... on PaymentInfoGQLModel { ...PaymentInfo }
-    ... on InsertError { ...InsertError }
-  }
-}
-
-fragment PaymentInfo on PaymentInfoGQLModel {
-  __typename
-  id
-  
-}
-
-fragment InsertError on InsertError {
-  __typename
-  msg
-  failed
-  input
-}
-`)
-
-const AdmissionInsertAsyncAction = createAsyncGraphQLAction(`
-mutation admissionInsert(
-  $programId: UUID!,
-  $id: UUID,
-  $name: String,
-  $nameEn: String,
-  $stateId: UUID,
-  $paymentInfoId: UUID,
-  $applicationStartDate: DateTime,
-  $applicationLastDate: DateTime,
-  $endDate: DateTime,
-  $conditionDate: DateTime,
-  $paymentDate: DateTime,
-  $conditionExtendedDate: DateTime,
-  $requestConditionExtendDate: DateTime,
-  $requestExtraConditionsDate: DateTime,
-  $requestExtraDateDate: DateTime,
-  $examStartDate: DateTime,
-  $examLastDate: DateTime,
-  $studentEntryDate: DateTime
-) {
-  admissionInsert(admission: {programId: $programId, id: $id, name: $name, nameEn: $nameEn, stateId: $stateId, paymentInfoId: $paymentInfoId, applicationStartDate: $applicationStartDate, applicationLastDate: $applicationLastDate, endDate: $endDate, conditionDate: $conditionDate, paymentDate: $paymentDate, conditionExtendedDate: $conditionExtendedDate, requestConditionExtendDate: $requestConditionExtendDate, requestExtraConditionsDate: $requestExtraConditionsDate, requestExtraDateDate: $requestExtraDateDate, examStartDate: $examStartDate, examLastDate: $examLastDate, studentEntryDate: $studentEntryDate}) {
-    ... on AdmissionGQLModel { ...Admission }
-    ... on InsertError { ...InsertError }
-  }
-}
-
-fragment Admission on AdmissionGQLModel {
-  __typename
-  id
-  name
-}
-
-fragment InsertError on InsertError {
-  __typename
-  msg
-  failed
-  input
-}
-`, updateMembershipsForUser)
-//povykonani bude zavolan middleware, ktery zajisti zapis do cache a prekresleni vsech komponent
-
 
 //komponenta, ktera zobrazuje jednu skupinu
 //pri kliknuti da notifikaci userdata - tak se zajisti interaktivita kazde komponenty
-const LocalProgram = ({ program, onSelect }) => {
+const LocalProgram = ({ admission, onSelect }) => {
+  
   const onClick = () => {
-    onSelect(program);
+    onSelect(admission);
   }
+
   return (
     <div>
-      {program.name}
+      {admission.program.name}
       <button onClick={onClick}>Podat prihlasku</button>
     </div>
   )
 }
 
 
-export const NewAdmission = ({ user }) => {
-  const { loading, error, fetch } = useAsyncAction(QueryGroupAsyncAction, {}, { deffered: true });
-  const { loading: loadingAdmissionInsert, error: errorAdmissionInsert, fetch: fetchAdmissionInsert } = useAsyncAction(AdmissionInsertAsyncAction, {}, { deffered: true });
-  const { loading: loadingPaymentInfoInsert, error: errorPaymentInfoInsert, fetch: fetchPaymentInfoInsert } = useAsyncAction(PaymentInfoInsertAsyncAction, {}, { deffered: true });
+export const NewAdmission = ({ user, onChange, onBlur }) => {
+  const { loading, error, fetch } = useAsyncAction(QueryAdmissionAsyncAction, {}, { deffered: true });
   const { loading: loadingPaymentInsert, error: errorPaymentInsert, fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { loading: loadingStudentInsert, error: errorStudentInsert, fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });
+  const { loading: loadingEvaluationInsert, error: errorEvaluationInsert, fetch: fetchEvaluationInsert } = useAsyncAction(EvaluationInsertAsyncAction, {}, { deffered: true });
+  const { loading: loadingExamInsert, error: errorExamInsert, fetch: fetchExamInsert } = useAsyncAction(ExamInsertAsyncAction, {}, { deffered: true });
   const [isInputVisible, setIsInputVisible] = useState(false);
   const inputRef = useRef(null);
-  const { fetch: refetchUser } = useAsyncAction(UserReadAsyncAction, {}, { deffered: true });
-  const [programs, setPrograms] = useState([]);
+  const [admissions, setAdmissions] = useState([]);
 
 
   //zpozdovac, ma implicitni timeout
@@ -193,49 +202,38 @@ export const NewAdmission = ({ user }) => {
 
 
   //chvile, kdy uzivatel klikne na skupinu
-  const onSelect = async (program) => {
+  const onSelect = async (admission) => {
     // Prepare parameters for the insert mutations
     const studentInsertParams = {
       id: crypto.randomUUID(),
       userId: user.id,
-      programId: program.id,
+      programId: admission.program.id,
       stateId: crypto.randomUUID(), // Placeholder, because we don't use states
       semesterNumber: 0,
-    };
-    const paymentInfoInsertParams = {
-      id: crypto.randomUUID(),
-      accountNumber: "0000 0000 0000 0011",
-      specificSymbol: "80",
-      constantSymbol: "54321",
-      IBAN: "AL35202111090000000001234567",
-      SWIFT: "ANNA-BB-CC-123",
-      amount: 600.0,
     };
     const paymentInsertParams = {
       studentId: studentInsertParams.id,
       bankUniqueData: "bank unique data",
       variableSymbol: "variable symbol",
       amount: 0,
-      paymentInfoId: paymentInfoInsertParams.id
-    };
-    const admissionInsertParams = {
-      programId: program.id,
-      id: crypto.randomUUID(),
-      name: program.name,
-      paymentInfoId: paymentInfoInsertParams.id,
+      paymentInfoId: admission.paymentInfo.id
     };
 
 
-    //TODO: Error handling
-    await fetchStudentInsert(studentInsertParams)
-    await fetchPaymentInfoInsert(paymentInfoInsertParams);
-    await fetchPaymentInsert(paymentInsertParams);
-    fetchAdmissionInsert(admissionInsertParams).then(
-      json => refetchUser({ id: user.id })
-    );
+
+
+    //TODO: Error handling - neresit
+    await fetchStudentInsert(studentInsertParams);
+
+    // await fetchExamInsert(examInsertParams);
+    // await fetchEvaluationInsert(evaluationInsertParams);
+    
+    await fetchPaymentInsert(paymentInsertParams).then(
+      json => onChange({target: { value: user }})
+    )
   };
 
-  const onChange = (e) => {
+  const onChange_ = (e) => {
     const data = e.target.value;
     //data jsou to, co uzivatel zadal do inputu
     //necheme hledat pomoci 1 nebo 0 znaku
@@ -247,15 +245,15 @@ export const NewAdmission = ({ user }) => {
           //z jsonu vytahuju to co potrebuju
           //otaznik znamena - nejsem si jisty, ze to tam je - pokud to tam neni, tak to vrati null
           //or zajistuje ze se vrati prazdne pole, bude-li tam null
-          const programs = json?.data?.programPage || []
-          setPrograms(programs);
+          const admissions = json?.data?.admissionPage || []
+          setAdmissions(admissions);
           return json;
         }
       ))
 
     }
     else {
-      setPrograms([]);
+      setAdmissions([]);
     }
   }
 
@@ -266,7 +264,7 @@ export const NewAdmission = ({ user }) => {
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
       setIsInputVisible(false);
-      setPrograms([]); // Clear the programs list when hiding
+      setAdmissions([]); // Clear the programs list when hiding
     }
   };
 
@@ -281,7 +279,7 @@ export const NewAdmission = ({ user }) => {
     <div>
       {!isInputVisible && (
         <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue" }}>
-          Vyhledávač studijního programu
+          Vyhledávač vypsaných příjmacích řízení
         </p>
       )}
       {isInputVisible && (
@@ -301,14 +299,14 @@ export const NewAdmission = ({ user }) => {
           <input
             type="text"
             defaultValue=""
-            onChange={onChange}
+            onChange={onChange_}
             className="form-control"
             placeholder="Zadejte název programu"
           />
-          {programs &&
-            programs.map((program) => {
-              return <LocalProgram key={program.id} program={program} onSelect={onSelect} />;
-            })}
+          {admissions &&
+            admissions.map((admission) => {
+              return <LocalProgram key={admission.program.id} admission={admission} onSelect={onSelect} />;
+          })}
         </div>
       )}
     </div>

@@ -70,6 +70,7 @@ export const DeleteAdmission = ({student, user}) => {
     const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
     const [programs, setPrograms] = useState([]);
 
+
     const onDelete = async () => {
         //console.log("UserData.onDelete")
         //delete everything
@@ -81,17 +82,9 @@ export const DeleteAdmission = ({student, user}) => {
             id: student.payments.id,
             lastchange: student.payments.lastchange
         };
-        const paymentInfoDeleteParams = {
-            id: student.payments.paymentInfo.id,
-            lastchange: student.payments.paymentInfo.lastchange
-        };
-        const AdmissionDeleteParams = {
-            id: student.payments.paymentInfo.admission.id,
-            lastchange: student.payments.paymentInfo.admission.lastchange
-        };
 
-        await fetchAdmissionDelete(AdmissionDeleteParams)
-        await fetchPaymentInfoDelete(paymentInfoDeleteParams)
+        // await fetchAdmissionDelete(AdmissionDeleteParams)
+        // await fetchPaymentInfoDelete(paymentInfoDeleteParams)
         await fetchPaymentDelete(paymentDeleteParams)
         fetchStudentDelete(studentDeleteParams).then(
             json=>refetchUser({ id: user.id })
@@ -117,7 +110,8 @@ export const DeleteAdmission = ({student, user}) => {
         }
       };
     
-      return (<Button 
+      return (
+        <Button 
           onClick={handleToggle}
           variant={isToggled ? 'primary' : 'danger'}
         >
