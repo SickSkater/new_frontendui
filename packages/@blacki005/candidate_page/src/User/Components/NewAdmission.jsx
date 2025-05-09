@@ -223,8 +223,21 @@ export const NewAdmission = ({ user }) => {
       id: crypto.randomUUID(),
       name: program.name,
       paymentInfoId: paymentInfoInsertParams.id,
+      nameEn: "Lorem Ipsum",
+      stateId: crypto.randomUUID(),
+      applicationStartDate: new Date().toISOString().slice(0, -1), // Odstranění "Z"
+      applicationLastDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().slice(0, -1), // Odstranění "Z"
+      endDate: new Date(new Date().setDate(new Date().getDate() + 60)).toISOString().slice(0, -1), // Odstranění "Z"
+      conditionDate: new Date(new Date().setDate(new Date().getDate() + 45)).toISOString().slice(0, -1), // Odstranění "Z"
+      paymentDate: new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().slice(0, -1), // Odstranění "Z"
+      conditionExtendedDate: null,
+      requestConditionExtendDate: null,
+      requestExtraConditionsDate: null,
+      requestExtraDateDate: null,
+      examStartDate: new Date(new Date().setDate(new Date().getDate() + 50)).toISOString().slice(0, -1), // Odstranění "Z"
+      examLastDate: new Date(new Date().setDate(new Date().getDate() + 55)).toISOString().slice(0, -1), // Odstranění "Z"
+      studentEntryDate: new Date(new Date().setDate(new Date().getDate() + 70)).toISOString().slice(0, -1), // Odstranění "Z"
     };
-
 
     //TODO: Error handling
     await fetchStudentInsert(studentInsertParams)

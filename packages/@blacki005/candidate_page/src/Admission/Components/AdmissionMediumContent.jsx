@@ -1,3 +1,4 @@
+import { Tab } from "react-bootstrap";
 import { AdmissionProgramAttribute } from "../Scalars/AdmissionProgramAttribute"
 
 /**
@@ -23,85 +24,93 @@ import { AdmissionProgramAttribute } from "../Scalars/AdmissionProgramAttribute"
  *   <p>Additional information about the entity.</p>
  * </AdmissionMediumContent>
  */
-import Table from 'react-bootstrap/Table';  
+import Table from 'react-bootstrap/Table';
 
-export const AdmissionMediumContent = ({admission, children}) => {
+// Funkce pro formátování data
+const formatDate = (dateTime) => {
+    if (!dateTime) return "N/A";
+    const date = new Date(dateTime);
+    return date.toLocaleDateString("cs-CZ", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    });
+};
+
+export const AdmissionMediumContent = ({ admission, children }) => {
     return (
-        <Table responsive bordered hover striped > 
-        <tbody>
-            <tr>
-                <th>
-                Datum zahájení podávání přihlášek:
-                </th>
-                <th>
-                {admission.applicationStartDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum ukončení podávání přihlášek: 
-                </th>
-                <th>
-                {admission.applicationLastDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum splnění podmínek: 
-                </th>
-                <th>
-                {admission.conditionDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum platby:               
-                 </th>
-                <th>
-                {admission.paymentDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum nástupu do studia:
-                </th>
-                <th>
-                {admission.studentEntryDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum zahájení zkoušek: 
-                </th>
-                <th>
-                {admission.examStartDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum ukončení zkoušek:
-                </th>
-                <th>
-                {admission.examLastDate}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                Datum ukončení programu: 
-                </th>
-                <th>
-                {admission.endDate}
-                </th>
-            </tr>            
-            <tr>
-                <th>
-                Studijní program: 
-                </th>
-                <th>
-                {admission.program.name}
-                </th>
-            </tr>      
-            </tbody>
-        </Table>
-    )
-}
+        <div>
+            {/* Tabulka pro párové prvky */}
+            <Table responsive bordered hover striped className="text-center">
+                <thead>
+                    <tr>
+                        <th>Lorem ipsum</th>
+                        <th>Datum zahájení</th>
+                        <th>Datum ukončení</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Podávání přihlášek:</th>
+                        <td>{formatDate(admission.applicationStartDate)}</td>
+                        <td>{formatDate(admission.applicationLastDate)}</td>
+                    </tr>
+                    <tr>
+                        <th>Požadavky pro přijetí:</th>
+                        <td>{formatDate(admission.conditionDate)}</td>
+                        <td>{formatDate(admission.endDate)}</td>
+                    </tr>
+                    <tr>
+                        <th>Platba:</th>
+                        <td>{formatDate(admission.paymentDate)}</td>
+                        <td>{formatDate(admission.conditionExtendedDate)}</td>
+                    </tr>
+                    <tr>
+                        <th>Zkouška:</th>
+                        <td>{formatDate(admission.examStartDate)}</td>
+                        <td>{formatDate(admission.examLastDate)}</td>
+                    </tr>
+                    <tr>
+                        <th>Nástup studenta:</th>
+                        <td>{formatDate(admission.studentEntryDate)}</td>
+                        <td>N/A</td>
+                    </tr>
+                </tbody>
+            </Table>
+
+            {/* Tabulka pro ostatní prvky */}
+            <Table responsive bordered hover striped className="text-center">
+                <tbody>
+                    <tr>
+                        <th>ID:</th>
+                        <td>{admission.id}</td>
+                    </tr>
+                    <tr>
+                        <th>Název:</th>
+                        <td>{admission.name}</td>
+                    </tr>
+                    <tr>
+                        <th>Anglický název:</th>
+                        <td>{admission.nameEn}</td>
+                    </tr>
+                    <tr>
+                        <th>Stav ID:</th>
+                        <td>{admission.stateId || "N/A"}</td>
+                    </tr>
+                    <tr>
+                        <th>Žádost o prodloužení podmínek:</th>
+                        <td>{formatDate(admission.requestConditionExtendDate)}</td>
+                    </tr>
+                    <tr>
+                        <th>Žádost o extra podmínky:</th>
+                        <td>{formatDate(admission.requestExtraConditionsDate)}</td>
+                    </tr>
+                    <tr>
+                        <th>Žádost o extra datum:</th>
+                        <td>{formatDate(admission.requestExtraDateDate)}</td>
+                    </tr>
+                </tbody>
+            </Table>
+        </div>
+    );
+};

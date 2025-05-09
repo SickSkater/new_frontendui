@@ -90,7 +90,7 @@ export const DeleteAdmission = ({student, user}) => {
             lastchange: student.payments.paymentInfo.admission.lastchange
         };
 
-        await fetchAdmissionDelete(AdmissionDeleteParams)
+        // await fetchAdmissionDelete(AdmissionDeleteParams)
         await fetchPaymentInfoDelete(paymentInfoDeleteParams)
         await fetchPaymentDelete(paymentDeleteParams)
         fetchStudentDelete(studentDeleteParams).then(
