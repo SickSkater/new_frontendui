@@ -50,7 +50,7 @@ export const UserStudentsAttribute = ({ studies, user }) => {
         <>
             {
                 studies.map(
-                    student => <div id={student.id} key={student.id} style={{width: "60%", margin: "auto"}}>
+                    student => <div id={student.id} key={student.id} style={{width: "60%", margin: "auto", padding: "10px"}}>
                         <CardCapsule title={`${student.program.name}`}>
                             <Table striped bordered hover size="sm" className="mb-0">
                                 <tbody>
