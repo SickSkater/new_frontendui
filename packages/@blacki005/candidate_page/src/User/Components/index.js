@@ -5,7 +5,8 @@ export * from './UserLargeCard'
 export * from './UserLink'
 export * from './UserMediumContent'
 export * from './UserMediumCard'
-
 export * from './UserMediumEditableContent'
+
 export * from './NewAdmission'
 export * from './DeleteAdmission'
+export * from './DataGenerator'

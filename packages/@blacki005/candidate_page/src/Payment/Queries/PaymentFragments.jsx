@@ -6,8 +6,17 @@ fragment PaymentLink on PaymentGQLModel {
   __typename
   id
   lastchange
-  name
-  nameEn
+  student {
+    student {
+      name
+      surname
+    }
+  }
+  paymentInfo {
+    admission {
+      name
+    }
+  }
 }
 `)
 

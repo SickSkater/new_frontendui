@@ -1,6 +1,6 @@
 import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
 
-export const PaymentURI = '/payment/payment/view/';
+export const PaymentURI = '/payment/';
 
 /**
  * A React component that renders a `ProxyLink` to an "payment" entity's view page.
@@ -30,5 +30,5 @@ export const PaymentURI = '/payment/payment/view/';
  * @see ProxyLink - The base component used for rendering the link.
  */
 export const PaymentLink = ({payment}) => {
-    return <ProxyLink to={PaymentURI + payment.id}>{payment.name}</ProxyLink>
+    return <ProxyLink to={PaymentURI + payment.id}>Platba</ProxyLink>
 }

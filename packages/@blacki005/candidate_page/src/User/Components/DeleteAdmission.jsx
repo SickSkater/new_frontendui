@@ -1,3 +1,4 @@
+
 import { createAsyncGraphQLAction, ItemActions, useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
 import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
 import { useState } from "react";
@@ -6,9 +7,11 @@ import {useDispatch} from "react-redux"
 import {UserMediumEditableContent} from "."
 import { Pass } from "react-bootstrap-icons";
 import {Button} from "react-bootstrap"
+// import { StudentDeleteAsyncAction } from "../../Student";
+import { PaymentDeleteAsyncAction } from "../../Payment";
 
 
-export const updateAdmissionsForUser = (jsonData) => async (dispatch, getState, next = (jsonResult)=>jsonResult) => {
+export const updateAdmissionsForUser = (jsonData) => async (dispatch, next = (jsonResult)=>jsonResult) => {
     const program = jsonData?.data?.programInsert;
     if (program) {
         const {__typename} = program
@@ -29,51 +32,15 @@ mutation studentDelete($id: UUID!, $lastchange: DateTime!) {
   }
 }
 `, updateAdmissionsForUser)
-const PaymentDeleteAsyncAction = createAsyncGraphQLAction(`
-mutation paymentDelete($id: UUID!, $lastchange: DateTime!) {
-  paymentDelete(payment: {id: $id, lastchange: $lastchange}) {
-    __typename
-    failed
-    msg
-    input
-  }
-}
-`)
-const PaymentInfoDeleteAsyncAction = createAsyncGraphQLAction(`
-mutation paymentInfoDelete($id: UUID!, $lastchange: DateTime!) {
-  paymentInfoDelete(paymentInfo: {id: $id, lastchange: $lastchange}) {
-    __typename
-    msg
-    failed
-    input
-  }
-}
-`)
-const AdmissionDeleteAsyncAction = createAsyncGraphQLAction(`
-mutation admissionDelete($id: UUID!, $lastchange: DateTime!) {
-  admissionDelete(admission: {id: $id, lastchange: $lastchange}) {
-    __typename
-    msg
-    failed
-    input
-  }
-}
-`)
-
-
 
 export const DeleteAdmission = ({student, user}) => {
-    const {loading:  loadingAdmissionDelete, error: errorAdmissionDelete, fetch: fetchAdmissionDelete} = useAsyncAction(AdmissionDeleteAsyncAction, {}, {deffered: true});
-    const {loading: loadingPaymentInfoDelete, error: errorPaymentInfoDelete, fetch: fetchPaymentInfoDelete} = useAsyncAction(PaymentInfoDeleteAsyncAction, {}, {deffered: true});
-    const {loading: loadingPaymentDelete, error: errorPaymentDelete, fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
-    const {loading: loadingStudentDelete, error: errorStudentDelete, fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
+    const {fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
+    const {fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
     const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
     const [programs, setPrograms] = useState([]);
 
-
     const onDelete = async () => {
-        //console.log("UserData.onDelete")
-        //delete everything
+        //parametry pro smazání přihlášky
         const studentDeleteParams = {
             id: student.id,
             lastchange: student.lastchange
@@ -83,22 +50,11 @@ export const DeleteAdmission = ({student, user}) => {
             lastchange: student.payments.lastchange
         };
 
-        // await fetchAdmissionDelete(AdmissionDeleteParams)
-        // await fetchPaymentInfoDelete(paymentInfoDeleteParams)
         await fetchPaymentDelete(paymentDeleteParams)
         fetchStudentDelete(studentDeleteParams).then(
-            json=>refetchUser({ id: user.id })
+            ()=>refetchUser({ id: user.id })
         )
-
-
     }
-
-
-    return (
-        <div>
-            {toggleButton()}
-        </div>
-    )
 
     function toggleButton() {
       const [isToggled, setIsToggled] = useState(false);
@@ -119,4 +75,10 @@ export const DeleteAdmission = ({student, user}) => {
         </Button>
       );
     }
+
+    return (
+        <div>
+            {toggleButton()}
+        </div>
+    )
 }

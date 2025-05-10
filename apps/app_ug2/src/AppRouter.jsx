@@ -13,11 +13,6 @@ import {EvaluationPage, EvaluationRouterSegment} from "../../../packages/@blacki
 
 //co stranka, to jeden dictionary, tech stranek budeme mit vice:
 export const Routes = [
-    // UserRouterSegment
-    {
-        path: "/program/:id",
-        element: <ProgramPage/>
-    },
     {
         // http://localhost:5173/user/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/user/:id",
@@ -38,7 +33,6 @@ export const Routes = [
         path: "/evaluation/:id",
         element: <EvaluationPage/>
     },
-    ProgramRouterSegment,
     UserRouterSegment,
     PaymentInfoRouterSegment,
     AdmissionRouterSegment,

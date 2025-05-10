@@ -24,7 +24,7 @@ import { UserLink } from "./UserLink"
  *   <p>Additional information about the entity.</p>
  * </UserMediumContent>
  */
-import { UserData } from "./UserData"
+import { DataGenerator } from "./DataGenerator";
 export const UserMediumContent = ({user, children}) => {
     return (
         <div>

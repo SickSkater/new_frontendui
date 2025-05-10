@@ -6,8 +6,9 @@ fragment EvaluationLink on EvaluationGQLModel {
   __typename
   id
   lastchange
-  name
-  nameEn
+  passed
+  points
+  grade
 }
 `)
 

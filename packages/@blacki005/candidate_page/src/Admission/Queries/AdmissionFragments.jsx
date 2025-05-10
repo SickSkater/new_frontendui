@@ -27,6 +27,7 @@ fragment AdmissionLarge on AdmissionGQLModel {
   ...AdmissionMedium
   __typename
   id
+  lastchange
   name
   applicationStartDate
   applicationLastDate
@@ -44,6 +45,11 @@ fragment AdmissionLarge on AdmissionGQLModel {
     __typename
     id
     name
+    nameEn
+  }
+  paymentInfo {
+    __typename
+    id
   }
 }
 `, AdmissionMediumFragment)

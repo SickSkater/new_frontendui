@@ -27,6 +27,16 @@ import { UserPageNavbar } from "./UserPageNavbar"
  * 
  * <UserPageContent user={userEntity} />
  */
+const UserPageContent = ({user, onChange, onBlur}) => {
+    return (<>
+        <UserPageNavbar user={user}>
+          <NewAdmission user={user} onChange={onChange} onBlur={onBlur}/>
+        </UserPageNavbar>
+        <UserLargeCard user={user}>
+        </UserLargeCard>
+    </>)
+}
+
 
 /**
  * A lazy-loading component for displaying content of an user entity.
@@ -90,16 +100,6 @@ const UserPageContentLazy = ({user}) => {
  *
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
-
-const UserPageContent = ({user, onChange, onBlur}) => {
-  return (<>
-      <UserPageNavbar user={user}>
-        <NewAdmission user={user} onChange={onChange} onBlur={onBlur}/>
-      </UserPageNavbar>
-      <UserLargeCard user={user}>
-      </UserLargeCard>
-  </>)
-}
 export const UserPage = () => {
     const {id} = useParams()
     const user = {id}

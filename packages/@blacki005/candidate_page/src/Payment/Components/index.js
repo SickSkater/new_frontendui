@@ -7,3 +7,4 @@ export * from './PaymentMediumContent'
 export * from './PaymentMediumCard'
 
 export * from './PaymentMediumEditableContent'
+export * from './PaymentStatus'

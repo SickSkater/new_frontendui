@@ -42,6 +42,12 @@ fragment UserLarge on UserGQLModel {
       id
       name
     }
+    evaluations {
+      __typename
+      id
+      points
+      passed
+    }
     payments {
       __typename
       id
