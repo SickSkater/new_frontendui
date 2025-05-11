@@ -68,7 +68,7 @@ const LocalAdmission = ({ admission, onSelect }) => {
  * @example
  * <NewAdmission user={userObject} onChange={handleAdmissionChange} />
  */
-export const NewAdmission = ({ user, onChange }) => {
+export const NewApplication = ({ user, onChange }) => {
   const { fetch: fetchAdmissionRead } = useAsyncAction(QueryAdmissionAsyncAction, {}, { deffered: true });
   const { fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });

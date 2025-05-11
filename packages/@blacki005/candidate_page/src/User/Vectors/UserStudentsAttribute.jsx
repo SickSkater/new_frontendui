@@ -2,11 +2,10 @@ import { createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult } fro
 import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
 import { AdmissionLink } from "../../Admission"
 import { EvaluationLink } from "../../Evaluation"
-import { DeleteAdmission } from "../Components/DeleteAdmission"
+import { DeleteApplication } from "../Components/DeleteApplication"
 import { Table } from "react-bootstrap"
 import { PaymentLink } from "../../Payment"
 import { PaymentStatus } from "../../Payment"
-
 /**
  * A component for displaying the `students` attribute of an user entity.
  *
@@ -33,7 +32,7 @@ import { PaymentStatus } from "../../Payment"
  *
  * <UserStudentsAttribute user={userEntity} />
  */
-export const UserStudentsAttribute = ({ studies, user }) => {
+export const UserStudentsAttribute = ({ studies, user}) => {
     if (typeof studies === 'undefined') return null
 
     // Filter out students with invalid data
@@ -88,7 +87,7 @@ export const UserStudentsAttribute = ({ studies, user }) => {
                                             Smazat přihlášku:
                                         </td>
                                         <td style={{ padding: "10px", width: "70%" }}>
-                                            <DeleteAdmission student={student} user={user} />
+                                            <DeleteApplication student={student} user={user}/>
                                         </td>
                                     </tr>
                                 </tbody>

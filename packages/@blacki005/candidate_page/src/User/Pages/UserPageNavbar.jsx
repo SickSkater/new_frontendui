@@ -3,7 +3,7 @@ import { ProxyLink, MyNavbar, useHash } from '@hrbolek/uoisfrontend-shared';
 
 import { UserURI } from '../Components'
 
-import { NewAdmission } from '../Components';
+import { NewApplication } from '../Components';
 
 
 /**

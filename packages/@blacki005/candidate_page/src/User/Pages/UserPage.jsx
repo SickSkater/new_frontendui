@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 
 import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import { NewAdmission, UserLargeCard } from "../Components"
+import { NewApplication, UserLargeCard } from "../Components"
 import { UserReadAsyncAction, UserReadPageAsyncAction } from "../Queries"
 import { UserPageNavbar } from "./UserPageNavbar"
 
@@ -30,7 +30,7 @@ import { UserPageNavbar } from "./UserPageNavbar"
 const UserPageContent = ({user, onChange, onBlur}) => {
     return (<>
         <UserPageNavbar user={user}>
-          <NewAdmission user={user} onChange={onChange} onBlur={onBlur}/>
+          <NewApplication user={user} onChange={onChange} onBlur={onBlur}/>
         </UserPageNavbar>
         <UserLargeCard user={user}>
         </UserLargeCard>

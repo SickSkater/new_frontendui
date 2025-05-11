@@ -7,6 +7,6 @@ export * from './UserMediumContent'
 export * from './UserMediumCard'
 export * from './UserMediumEditableContent'
 
-export * from './NewAdmission'
-export * from './DeleteAdmission'
+export * from './NewApplication'
+export * from './DeleteApplication'
 export * from './DataGenerator'
