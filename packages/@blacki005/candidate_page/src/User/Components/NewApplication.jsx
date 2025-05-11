@@ -4,9 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { PaymentInsertAsyncAction } from "../../Payment";
 import { StudentInsertAsyncAction } from "../../Student";
 import { EvaluationInsertAsyncAction } from "../../Evaluation";
+import { UserReadAsyncAction } from "../Queries";
 
-
-
+//query pro vyhledani admissions podle pattern ve jmenu
 const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
   query ($pattern: String!) {
     admissionPage(where: {name: {_ilike: $pattern}}) {
@@ -25,8 +25,7 @@ const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
       }
     }
   }
-  `)
-
+`)
 
 
 //komponenta, ktera zobrazuje jednu skupinu
@@ -73,7 +72,8 @@ export const NewApplication = ({ user, onChange }) => {
   const { fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchEvaluationInsert } = useAsyncAction(EvaluationInsertAsyncAction, {}, { deffered: true });
-  
+  const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
+
   //hooks
   const [isInputVisible, setIsInputVisible] = useState(false);
   const inputRef = useRef(null);
@@ -84,7 +84,7 @@ export const NewApplication = ({ user, onChange }) => {
 
   //vola se kdyz uzivatel klikne na admission z dropdownu
   const onSelect = async (admission) => {
-    // priprava parametru pro insert
+    //parametry pro insert
     const studentInsertParams = {
       id: crypto.randomUUID(),
       userId: user.id,
@@ -111,7 +111,8 @@ export const NewApplication = ({ user, onChange }) => {
     await fetchStudentInsert(studentInsertParams);
     await fetchEvaluationInsert(evaluationInsertParams);
     fetchPaymentInsert(paymentInsertParams).then(
-      () => onChange({target: { value: user }})
+      //misto onChange se provede UserReadAsyncAction, protoze ma zde stejny efekt
+      () => { refetchUser({ id: user.id }) }
     )
   };
 

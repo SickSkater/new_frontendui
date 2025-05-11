@@ -1,37 +1,9 @@
-import { createAsyncGraphQLAction, ItemActions, useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
-import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
+import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
 import { useState } from "react";
-import {UserReadAsyncAction, UserUpdateAsyncAction} from "../Queries"
-import {useDispatch} from "react-redux"
-import { Pass } from "react-bootstrap-icons";
-import {Button} from "react-bootstrap"
-// import { StudentDeleteAsyncAction } from "../../Student";
+import { UserReadAsyncAction} from "../Queries"
+import { Button} from "react-bootstrap"
+import { StudentDeleteAsyncAction } from "../../Student";
 import { PaymentDeleteAsyncAction } from "../../Payment";
-
-
-export const updateAdmissionsForUser = (jsonData) => async (dispatch, next = (jsonResult)=>jsonResult) => {
-    const program = jsonData?.data?.programInsert;
-    if (program) {
-        const {__typename} = program
-        if (__typename === "ProgramGQLModel") {
-            const {user} = program.user;
-            dispatch(ItemActions.item_update(user))
-        }
-    }
-}
-
-const StudentDeleteAsyncAction = createAsyncGraphQLAction(`
-mutation studentDelete($id: UUID!, $lastchange: DateTime!) {
-  studentDelete(student: {id: $id, lastchange: $lastchange}) {
-    __typename
-    msg
-    failed
-    input
-  }
-}
-`, updateAdmissionsForUser)
-
-
 
 /**
  * DeleteApplication Component
@@ -54,10 +26,9 @@ export const DeleteApplication = ({student, user}) => {
     const {fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
     const {fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
     const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
-    const [programs, setPrograms] = useState([]);
 
     const onDelete = async () => {
-        //parametry pro smazání přihlášky
+        //parametry pro smazání přihlášky - tedy payment a student
         const studentDeleteParams = {
             id: student.id,
             lastchange: student.lastchange
