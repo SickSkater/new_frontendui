@@ -1,5 +1,4 @@
 import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
-import { uri_btn } from "../../../URI_btn"
 
 export const EvaluationURI = `/evaluation/`;
 
@@ -31,6 +30,6 @@ export const EvaluationURI = `/evaluation/`;
  * @see ProxyLink - The base component used for rendering the link.
  */
 export const EvaluationLink = ({evaluation, ...props}) => {
-    //return <ProxyLink to={EvaluationURI + evaluation.id}> Výsledky</ProxyLink>
-    return uri_btn(evaluation, EvaluationURI, "Výsledky")
+    if (typeof evaluation === 'undefined') return <div>Evaluation undefined</div>
+    return <ProxyLink to={EvaluationURI + evaluation.id}> Výsledky</ProxyLink>
 }

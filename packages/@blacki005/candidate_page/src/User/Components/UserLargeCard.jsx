@@ -3,7 +3,6 @@ import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { UserCardCapsule } from "./UserCardCapsule"
 import { UserMediumCard } from "./UserMediumCard"
 import { UserStudentsAttribute, UserStudentsAttributeInifite } from "../Vectors/UserStudentsAttribute"
-import {NewAdmission} from "./NewAdmission"
 import BreadcrumbNavigation from "./BreadcrumbNavigation"
 /**
  * A large card component for displaying detailed content and layout for an user entity.

@@ -26,8 +26,8 @@ import React from "react";
  *   <p>Additional information about the entity.</p>
  * </UserMediumContent>
  */
-import { UserData } from "./UserData"
-export const UserMediumContent = ({ user, children }) => {
+import { DataGenerator } from "./DataGenerator";
+export const UserMediumContent = ({user, children}) => {
     return (
         <div>
             <Table striped bordered hover >

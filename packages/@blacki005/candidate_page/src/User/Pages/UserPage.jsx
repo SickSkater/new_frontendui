@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 
 import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import { UserLargeCard } from "../Components"
+import { NewApplication, UserLargeCard } from "../Components"
 import { UserReadAsyncAction, UserReadPageAsyncAction } from "../Queries"
 import { UserPageNavbar } from "./UserPageNavbar"
 
@@ -27,6 +27,16 @@ import { UserPageNavbar } from "./UserPageNavbar"
  * 
  * <UserPageContent user={userEntity} />
  */
+const UserPageContent = ({user, onChange, onBlur}) => {
+    return (<>
+        <UserPageNavbar user={user}>
+          <NewApplication user={user} onChange={onChange} onBlur={onBlur}/>
+        </UserPageNavbar>
+        <UserLargeCard user={user}>
+        </UserLargeCard>
+    </>)
+}
+
 
 /**
  * A lazy-loading component for displaying content of an user entity.
@@ -90,14 +100,6 @@ const UserPageContentLazy = ({user}) => {
  *
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
-
-const UserPageContent = ({user}) => {
-  return (<>
-      <UserPageNavbar user={user} />
-      <UserLargeCard user={user}>
-      </UserLargeCard>
-  </>)
-}
 export const UserPage = () => {
     const {id} = useParams()
     const user = {id}

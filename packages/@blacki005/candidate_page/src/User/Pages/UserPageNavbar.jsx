@@ -3,7 +3,7 @@ import { ProxyLink, MyNavbar, useHash } from '@hrbolek/uoisfrontend-shared';
 
 import { UserURI } from '../Components'
 
-import { NewAdmission } from '../Components';
+import { NewApplication } from '../Components';
 
 
 /**
@@ -70,7 +70,7 @@ const TitleNavButton = ({ user, segment, label, ...props }) => {
  * const user = { id: 123, ... };
  * <UserPageNavbar user={user} onSearchChange={handleSearchChange} />
  */
-export const UserPageNavbar = ({ user, onSearchChange }) => {
+export const UserPageNavbar = ({ user, onSearchChange, children }) => {
     const [currentHash, setHash] = useHash(); // Use the custom hook to manage hash
 
     const segments = [
@@ -96,7 +96,8 @@ export const UserPageNavbar = ({ user, onSearchChange }) => {
                     />
                 </Nav.Item>
             ))}
-            <NewAdmission user={user}/>
+            {children}
+            
         </MyNavbar>
         </div>
 
