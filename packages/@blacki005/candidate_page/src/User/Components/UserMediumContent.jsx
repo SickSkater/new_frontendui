@@ -34,7 +34,7 @@ export const UserMediumContent = ({user, children}) => {
                 <tbody>
                     <tr>
                         <td>
-                            ID
+                            ID:
                         </td>
                         <td>
                             {user.id}
@@ -42,7 +42,7 @@ export const UserMediumContent = ({user, children}) => {
                     </tr>
                     <tr>
                         <td>
-                            Jméno
+                            Jméno:
                         </td>
                         <td>
                             {user.name}
@@ -50,7 +50,7 @@ export const UserMediumContent = ({user, children}) => {
                     </tr>
                     <tr>
                         <td>
-                            Příjmení
+                            Příjmení:
                         </td>
                         <td>
                             {user.surname}
@@ -58,7 +58,7 @@ export const UserMediumContent = ({user, children}) => {
                     </tr>
                     <tr>
                         <td>
-                            Email
+                            Email:
                         </td>
                         <td>
                             {user.email}
@@ -68,7 +68,7 @@ export const UserMediumContent = ({user, children}) => {
                         <tr key={study.id}>
 
                                 <td>
-                                    Přihláška
+                                    Přihláška:
                                 </td>
                                 <td>
                                     {study.program.name}

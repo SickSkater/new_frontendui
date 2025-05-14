@@ -14,7 +14,7 @@ import Nav from 'react-bootstrap/Nav';
 const BreadcrumbNavigation = ({ maxHistory = 5 }) => {
     const [history, setHistory] = useState([]);
     const navigate = useNavigate();
-    const predefinedOrder = ["user", "admission", "evaluation", "exam", "student"];
+    const predefinedOrder = ["user", "admission", "evaluation", "exam", "student", "paymentinfo"];
 
     const getDisplayName = (path) => {
         const predefinedLabels = {
@@ -22,7 +22,8 @@ const BreadcrumbNavigation = ({ maxHistory = 5 }) => {
             "admission": "Přihláška",
             "evaluation": "Výsledek",
             "exam": "Zkouška",
-            "student": "Student"
+            "student": "Student",
+            "paymentinfo": "Platba",
         };
 
         for (const [key, label] of Object.entries(predefinedLabels)) {
