@@ -1,5 +1,7 @@
 import { UserButton } from "./UserCUDButton"
 import { UserLink } from "./UserLink"
+import { Table } from "react-bootstrap"
+import React from "react";
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -25,10 +27,58 @@ import { UserLink } from "./UserLink"
  * </UserMediumContent>
  */
 import { UserData } from "./UserData"
-export const UserMediumContent = ({user, children}) => {
+export const UserMediumContent = ({ user, children }) => {
     return (
         <div>
-            {JSON.stringify(user, null, 2)}
+            <Table striped bordered hover >
+                <tbody>
+                    <tr>
+                        <td>
+                            ID
+                        </td>
+                        <td>
+                            {user.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Jméno
+                        </td>
+                        <td>
+                            {user.name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Příjmení
+                        </td>
+                        <td>
+                            {user.surname}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email
+                        </td>
+                        <td>
+                            {user.email}
+                        </td>
+                    </tr>
+                    {user.studies.map((study) => (
+                        <tr key={study.id}>
+
+                                <td>
+                                    Přihláška
+                                </td>
+                                <td>
+                                    {study.program.name}
+                                </td>
+                        </tr>
+                    ))}
+
+                </tbody>
+            </Table>
         </div>
     );
 }
+

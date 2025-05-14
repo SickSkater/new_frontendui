@@ -43,12 +43,11 @@ const BreadcrumbNavigation = ({ maxHistory = 5 }) => {
                     const pathIndex = predefinedOrder.findIndex((segment) => path.includes(segment));
 
                     // Ensure no duplicates exist in the history
-                    const isDuplicate = self.findIndex((p) => p === path) !== index;
-                    return pathIndex <= currentIndex && !isDuplicate; // Keep only parent or current paths and remove duplicates
+                    return pathIndex <= currentIndex && path !== currentPath;
                 });
 
                 const updatedHistory = [...filteredHistory, currentPath]
-                    .filter((path) => predefinedOrder.some((segment) => path.includes(segment))) // Keep only valid segments
+                    .filter((path, index, self) => predefinedOrder.some((segment) => path.includes(segment)) && self.indexOf(path) === index) // Keep only valid segments and remove duplicates
                     .sort((a, b) => {
                         const indexA = predefinedOrder.findIndex((segment) => a.includes(segment));
                         const indexB = predefinedOrder.findIndex((segment) => b.includes(segment));
