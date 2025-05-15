@@ -8,8 +8,6 @@ import { ProgramReadPageAsyncAction } from "../../Program"
 
 //chci mit button na pridani prijmacich rizeni ke vsem programum ktere jsou dostupbne
 //in construction - bude to stranka generujici data, ktera nase stranka pouziva
-
-
 export const DataGenerator = ({student, user}) => {
     const { fetch: fetchAdmissionInsert } = useAsyncAction(AdmissionInsertAsyncAction, {}, { deffered: true });
     const { fetch: fetchPaymentInfoInsert } = useAsyncAction(PaymentInfoInsertAsyncAction, {}, { deffered: true });
@@ -26,7 +24,6 @@ export const DataGenerator = ({student, user}) => {
         SWIFT: "123456789",
         amount: 0,
     }
-
 
     const admissionInsertParams = {
         id: crypto.randomUUID(),
@@ -71,6 +68,10 @@ export const DataGenerator = ({student, user}) => {
 
 
     const GenerateRandomData = async () => {
+        // await fetchPaymentInfoInsert(paymentInfoInsertParams);
+        // await fetchAdmissionInsert(admissionInsertParams);
+        // await fetchEvaluationInsert(evaluationInsertParams);
+        // await fetchExamInsert(examInsertParams);
         console.log("Generating random data...");
     }
 
@@ -81,28 +82,28 @@ export const DataGenerator = ({student, user}) => {
                 type="text"
                 defaultValue=""
                 className="form-control"
-                placeholder="Zadejte název programu"
+                placeholder="Zadejte data 1"
             />
             <input
                 type="text"
                 defaultValue=""
                 className="form-control"
-                placeholder="Zadejte název programu"
+                placeholder="Zadejte data 2"
             />
             <input
                 type="text"
                 defaultValue=""
                 className="form-control"
-                placeholder="Zadejte název programu"
+                placeholder="Zadejte data 3"
             />
             <input
                 type="date"
                 defaultValue=""
                 className="form-control"
-                placeholder="Zadejte název programu"
+                placeholder="Zadejte data 4"
             />
             <Button onClick={GenerateData}>
-                Generovat data
+                Generovat data podle zadaných hodnot
             </Button>
             <Button onClick={GenerateRandomData}>
                 Generovat náhodná data

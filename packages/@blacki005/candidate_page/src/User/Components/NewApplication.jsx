@@ -46,7 +46,7 @@ const LocalAdmission = ({ admission, onSelect }) => {
 
 
 /**
- * Component for creating a new admission process.
+ * Component for creating a new application for admission.
  * 
  * @component
  * @param {Object} props - Component properties.
