@@ -53,41 +53,48 @@ export const UserStudentsAttribute = ({ studies, user}) => {
         <>
             {
                 studies.map(
-                    student => <div id={student.id} key={student.id} style={{width: "60%", margin: "auto", padding: "10px"}}>
+                    student => <div id={student.id} key={student.id} style={{width: "60%", margin: "auto", padding: "1rem"}}>
                         <CardCapsule title={`${student.program.name}`}>
-                            <Table striped bordered hover size="sm" className="mb-0">
+                            <Table striped bordered hover style={{ tableLayout: 'fixed', width: '100%' }}>
                                 <tbody>
                                     <tr>
-                                        <td style={{ padding: "10px", width: "30%" }}>
+                                        <td style={{ padding: "1rem", width: "30%" }}>
                                             Přihláška:
                                         </td>
-                                        <td style={{ padding: "10px", width: "70%" }}>
+                                        <td style={{ padding: "1rem", width: "70%" }}>
                                             <AdmissionLink admission={student.payments.paymentInfo.admission} />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style={{ padding: "10px", width: "30%" }}>
-                                            <EvaluationLink evaluation={student?.evaluations[0]}/>:
+                                        <td style={{ padding: "1rem", width: "30%" }}>
+                                            Výsledky:
                                         </td>
-                                        <td style={{ padding: "10px", width: "70%" }}>
-                                            Termín: {student?.payments?.paymentInfo?.admission?.examStartDate} - {student?.payments?.paymentInfo?.admission?.examLastDate} <br/> 
-                                            Splneno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"} <br/>
+                                        <td style={{ padding: "1rem", width: "70%" }}>
+                                            <EvaluationLink evaluation={student?.evaluations[0]} /><br />
+                                            Termín: {student?.payments?.paymentInfo?.admission?.examStartDate} - {student?.payments?.paymentInfo?.admission?.examLastDate} <br />
+                                            Splneno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style={{ padding: "10px", width: "30%" }}>
-                                            <PaymentLink payment={student.payments} />:
+                                        <td style={{ padding: "1rem", width: "30%" }}>
+                                            Platba:
                                         </td>
-                                        <td style={{ padding: "10px", width: "70%" }}>
+                                        <td
+                                            style={{
+                                                padding: "1rem",
+                                                width: "70%",
+                                                backgroundColor: student.payments?.status === "paid" ? "#d4edda" : "#f8d7da",
+                                            }}
+                                        >
                                             <PaymentStatus payment={student.payments} />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style={{ padding: "10px", width: "30%" }}>
+                                        <td style={{ padding: "1rem", width: "30%" }}>
                                             Smazat přihlášku:
                                         </td>
-                                        <td style={{ padding: "10px", width: "70%" }}>
-                                            <DeleteApplication student={student} user={user}/>
+                                        <td style={{ padding: "1rem", width: "70%" }}>
+                                            <DeleteApplication student={student} user={user} />
                                         </td>
                                     </tr>
                                 </tbody>

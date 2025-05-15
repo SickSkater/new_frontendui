@@ -14,7 +14,7 @@ import Nav from 'react-bootstrap/Nav';
 const BreadcrumbNavigation = ({ maxHistory = 5 }) => {
     const [history, setHistory] = useState([]);
     const navigate = useNavigate();
-    const predefinedOrder = ["user", "admission", "evaluation", "exam", "student"];
+    const predefinedOrder = ["user", "admission", "evaluation", "exam", "student", "paymentinfo"];
 
     const getDisplayName = (path) => {
         const predefinedLabels = {
@@ -22,7 +22,8 @@ const BreadcrumbNavigation = ({ maxHistory = 5 }) => {
             "admission": "Přihláška",
             "evaluation": "Výsledek",
             "exam": "Zkouška",
-            "student": "Student"
+            "student": "Student",
+            "paymentinfo": "Platba",
         };
 
         for (const [key, label] of Object.entries(predefinedLabels)) {
@@ -43,12 +44,11 @@ const BreadcrumbNavigation = ({ maxHistory = 5 }) => {
                     const pathIndex = predefinedOrder.findIndex((segment) => path.includes(segment));
 
                     // Ensure no duplicates exist in the history
-                    const isDuplicate = self.findIndex((p) => p === path) !== index;
-                    return pathIndex <= currentIndex && !isDuplicate; // Keep only parent or current paths and remove duplicates
+                    return pathIndex <= currentIndex && path !== currentPath;
                 });
 
                 const updatedHistory = [...filteredHistory, currentPath]
-                    .filter((path) => predefinedOrder.some((segment) => path.includes(segment))) // Keep only valid segments
+                    .filter((path, index, self) => predefinedOrder.some((segment) => path.includes(segment)) && self.indexOf(path) === index) // Keep only valid segments and remove duplicates
                     .sort((a, b) => {
                         const indexA = predefinedOrder.findIndex((segment) => a.includes(segment));
                         const indexB = predefinedOrder.findIndex((segment) => b.includes(segment));

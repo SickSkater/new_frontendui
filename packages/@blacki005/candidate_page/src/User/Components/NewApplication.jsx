@@ -5,6 +5,7 @@ import { PaymentInsertAsyncAction } from "../../Payment";
 import { StudentInsertAsyncAction } from "../../Student";
 import { EvaluationInsertAsyncAction } from "../../Evaluation";
 import { UserReadAsyncAction } from "../Queries";
+import { Button } from "react-bootstrap";
 
 //query pro vyhledani admissions podle pattern ve jmenu
 const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
@@ -37,9 +38,9 @@ const LocalAdmission = ({ admission, onSelect }) => {
   }
 
   return (
-    <div>
-      {admission.program.name}
-      <button onClick={onClick}>Podat prihlasku</button>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', border: '1px solid #ccc', padding: '0.5rem', margin: '0.5rem', backgroundColor: "whitesmoke" }}>
+      <span>{admission.program.name}</span>
+      <Button style={{ padding: '0.25rem 0.5rem', fontSize: 'inherit' }} onClick={onClick}>Podat přihlášku</Button>
     </div>
   )
 }
