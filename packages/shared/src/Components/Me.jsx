@@ -11,7 +11,7 @@ import Col from 'react-bootstrap/Col';
 
 import { Dropdown } from "react-bootstrap";
 import { ProxyLink } from "./ProxyLink";
-import BreadcrumbNavigation from "../../../@blacki005/candidate_page/src/User/Components/BreadcrumbNavigation";
+import BreadcrumbNavigation from "../../../@blacki005/applicant_page/src/User/Components/BreadcrumbNavigation";
 
 /**
  * shared module.

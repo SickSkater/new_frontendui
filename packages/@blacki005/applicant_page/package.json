@@ -1,5 +1,5 @@
 {
-  "name": "@blacki005/candidate_page",
+  "name": "@blacki005/applicant_page",
   "version": "*",
   "main": "src/index.js",
   "scripts": {

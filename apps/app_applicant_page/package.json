@@ -1,5 +1,5 @@
 {
-  "name": "@hrbolek/app_ug2",
+  "name": "@blacki005/app_applicant_page",
   "private": true,
   "version": "0.5.0",
   "type": "module",
@@ -16,7 +16,7 @@
     "@hrbolek/uoisfrontend-requests": "*",
     "@hrbolek/uoisfrontend-shared": "*",
     "@hrbolek/uoisfrontend-ug": "*",
-    "@blacki005/candidate_page": "packages/@blacki005/candidate_page",
+    "@blacki005/applicant_page": "packages/@blacki005/applicant_page",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
