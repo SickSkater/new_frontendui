@@ -3,18 +3,17 @@ import { PaymentInfoLargeFragment } from "./PaymentInfoFragments";
 
 const PaymentInfoInsertMutation = createQueryStrLazy(
 `
-mutation PaymentInfoInsertMutation($id: UUID, $name: String, $name_en: String) {
-  result: paymentinfoInsert(
-    paymentinfo: {id: $id, name: $name, nameEn: $name_en}
-  ) {
-    ... on InsertError {
+mutation paymentInfoInsert($id: UUID, $accountNumber: String, $specificSymbol: String, $constantSymbol: String, $IBAN: String, $SWIFT: String, $amount: Float) {
+  paymentInfoInsert(paymentInfo: {id: $id, accountNumber: $accountNumber, specificSymbol: $specificSymbol, constantSymbol: $constantSymbol, IBAN: $IBAN, SWIFT: $SWIFT, amount: $amount}) {
+    ... on PaymentInfoGQLModel { ...PaymentInfoLarge }
+    ... on InsertError { 
       failed
       msg
       input
     }
-    ...PaymentInfoLarge
   }
 }
+
 `,
     PaymentInfoLargeFragment)
 

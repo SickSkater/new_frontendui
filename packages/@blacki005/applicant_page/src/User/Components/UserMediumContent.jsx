@@ -2,6 +2,7 @@ import { UserButton } from "./UserCUDButton"
 import { UserLink } from "./UserLink"
 import { Table } from "react-bootstrap"
 import React from "react";
+import { AdmissionsList } from "./AdmissionsList"
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -78,6 +79,7 @@ export const UserMediumContent = ({user, children}) => {
 
                 </tbody>
             </Table>
+            <AdmissionsList user={user}/>
         </div>
     );
 }

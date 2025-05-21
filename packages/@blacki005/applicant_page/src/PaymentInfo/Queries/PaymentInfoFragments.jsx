@@ -5,6 +5,12 @@ export const PaymentInfoLinkFragment = createQueryStrLazy(
 fragment PaymentInfoLink on PaymentInfoGQLModel {
   __typename
   id
+  amount
+  IBAN
+  SWIFT
+  accountNumber
+  specificSymbol
+  constantSymbol
 }
 `)
 

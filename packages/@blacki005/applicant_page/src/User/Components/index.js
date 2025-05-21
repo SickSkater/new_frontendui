@@ -7,6 +7,9 @@ export * from './UserMediumContent'
 export * from './UserMediumCard'
 export * from './UserMediumEditableContent'
 
-export * from './NewApplication'
-export * from './DeleteApplication'
+//my components
+export * from './SearchAdmissions'
+export * from './DeleteApplicationButton'
 export * from './DataGenerator'
+export * from './AdmissionsList'
+export * from './NewApplicationButton'

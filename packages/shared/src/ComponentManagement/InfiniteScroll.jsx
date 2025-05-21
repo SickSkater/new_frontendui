@@ -71,16 +71,16 @@ const mergeArraysById = (array1, array2) => {
  *   calculateNewFilter={(oldFilter) => ({ ...oldFilter, skip: oldFilter.skip + 10 })}
  * />
  */
-export const InfiniteScroll = ({ 
-    preloadedItems=[], 
-    actionParams, 
-    asyncAction, 
+export const InfiniteScroll = ({
+    preloadedItems=[],
+    actionParams,
+    asyncAction,
     Visualiser,
     calculateNewFilter = (oldfilter) => ({...oldfilter, skip: oldfilter.skip + oldfilter.limit || 10, limit: oldfilter.limit || 10}),
     children,
     onAll = () => null,
     ...props
- }) => {
+}) => {
     // const { 
     //     skip=0, 
     //     limit=12, 
@@ -104,7 +104,8 @@ export const InfiniteScroll = ({
 
     // preloaded (store content) have changed, so take them as loaded
     useEffect(() => {
-        if (_state.hasMore) return
+        //preloadedItems,length caused infinite loop - bug fixed with this condition
+        if (_state.hasMore || preloadedItems.length === 0) return
         _setState(prevState => {
             // const items = mergeArraysById(_state.results, preloadedItems)
             const newState = ({
@@ -115,7 +116,7 @@ export const InfiniteScroll = ({
             })
             return newState
         })
-    },[preloadedItems])
+    }, [preloadedItems, _state.hasMore])
 
     // Function to load more items
     const loadItems = async () => {
@@ -152,9 +153,9 @@ export const InfiniteScroll = ({
         } catch (error) {
             console.error("Error loading items:", error);
             _setState({
-                ..._state, 
-                hasMore: false, 
-                loading: false, 
+                ..._state,
+                hasMore: false,
+                loading: false,
                 errors: error
             });
         }

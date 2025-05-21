@@ -3,16 +3,14 @@ import { ProgramLargeFragment } from "./ProgramFragments";
 
 const ProgramInsertMutation = createQueryStrLazy(
 `
-mutation ProgramInsertMutation($id: UUID, $name: String, $name_en: String) {
-  result: programInsert(
-    program: {id: $id, name: $name, nameEn: $name_en}
-  ) {
+mutation programInsert($id: UUID, $name: String, $nameEn: String, $groupId: UUID, $licencedGroupId: UUID, $typeId: UUID) {
+  programInsert(program: {id: $id, name: $name, nameEn: $nameEn, groupId: $groupId, licencedGroupId: $licencedGroupId, typeId: $typeId}) {
+    ... on ProgramGQLModel { ...ProgramLarge }
     ... on InsertError {
       failed
       msg
       input
     }
-    ...ProgramLarge
   }
 }
 `,

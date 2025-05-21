@@ -4,6 +4,7 @@ import { UserCardCapsule } from "./UserCardCapsule"
 import { UserMediumCard } from "./UserMediumCard"
 import { UserStudentsAttribute, UserStudentsAttributeInifite } from "../Vectors/UserStudentsAttribute"
 import BreadcrumbNavigation from "./BreadcrumbNavigation"
+import { AdmissionsList } from "./AdmissionsList"
 /**
  * A large card component for displaying detailed content and layout for an user entity.
  *
@@ -35,11 +36,11 @@ export const UserLargeCard = ({user, children}) => {
         <UserCardCapsule user={user} >
             <Row>
                 <LeftColumn>
-                <UserMediumCard user={user}/>
+                    <UserMediumCard user={user}/>
                 </LeftColumn>
 
                 <MiddleColumn>
-                <UserStudentsAttribute studies={user.studies} user={user} />
+                    <UserStudentsAttribute studies={user.studies} user={user} />
                 </MiddleColumn>
 
             </Row>

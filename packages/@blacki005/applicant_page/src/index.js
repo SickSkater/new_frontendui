@@ -5,3 +5,4 @@ export * from './first';
 export * from './Payment';
 export * from './Admission';
 export * from './Evaluation';
+export * from './Student';

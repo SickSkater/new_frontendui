@@ -1,22 +1,28 @@
 
 import { UserRouterSegment} from "@blacki005/applicant_page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { UserPage } from "@blacki005/applicant_page";
+import { UserPage, UserPageEditable } from "@blacki005/applicant_page";
 import { PaymentInfoPage, PaymentInfoRouterSegment } from "@blacki005/applicant_page";
 import {AdmissionPage, AdmissionRouterSegment} from "@blacki005/applicant_page";
 import {EvaluationPage, EvaluationRouterSegment} from "@blacki005/applicant_page";
+import { DataGenerator } from "@blacki005/applicant_page";
 
 export const Routes = [
     {
         //editable:
         // http://localhost:5173/applicant/user/view/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/applicant/user/edit/:id",
-        element: <UserPage/>
+        element: <UserPageEditable/>
     },
     {
         //readonly:
         path: "/applicant/user/view/:id",
         element: <UserPage/>
+    },
+    {
+        //data generator:
+        path: "/applicant/user/generate",
+        element: <DataGenerator/>
     },
     {
         // http://localhost:5173/paymentinfo/6a6ca6e9-2222-498f-b270-b7b07c2afa41

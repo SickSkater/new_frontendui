@@ -100,7 +100,7 @@ const UserPageContentLazy = ({user}) => {
  *
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
-export const UserPage = () => {
+export const UserPageEditable = () => {
     const {id} = useParams()
     const user = {id}
     return <UserPageContentLazy user={user} />

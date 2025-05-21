@@ -12,8 +12,6 @@ This document outlines the timeline of commits, problems encountered, discoverie
 - **Resolution**:  
   The issue was resolved by creating a new entity with the correct naming conventions in the commit on **Apr. 3, 2025**.
 
----
-
 ### **2. PaymentInfo Entity Naming Issue**
 - **Problem Definition**:  
   The `PaymentInfo` entity had inconsistent naming conventions due to improper camelCase usage. Specifically, the letter "I" in `Info` was sometimes uppercase and sometimes lowercase, causing issues during entity generation.
@@ -65,6 +63,17 @@ This document outlines the timeline of commits, problems encountered, discoverie
 - **Resolution**:  
   We resolved this by generating the ID on the client side and storing it in a variable before performing the insertion.
 
+---
+
+### **8. Infinite Scroll Issue**
+- **Date**: **May 20, 2025**  
+- **Problem Definition**:  
+  The `InfiniteScroll` component encountered two issues:
+  1. An infinite loop occurred because the `hasMore` variable was not correctly set to `false` when the fetch operation returned an array of size 0.
+  2. A missing condition in the `useEffect` function caused unintended behavior during component updates.
+- **Resolution**:  
+  The issue was resolved on **May 21, 2025** with the assistance of JVFlasar and Gemini AI. The `hasMore` variable was properly updated, and the missing condition was added to the `useEffect` dependency array.
+  
 ---
 
 ## Problems That Could Not Be Resolved

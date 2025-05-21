@@ -1,38 +1,62 @@
-//komponenta pro zobrazeni seznamu prijmacich rizeni
+import React from "react";
 import { InfiniteScroll } from "@hrbolek/uoisfrontend-shared";
-import { AdmissionLink } from "../../Admission";
-import { AdmissionReadPageAsyncAction } from "../../Admission";
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
-import { createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-gql-shared";
+import { 
+    AdmissionLink,
+    AdmissionReadPageAsyncAction,
+    SearchAdmissions
+ } from "@blacki005/applicant_page";
 
 
-const VectorsAttributeQuery = `
-query AdmissionQueryRead($id: id, $where: AdmissionInputFilter, $skip: Int, $limit: Int) {
-    result: admissionById(id: $id) {
-        __typename
-        id
-        vectors(skip: $skip, limit: $limit, where: $where) {
-            __typename
-            id
+//TODO: frontend
+//visualizer for displaying items in InfiniteScroll
+const ItemsVisualizer = ({ items }) => (
+    <div>
+        {items.map((item) => (
+            <div key={item.id}>
+                <AdmissionLink admission={item}/>
+                <br/>
+            </div>
+        ))}
+    </div>
+);
+
+
+
+/**
+ * Component for displaying a list of admissions with infinite scrolling.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.user - The user object containing user-specific information for displaying NewApplication component.
+ * @returns {JSX.Element} The rendered InfiniteScroll of all admissions with admission searching feature.
+ */
+export const AdmissionsList = ({user}) => {
+    const { fetch } = useAsyncAction(AdmissionReadPageAsyncAction, {}, { defferred: true });
+
+    //returns promise that resolves to array of admissions - asyncAction for InfiniteScroll
+    const fetchItems = ({ skip, limit }) => async (dispatch) => {
+        const response = await fetch({ limit, skip});
+        // Check if the response contains the expected data
+        if (response?.data?.admissionPage) {
+            return response.data.admissionPage;
+        } else {
+            console.warn("No result found in response");
+            return [];
         }
-    }
-}
-`
+    };
 
-const VectorsAttributeAsyncAction = createAsyncGraphQLAction(
-    VectorsAttributeQuery,
-    processVectorAttributeFromGraphQLResult("vectors")
-)
-
-
-
-export const AdmissionsList = () => {
-    if (typeof admissions === 'undefined') return null
+    //TODO: frontend - aby se textove pole vyhledavace zobrazilo pod nim - nejak to vyresit
+    //TODO: odstranit NewApplication z puvodniho mista
     return (
-        <InfiniteScroll
-            Visualiser={'AdmissionLink'}
-            actionParams={{skip: 0, limit: 10}}
-            asyncAction={VectorsAttributeAsyncAction}
-        />
+        <div>
+            Vyhledat prijmaci rizeni:
+            <SearchAdmissions user={user}/>
+            Vypsana prijmaci rizeni:
+            <InfiniteScroll
+                Visualiser={ItemsVisualizer}
+                actionParams={{ skip: 0, limit: 10 }}
+                asyncAction={fetchItems}
+            />
+        </div>
     )
 }

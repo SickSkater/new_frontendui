@@ -1,11 +1,15 @@
-import { createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult } from "@hrbolek/uoisfrontend-gql-shared"
-import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
-import { AdmissionLink } from "../../Admission"
-import { EvaluationLink } from "../../Evaluation"
-import { DeleteApplication } from "../Components/DeleteApplication"
 import { Table } from "react-bootstrap"
-import { PaymentLink } from "../../Payment"
-import { PaymentStatus } from "../../Payment"
+import {
+    createAsyncGraphQLAction,
+    processVectorAttributeFromGraphQLResult
+} from "@hrbolek/uoisfrontend-gql-shared"
+import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
+import {
+    AdmissionLink,
+    EvaluationLink,
+    DeleteApplication,
+    PaymentStatus
+} from "@blacki005/applicant_page"
 /**
  * A component for displaying the `students` attribute of an user entity.
  *
@@ -45,7 +49,6 @@ export const UserStudentsAttribute = ({ studies, user}) => {
     )
 
     if (studies.length === 0) {
-        console.log("User with id" + user.id + " has no studies")
         return null
     }
 

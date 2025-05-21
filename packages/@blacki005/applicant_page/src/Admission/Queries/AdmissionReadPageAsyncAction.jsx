@@ -3,10 +3,10 @@ import { AdmissionLargeFragment } from "./AdmissionFragments";
 
 const AdmissionReadPageQuery = createQueryStrLazy(
 `
-query AdmissionReadPageQuery($skip: Int, $limit: Int, $where: AdmissionInputFilter) {
-  result: admissionPage(skip: $skip, limit: $limit, where: $where) {
-    ...AdmissionLarge
-  }
+query admissionPage($skip: Int, $limit: Int, $orderby: String, $where: AdmissionInputFilter) {
+  admissionPage(skip: $skip, limit: $limit, orderby: $orderby, where: $where) {
+  ...AdmissionLarge
+}
 }
 `, 
     AdmissionLargeFragment)
