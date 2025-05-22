@@ -10,7 +10,6 @@ import { DataGenerator } from "@blacki005/applicant_page";
 export const Routes = [
     {
         //editable:
-        // http://localhost:5173/applicant/user/view/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/applicant/user/edit/:id",
         element: <UserPageEditable/>
     },

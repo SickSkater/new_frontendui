@@ -122,7 +122,7 @@ export const SearchAdmissions = ({ user, onChange }) => {
           />
           {admissions &&
             admissions.map((admission) => {
-              return <NewApplicationButton key={admission.id} admission={admission} user={user}/>;
+              return <NewApplicationButton key={admission.id} admission={admission} user={user} readonly={false}/>;
           })}
         </div>
       )}
