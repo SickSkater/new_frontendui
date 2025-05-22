@@ -1,6 +1,7 @@
 import { UserCardCapsule } from "./UserCardCapsule"
 import { UserMediumEditableContent } from "@blacki005/applicant_page"
 
+
 /**
  * A card component that displays detailed content for an user entity.
  *

@@ -1,8 +1,6 @@
 import { CardCapsule } from "@hrbolek/uoisfrontend-shared"
 import { PersonFill } from "react-bootstrap-icons"
 import { UserLink } from "./UserLink"
-import { Breadcrumb } from "react-bootstrap"
-import BreadcrumbNavigation from "./BreadcrumbNavigation"
 
 /**
  * A specialized card component that displays an `UserLink` as its title and encapsulates additional content.

@@ -93,32 +93,32 @@ export const SearchAdmissions = ({ user, onChange }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{ position: "relative", display: "block", width: "100%" }}>
       {!isInputVisible && (
-        <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue" }}>
+        <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue", margin: 0, width: "100%", textAlign: "center" }}>
           Vyhledávač vypsaných příjmacích řízení
         </p>
       )}
       {isInputVisible && (
         <div ref={inputRef}
-        style={{
-          position: "absolute", // Překrytí ostatních prvků
-          top: "1px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          backgroundColor: "white",
-          zIndex: 1000, // Zajistí, že bude nad ostatními prvky
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-          borderRadius: "8px",
-          width: "400px",
-        }}
-      >
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            backgroundColor: "white",
+            zIndex: 1000,
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            borderRadius: "8px",
+          }}
+        >
           <input
             type="text"
             defaultValue=""
             onChange={handleInputChange}
             className="form-control"
             placeholder="Zadejte název programu"
+            style={{ width: "100%" }}
           />
           {admissions &&
             admissions.map((admission) => {

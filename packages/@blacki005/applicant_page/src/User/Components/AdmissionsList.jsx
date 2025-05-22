@@ -11,13 +11,25 @@ import {
 //TODO: frontend - podat prihlasku pri klepnuti na odkaz
 //visualizer for displaying items in InfiniteScroll
 const ItemsVisualizer = ({ items }) => (
-    <div>
-        {items.map((item) => (
-            <div key={item.id}>
-                <AdmissionLink admission={item}/>
-                <br/>
-            </div>
-        ))}
+    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <table className="table table-striped table-bordered table-hover" style={{ width: "80%", margin: "24px auto 0 auto", background: "#fff", borderRadius: 12, boxShadow: "0 2px 12px rgba(0,0,0,0.07)" }}>
+            <thead>
+                <tr>
+                    <th style={{ textAlign: "center", fontSize: 18, background: "#f0f4fa", borderTopLeftRadius: 12, borderTopRightRadius: 12 }}>
+                        Seznam příjímacích řízení
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {items.map((item) => (
+                    <tr key={item.id}>
+                        <td style={{ textAlign: "center", fontWeight: 500, fontSize: 16, padding: "12px 0" }}>
+                            <AdmissionLink admission={item}/>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     </div>
 );
 
@@ -49,9 +61,6 @@ export const AdmissionsList = ({user}) => {
     //TODO: odstranit NewApplication z puvodniho mista
     return (
         <div>
-            Vyhledat prijmaci rizeni:
-            <SearchAdmissions user={user}/>
-            Vypsana prijmaci rizeni:
             <InfiniteScroll
                 Visualiser={ItemsVisualizer}
                 actionParams={{ skip: 0, limit: 10 }}

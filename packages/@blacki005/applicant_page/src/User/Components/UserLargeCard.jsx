@@ -3,8 +3,9 @@ import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
 import { UserCardCapsule } from "./UserCardCapsule"
 import { UserMediumCard } from "./UserMediumCard"
 import { UserStudentsAttribute, UserStudentsAttributeInifite } from "../Vectors/UserStudentsAttribute"
-import BreadcrumbNavigation from "./BreadcrumbNavigation"
 import { AdmissionsList } from "./AdmissionsList"
+import { Search, Table } from "react-bootstrap-icons"
+import { SearchAdmissions } from "./SearchAdmissions"
 /**
  * A large card component for displaying detailed content and layout for an user entity.
  *
@@ -31,14 +32,13 @@ import { AdmissionsList } from "./AdmissionsList"
  */
 
 
-export const UserLargeCard = ({user, children}) => {
+export const UserLargeCard = ({ user, children }) => {
     return (
         <UserCardCapsule user={user} >
             <Row>
                 <LeftColumn>
-                    <UserMediumCard user={user}/>
+                    <UserMediumCard user={user} />
                 </LeftColumn>
-
                 <MiddleColumn>
                     <UserStudentsAttribute studies={user.studies} user={user} />
                 </MiddleColumn>

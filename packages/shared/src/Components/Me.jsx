@@ -11,7 +11,6 @@ import Col from 'react-bootstrap/Col';
 
 import { Dropdown } from "react-bootstrap";
 import { ProxyLink } from "./ProxyLink";
-import BreadcrumbNavigation from "../../../@blacki005/applicant_page/src/User/Components/BreadcrumbNavigation";
 
 /**
  * shared module.
@@ -441,10 +440,7 @@ export const MyNavbar = ({
                     <div className="mx-auto d-flex align-items-center flex-column flex-lg-row mb-0">
                         {children}
                     </div>                    
-                    <Nav.Item style={{ fontSize: "10px" }}>
-                            <BreadcrumbNavigation maxHistory={5} />
-                        </Nav.Item>
-                    {/* Search Form and Profile Icon (Right-Aligned in Large Screens) */}
+
                     <div className="d-flex flex-column flex-lg-row align-items-center ml-lg-auto">
                         {/* Search Form */}
                         {onSearchChange && (

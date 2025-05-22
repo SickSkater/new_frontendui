@@ -1,8 +1,6 @@
-import { UserButton } from "./UserCUDButton"
-import { UserLink } from "./UserLink"
+import { SearchAdmissions } from "./SearchAdmissions";
 import { Table } from "react-bootstrap"
 import React from "react";
-import { AdmissionsList } from "./AdmissionsList"
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -28,58 +26,68 @@ import { AdmissionsList } from "./AdmissionsList"
  * </UserMediumContent>
  */
 import { DataGenerator } from "./DataGenerator";
-export const UserMediumContent = ({user, children}) => {
+import { AdmissionsList } from "./AdmissionsList";
+export const UserMediumContent = ({ user, children }) => {
     return (
-        <div>
-            <Table striped bordered hover >
+        <div style={{ maxWidth: 400, margin: "0 auto" }}>
+            <Table striped bordered hover style={{ marginBottom: 16, tableLayout: "fixed", width: "100%" }}>
                 <tbody>
                     <tr>
-                        <td>
+                        <td style={{ width: "40%", wordBreak: "break-word" }}>
                             ID:
                         </td>
-                        <td>
+                        <td style={{ width: "60%", wordBreak: "break-word" }}>
                             {user.id}
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style={{ width: "40%", wordBreak: "break-word" }}>
                             Jméno:
                         </td>
-                        <td>
+                        <td style={{ width: "60%", wordBreak: "break-word" }}>
                             {user.name}
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style={{ width: "40%", wordBreak: "break-word" }}>
                             Příjmení:
                         </td>
-                        <td>
+                        <td style={{ width: "60%", wordBreak: "break-word" }}>
                             {user.surname}
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style={{ width: "40%", wordBreak: "break-word" }}>
                             Email:
                         </td>
-                        <td>
+                        <td style={{ width: "60%", wordBreak: "break-word" }}>
                             {user.email}
                         </td>
                     </tr>
                     {user.studies.map((study) => (
                         <tr key={study.id}>
-
-                                <td>
-                                    Přihláška:
-                                </td>
-                                <td>
-                                    {study.program.name}
-                                </td>
+                            <td style={{ width: "40%", wordBreak: "break-word" }}>
+                                Přihláška:
+                            </td>
+                            <td style={{ width: "60%", wordBreak: "break-word" }}>
+                                {study.program.name}
+                            </td>
                         </tr>
                     ))}
-
                 </tbody>
             </Table>
-            <AdmissionsList user={user}/>
+            <Table striped bordered hover style={{ tableLayout: "fixed", width: "100%", marginBottom: 0 }}>
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style={{ padding: 8 }} colSpan={2}>
+                            <SearchAdmissions user={user} />
+                        </td>
+                    </tr>
+                </tbody>
+            </Table>
+            <AdmissionsList user={user} />
         </div>
     );
 }
