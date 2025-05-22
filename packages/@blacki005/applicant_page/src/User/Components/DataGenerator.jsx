@@ -125,22 +125,92 @@ export const DataGenerator = () => {
         setAdmission(fetchedAdmission);
     }
 
+    // Překlad klíčů pro hezčí popisky v tabulce
+    const keyLabels = {
+        id: "Identifikátor",
+        programId: "Program",
+        paymentInfoId: "Platební info",
+        name: "Název",
+        nameEn: "Název (EN)",
+        applicationStartDate: "Začátek přihlášek",
+        applicationLastDate: "Konec přihlášek",
+        endDate: "Konec řízení",
+        conditionDate: "Datum splnění podmínek",
+        paymentDate: "Datum platby",
+        conditionExtendedDate: "Prodloužené podmínky",
+        requestConditionExtendDate: "Žádost o prodloužení podmínek",
+        requestExtraConditionsDate: "Žádost o extra podmínky",
+        requestExtraDateDate: "Žádost o extra datum",
+        examStartDate: "Začátek zkoušek",
+        examLastDate: "Konec zkoušek",
+        accountNumber: "Číslo účtu",
+        specificSymbol: "Specifický symbol",
+        constantSymbol: "Konstantní symbol",
+        IBAN: "IBAN",
+        SWIFT: "SWIFT",
+        amount: "Částka",
+        studentEntryDate: "Datum přijetí studenta",
+        admission: "Přijímací řízení",
+        paymentInfo: "Platební informace",
+        lastchange: "Poslední změna",
+
+    };
 
     return (
-        <div>
-            <Button onClick={GenerateAdmission}>
-                Generovat prijmaci rizeni
-            </Button>
+        <div style={{ maxWidth: 600, margin: "32px auto", padding: 24, background: "#f8f9fa", borderRadius: 16, boxShadow: "0 2px 16px rgba(0,0,0,0.08)" }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+                <Button onClick={GenerateAdmission}>
+                    Generovat přijímací řízení
+                </Button>
+            </div>
             {paymentInfo && (
-                <div>
-                    <h3>Payment Info:</h3>
-                    <pre>{JSON.stringify(paymentInfo, null, 2)}</pre>
+                <div style={{ marginBottom: 32, background: "#fff", borderRadius: 12, boxShadow: "0 1px 6px rgba(0,0,0,0.06)", padding: 20 }}>
+                    <h4 style={{ color: "#1976d2", marginBottom: 16 }}>Platební informace</h4>
+                    <div style={{ overflowX: 'auto' }}>
+                        <table className="table table-bordered" style={{ background: "#fafdff", borderRadius: 8, minWidth: 600 }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: "30%", whiteSpace: 'nowrap' }}>Název</th>
+                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>Hodnota</th>
+                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>JSON</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(paymentInfo).map(([key, value]) => (
+                                    <tr key={key}>
+                                        <th style={{ width: "30%", background: "#f0f4fa", fontWeight: 600, textTransform: "capitalize", whiteSpace: 'nowrap' }}>{keyLabels[key] || key}</th>
+                                        <td style={{ width: "35%", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{String(value)}</td>
+                                        <td style={{ width: "35%", color: "#888", fontStyle: "italic", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{key}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )}
             {admission && (
-                <div>
-                    <h3>Admission:</h3>
-                    <pre>{JSON.stringify(admission, null, 2)}</pre>
+                <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 1px 6px rgba(0,0,0,0.06)", padding: 20, marginBottom: 32 }}>
+                    <h4 style={{ color: "#1976d2", marginBottom: 16 }}>Přijímací řízení</h4>
+                    <div style={{ overflowX: 'auto' }}>
+                        <table className="table table-bordered" style={{ background: "#fafdff", borderRadius: 8, minWidth: 600 }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: "30%", whiteSpace: 'nowrap' }}>Popis</th>
+                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>Hodnota</th>
+                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>Klíč</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(admission).map(([key, value]) => (
+                                    <tr key={key}>
+                                        <th style={{ width: "30%", background: "#f0f4fa", fontWeight: 600, textTransform: "capitalize", whiteSpace: 'nowrap' }}>{keyLabels[key] || key}</th>
+                                        <td style={{ width: "35%", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{String(value)}</td>
+                                        <td style={{ width: "35%", color: "#888", fontStyle: "italic", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{key}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )}
         </div>
