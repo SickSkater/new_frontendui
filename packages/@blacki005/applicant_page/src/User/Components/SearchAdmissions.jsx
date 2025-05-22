@@ -126,9 +126,9 @@ export const SearchAdmissions = ({ user, onChange }) => {
       {isInputVisible && admissions && admissions.length > 0 && (
         <div style={{
           position: "absolute",
-          top: 0,
+          top: "-25rem", // začátek výsledků zarovnaný s horním okrajem inputu (mírně odsazený)
           left: "100%",
-          marginLeft: 16,
+          marginLeft: 40,
           minWidth: 220,
           maxWidth: 320,
           background: "#fff",
