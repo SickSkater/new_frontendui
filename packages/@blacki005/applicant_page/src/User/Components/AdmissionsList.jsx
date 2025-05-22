@@ -8,7 +8,7 @@ import {
  } from "@blacki005/applicant_page";
 
 
-//TODO: frontend
+//TODO: frontend - podat prihlasku pri klepnuti na odkaz
 //visualizer for displaying items in InfiniteScroll
 const ItemsVisualizer = ({ items }) => (
     <div>

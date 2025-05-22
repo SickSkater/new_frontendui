@@ -24,7 +24,7 @@ import {
  * @example
  * <DeleteAdmissionButton student={studentData} user={userData} />
  */
-export const DeleteApplication = ({student, user}) => {
+export const DeleteApplication = ({student, user, readonly}) => {
     const {fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
     const {fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
     const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
@@ -53,7 +53,17 @@ export const DeleteApplication = ({student, user}) => {
           onDelete();
         }
       };
-    
+      
+      if (readonly) {
+        return (
+          <Button 
+            variant="primary" 
+            disabled
+          >
+            Smazat přihlášku
+          </Button>
+        )
+      }
       return (
         <Button 
           onClick={handleToggle}
