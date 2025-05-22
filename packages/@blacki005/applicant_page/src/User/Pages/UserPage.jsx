@@ -3,9 +3,9 @@ import { useParams } from "react-router"
 
 import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import { SearchAdmissions, UserLargeCard } from "../Components"
-import { UserReadAsyncAction, UserReadPageAsyncAction } from "../Queries"
-import { UserPageNavbar } from "./UserPageNavbar"
+import { Row } from "react-bootstrap"
+import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
+import { UserStudentsAttribute, UserCardCapsule, UserMediumContent, UserReadAsyncAction, UserPageNavbar } from "@blacki005/applicant_page"
 
 /**
  * A page content component for displaying detailed information about an user entity.
@@ -31,8 +31,20 @@ const UserPageContent = ({user, onChange, onBlur}) => {
     return (<>
         <UserPageNavbar user={user}>
         </UserPageNavbar>
-        <UserLargeCard user={user}>
-        </UserLargeCard>
+        <UserCardCapsule user={user} >
+            <Row>
+                <LeftColumn>
+                    <UserCardCapsule title="Informace o uživateli">
+                        <UserMediumContent user={user}/>
+                    </UserCardCapsule>
+                </LeftColumn>
+
+                <MiddleColumn>
+                    <UserStudentsAttribute studies={user.studies} user={user} readonly={true} />
+                </MiddleColumn>
+
+            </Row>
+        </UserCardCapsule>
     </>)
 }
 

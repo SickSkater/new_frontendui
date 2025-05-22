@@ -1,5 +1,5 @@
 import { UserCardCapsule } from "./UserCardCapsule"
-import { UserMediumContent } from "./UserMediumContent"
+import { UserMediumEditableContent } from "@blacki005/applicant_page"
 
 
 /**
@@ -30,10 +30,9 @@ import { UserMediumContent } from "./UserMediumContent"
 export const UserMediumCard = ({user, children}) => {
     return (
         <UserCardCapsule title="Informace o uživateli">
-            <UserMediumContent user={user}>
+            <UserMediumEditableContent user={user}>
                 {children}
-                                 
-            </UserMediumContent>
+            </UserMediumEditableContent>
         </UserCardCapsule>
     )
 }

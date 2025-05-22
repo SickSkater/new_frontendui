@@ -1,13 +1,17 @@
-import { Input } from "@hrbolek/uoisfrontend-shared"
+import { UserButton } from "./UserCUDButton"
+import { UserLink } from "./UserLink"
+import { Table } from "react-bootstrap"
+import React from "react";
+import { AdmissionsList } from "./AdmissionsList"
 
 /**
  * A component that displays medium-level content for an user entity.
  *
- * This component renders a label "UserMediumContent" followed by a serialized representation of the `user` object
+ * This component renders serialized representation of the `user` object
  * and any additional child content. It is designed to handle and display information about an user entity object.
  *
  * @component
- * @param {Object} props - The properties for the UserMediumContent component.
+ * @param {Object} props - The properties for the UserMediumEditableContent component.
  * @param {Object} props.user - The object representing the user entity.
  * @param {string|number} props.user.id - The unique identifier for the user entity.
  * @param {string} props.user.name - The name or label of the user entity.
@@ -19,16 +23,64 @@ import { Input } from "@hrbolek/uoisfrontend-shared"
  * // Example usage:
  * const userEntity = { id: 123, name: "Sample Entity" };
  * 
- * <UserMediumContent user={userEntity}>
+ * <UserMediumEditableContent user={userEntity}>
  *   <p>Additional information about the entity.</p>
- * </UserMediumContent>
+ * </UserMediumEditableContent>
  */
-export const UserMediumEditableContent = ({user, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
+import { DataGenerator } from "./DataGenerator";
+export const UserMediumEditableContent = ({user, children}) => {
     return (
-        <>           
-            <Input id={"name"} label={"Název"} className="form-control" defaultValue={user?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
-            <Input id={"name_en"} label={"Anglický název"} className="form-control" defaultValue={user?.name_en|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
-            {children}
-        </>
-    )
+        <div>
+            <Table striped bordered hover >
+                <tbody>
+                    <tr>
+                        <td>
+                            ID:
+                        </td>
+                        <td>
+                            {user.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Jméno:
+                        </td>
+                        <td>
+                            {user.name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Příjmení:
+                        </td>
+                        <td>
+                            {user.surname}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email:
+                        </td>
+                        <td>
+                            {user.email}
+                        </td>
+                    </tr>
+                    {user.studies.map((study) => (
+                        <tr key={study.id}>
+
+                                <td>
+                                    Přihláška:
+                                </td>
+                                <td>
+                                    {study.program.name}
+                                </td>
+                        </tr>
+                    ))}
+
+                </tbody>
+            </Table>
+            <AdmissionsList user={user}/>
+        </div>
+    );
 }
+
