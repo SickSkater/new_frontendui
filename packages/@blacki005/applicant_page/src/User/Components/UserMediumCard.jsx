@@ -1,5 +1,6 @@
 import { UserCardCapsule } from "./UserCardCapsule"
 import { UserMediumEditableContent } from "@blacki005/applicant_page"
+import { SearchAdmissions } from "./SearchAdmissions"
 
 
 /**

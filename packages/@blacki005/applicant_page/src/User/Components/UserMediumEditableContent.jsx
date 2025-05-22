@@ -1,5 +1,4 @@
-import { UserButton } from "./UserCUDButton"
-import { UserLink } from "./UserLink"
+import { SearchAdmissions } from "./SearchAdmissions"
 import { Table } from "react-bootstrap"
 import React from "react";
 import { AdmissionsList } from "./AdmissionsList"
@@ -30,57 +29,66 @@ import { AdmissionsList } from "./AdmissionsList"
 import { DataGenerator } from "./DataGenerator";
 export const UserMediumEditableContent = ({user, children}) => {
     return (
-        <div>
-            <Table striped bordered hover >
-                <tbody>
-                    <tr>
-                        <td>
-                            ID:
-                        </td>
-                        <td>
-                            {user.id}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Jméno:
-                        </td>
-                        <td>
-                            {user.name}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Příjmení:
-                        </td>
-                        <td>
-                            {user.surname}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Email:
-                        </td>
-                        <td>
-                            {user.email}
-                        </td>
-                    </tr>
-                    {user.studies.map((study) => (
-                        <tr key={study.id}>
-
-                                <td>
-                                    Přihláška:
+         <div style={{ maxWidth: 400, margin: "0 auto" }}>
+                    <Table striped bordered hover style={{ marginBottom: 16, tableLayout: "fixed", width: "100%" }}>
+                        <tbody>
+                            <tr>
+                                <td style={{ width: "40%", wordBreak: "break-word" }}>
+                                    ID:
                                 </td>
-                                <td>
-                                    {study.program.name}
+                                <td style={{ width: "60%", wordBreak: "break-word" }}>
+                                    {user.id}
                                 </td>
-                        </tr>
-                    ))}
-
-                </tbody>
-            </Table>
-            <AdmissionsList user={user}/>
-        </div>
+                            </tr>
+                            <tr>
+                                <td style={{ width: "40%", wordBreak: "break-word" }}>
+                                    Jméno:
+                                </td>
+                                <td style={{ width: "60%", wordBreak: "break-word" }}>
+                                    {user.name}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style={{ width: "40%", wordBreak: "break-word" }}>
+                                    Příjmení:
+                                </td>
+                                <td style={{ width: "60%", wordBreak: "break-word" }}>
+                                    {user.surname}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style={{ width: "40%", wordBreak: "break-word" }}>
+                                    Email:
+                                </td>
+                                <td style={{ width: "60%", wordBreak: "break-word" }}>
+                                    {user.email}
+                                </td>
+                            </tr>
+                            {user.studies.map((study) => (
+                                <tr key={study.id}>
+                                    <td style={{ width: "40%", wordBreak: "break-word" }}>
+                                        Přihláška:
+                                    </td>
+                                    <td style={{ width: "60%", wordBreak: "break-word" }}>
+                                        {study.program.name}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                    <Table striped bordered hover style={{ tableLayout: "fixed", width: "100%", marginBottom: 0 }}>
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style={{ padding: 8 }} colSpan={2}>
+                                    <SearchAdmissions user={user} />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                    <AdmissionsList user={user} />
+                </div>
     );
 }
 
