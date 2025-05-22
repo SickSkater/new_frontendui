@@ -30,7 +30,6 @@ import { UserPageNavbar } from "./UserPageNavbar"
 const UserPageContent = ({user, onChange, onBlur}) => {
     return (<>
         <UserPageNavbar user={user}>
-          <SearchAdmissions user={user} onChange={onChange} onBlur={onBlur}/>
         </UserPageNavbar>
         <UserLargeCard user={user}>
         </UserLargeCard>

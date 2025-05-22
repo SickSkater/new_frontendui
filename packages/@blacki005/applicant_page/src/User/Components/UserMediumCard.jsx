@@ -1,7 +1,6 @@
-import { PersonFill } from "react-bootstrap-icons"
-import { UserLink } from "./UserLink"
 import { UserCardCapsule } from "./UserCardCapsule"
 import { UserMediumContent } from "./UserMediumContent"
+
 
 /**
  * A card component that displays detailed content for an user entity.
@@ -33,6 +32,7 @@ export const UserMediumCard = ({user, children}) => {
         <UserCardCapsule title="Informace o uživateli">
             <UserMediumContent user={user}>
                 {children}
+                                 
             </UserMediumContent>
         </UserCardCapsule>
     )
