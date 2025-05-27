@@ -20,7 +20,7 @@ import {
  *
  * @returns {JSX.Element} A styled button component for submitting a new application.
  */
-export const NewApplicationButton = ({ user, admission, readonly }) => {
+export const NewApplicationButton = ({ user, admission, editable }) => {
   const { fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchEvaluationInsert } = useAsyncAction(EvaluationInsertAsyncAction, {}, { deffered: true });
@@ -72,8 +72,8 @@ export const NewApplicationButton = ({ user, admission, readonly }) => {
       </span>
       <Button 
         style={{ padding: '0.25rem 0.5rem', fontSize: 'inherit' }} 
-        onClick={onClick} 
-        disabled={readonly}
+        onClick={onClick}
+        disabled={!editable}
       >
         Podat přihlášku
       </Button>

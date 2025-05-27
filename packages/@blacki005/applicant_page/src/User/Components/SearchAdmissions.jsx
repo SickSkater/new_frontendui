@@ -42,7 +42,7 @@ const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
  * 
  * @returns {JSX.Element} Text field for searching admissions and list of admissions corresponding with pattern in searchbox.
  */
-export const SearchAdmissions = ({ user, onChange }) => {
+export const SearchAdmissions = ({ user, onChange, editable }) => {
   const { fetch: fetchAdmissionRead } = useAsyncAction(QueryAdmissionAsyncAction, {}, { deffered: true });
 
   //hooks
@@ -93,37 +93,55 @@ export const SearchAdmissions = ({ user, onChange }) => {
   }, []);
 
   return (
-    <div style={{ position: "relative", display: "block", width: "100%" }}>
-      {!isInputVisible && (
-        <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue", margin: 0, width: "100%", textAlign: "center" }}>
-          Vyhledávač vypsaných příjmacích řízení
-        </p>
-      )}
-      {isInputVisible && (
-        <div ref={inputRef}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            backgroundColor: "white",
-            zIndex: 1000,
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            borderRadius: "8px",
-          }}
-        >
-          <input
-            type="text"
-            defaultValue=""
-            onChange={handleInputChange}
-            className="form-control"
-            placeholder="Zadejte název programu"
-            style={{ width: "100%" }}
-          />
-          {admissions &&
-            admissions.map((admission) => {
-              return <NewApplicationButton key={admission.id} admission={admission} user={user} readonly={false}/>;
-          })}
+    <div style={{ position: "relative", width: "100%" }}>
+      <div style={{ display: "block", width: "100%" }}>
+        {!isInputVisible && (
+          <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue", margin: 0, width: "100%", textAlign: "center" }}>
+            Vyhledávač vypsaných příjmacích řízení
+          </p>
+        )}
+        {isInputVisible && (
+          <div ref={inputRef}
+            style={{
+              position: "relative",
+              width: "100%",
+              backgroundColor: "white",
+              zIndex: 1000,
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              borderRadius: "8px",
+              padding: 8,
+            }}
+          >
+            <input
+              type="text"
+              defaultValue=""
+              onChange={handleInputChange}
+              className="form-control"
+              placeholder="Zadejte název programu"
+              style={{ width: "100%" }}
+            />
+          </div>
+        )}
+      </div>
+      {isInputVisible && admissions && admissions.length > 0 && (
+        <div style={{
+          position: "absolute",
+          top: "-25rem", // začátek výsledků zarovnaný s horním okrajem inputu (mírně odsazený)
+          left: "100%",
+          marginLeft: 40,
+          minWidth: 220,
+          maxWidth: 320,
+          background: "#fff",
+          borderRadius: 8,
+          boxShadow: "0px 4px 6px rgba(0,0,0,0.10)",
+          padding: 8,
+          zIndex: 2000
+        }}>
+          {admissions.map((admission) => (
+            <div key={admission.id} style={{ marginBottom: 8 }}>
+              <NewApplicationButton admission={admission} user={user} editable={editable}/>
+            </div>
+          ))}
         </div>
       )}
     </div>

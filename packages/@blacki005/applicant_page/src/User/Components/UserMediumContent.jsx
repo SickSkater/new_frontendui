@@ -1,5 +1,3 @@
-import { UserButton } from "./UserCUDButton"
-import { UserLink } from "./UserLink"
 import { Table } from "react-bootstrap"
 import React from "react";
 import { AdmissionsList } from "./AdmissionsList"
@@ -78,7 +76,7 @@ export const UserMediumContent = ({user, children}) => {
 
                 </tbody>
             </Table>
-            <AdmissionsList user={user} readonly={true}/>
+            <AdmissionsList user={user} editable={false}/>
         </div>
     );
 }

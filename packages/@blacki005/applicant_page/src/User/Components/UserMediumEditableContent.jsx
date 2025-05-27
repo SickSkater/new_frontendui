@@ -1,6 +1,9 @@
-import { SearchAdmissions } from "./SearchAdmissions";
 import { Table } from "react-bootstrap"
 import React from "react";
+import {
+    SearchAdmissions,
+    AdmissionsList
+ } from "@blacki005/applicant_page";
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -25,7 +28,6 @@ import React from "react";
  *   <p>Additional information about the entity.</p>
  * </UserMediumContent>
  */
-import { AdmissionsList } from "./AdmissionsList";
 export const UserMediumEditableContent = ({ user, children }) => {
     return (
         <div style={{ maxWidth: 400, margin: "0 auto" }}>
@@ -81,12 +83,12 @@ export const UserMediumEditableContent = ({ user, children }) => {
                 <tbody>
                     <tr>
                         <td style={{ padding: 8 }} colSpan={2}>
-                            <SearchAdmissions user={user} />
+                            <SearchAdmissions user={user} editable={true}/>
                         </td>
                     </tr>
                 </tbody>
             </Table>
-            <AdmissionsList user={user} readonly={false} />
+            <AdmissionsList user={user} editable={true} />
         </div>
     );
 }

@@ -36,7 +36,7 @@ import {
  *
  * <UserStudentsAttribute user={userEntity} />
  */
-export const UserStudentsAttribute = ({ studies, user, readonly}) => {
+export const UserStudentsAttribute = ({ studies, user, editable}) => {
     if (typeof studies === 'undefined') return null
 
     // Filter out students with invalid data
@@ -97,7 +97,7 @@ export const UserStudentsAttribute = ({ studies, user, readonly}) => {
                                             Smazat přihlášku:
                                         </td>
                                         <td style={{ padding: "1rem", width: "70%" }}>
-                                            <DeleteApplication student={student} user={user} readonly={readonly} />
+                                            <DeleteApplication student={student} user={user} editable={editable} />
                                         </td>
                                     </tr>
                                 </tbody>

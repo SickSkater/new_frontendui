@@ -1,7 +1,6 @@
-
-import { UserRouterSegment} from "@blacki005/applicant_page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { UserPage, UserPageEditable } from "@blacki005/applicant_page";
+import { UserRouterSegment} from "@blacki005/applicant_page";
+import { UserPage } from "@blacki005/applicant_page";
 import { PaymentInfoPage, PaymentInfoRouterSegment } from "@blacki005/applicant_page";
 import {AdmissionPage, AdmissionRouterSegment} from "@blacki005/applicant_page";
 import {EvaluationPage, EvaluationRouterSegment} from "@blacki005/applicant_page";
@@ -11,12 +10,11 @@ export const Routes = [
     {
         //editable:
         path: "/applicant/user/edit/:id",
-        element: <UserPageEditable/>
+        element: <UserPage editable={true}/>
     },
-    {
-        //readonly:
+    { 
         path: "/applicant/user/view/:id",
-        element: <UserPage/>
+        element: <UserPage editable={false}/>
     },
     {
         //data generator:
