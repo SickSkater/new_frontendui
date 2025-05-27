@@ -79,10 +79,17 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
   };
 
   const handleClickOutside = (event) => {
-    if (inputRef.current && !inputRef.current.contains(event.target)) {
-      setIsInputVisible(false);
-      setAdmissions([]); // Clear the programs list when hiding
+    // Pokud je inputRef nebo box s výsledky, zůstaň otevřené pokud klik uvnitř jednoho z nich
+    const inputBox = inputRef.current;
+    const resultsBox = document.getElementById("search-admissions-results");
+    if (
+      (inputBox && inputBox.contains(event.target)) ||
+      (resultsBox && resultsBox.contains(event.target))
+    ) {
+      return;
     }
+    setIsInputVisible(false);
+    setAdmissions([]); // Clear the programs list when hiding
   };
 
   useEffect(() => {
@@ -124,19 +131,22 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
         )}
       </div>
       {isInputVisible && admissions && admissions.length > 0 && (
-        <div style={{
-          position: "absolute",
-          top: "-25rem", // začátek výsledků zarovnaný s horním okrajem inputu (mírně odsazený)
-          left: "100%",
-          marginLeft: 40,
-          minWidth: 220,
-          maxWidth: 320,
-          background: "#fff",
-          borderRadius: 8,
-          boxShadow: "0px 4px 6px rgba(0,0,0,0.10)",
-          padding: 8,
-          zIndex: 2000
-        }}>
+        <div
+          id="search-admissions-results"
+          style={{
+            position: "absolute",
+            top: "-20rem",
+            left: "100%",
+            marginLeft: 40,
+            minWidth: 220,
+            maxWidth: 320,
+            background: "#fff",
+            borderRadius: 8,
+            boxShadow: "0px 4px 6px rgba(0,0,0,0.10)",
+            padding: 8,
+            zIndex: 2000
+          }}
+        >
           {admissions.map((admission) => (
             <div key={admission.id} style={{ marginBottom: 8 }}>
               <NewApplicationButton admission={admission} user={user} editable={editable}/>
