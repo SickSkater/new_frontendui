@@ -1,0 +1,41 @@
+.admissionsListContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.admissionsListTable {
+  width: 80%;
+  margin: 24px auto 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+.admissionsListTableTh {
+  text-align: center;
+  font-size: 18px;
+  background: #f0f4fa;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.admissionsListTableTd {
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 12px 0;
+}
+
+.admissionsListButton {
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admissionsListButton:hover {
+  background-color: #1565c0;
+}   

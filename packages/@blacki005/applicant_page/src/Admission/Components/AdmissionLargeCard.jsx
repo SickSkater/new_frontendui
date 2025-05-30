@@ -33,7 +33,6 @@ export const AdmissionLargeCard = ({admission, children}) => {
         <AdmissionCardCapsule admission={admission} >
             <Row>
                 <LeftColumn>
-                    TODO Zpet btn 
                 </LeftColumn>
                 <MiddleColumn>
                 <AdmissionMediumCard admission={admission}/>

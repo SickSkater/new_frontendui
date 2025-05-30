@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useAsyncAction, createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-gql-shared";
 import { CreateDelayer} from "@hrbolek/uoisfrontend-shared";
 import { NewApplicationButton } from "@blacki005/applicant_page";
-import './styles.css'
+import styles from "./SearchAdmissions.module.css";
+
 
 //query for searching admissions by pattern in the name
 const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
@@ -101,34 +102,32 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
   }, []);
 
   return (
-    <div class="search-admissions-root">
-      <div class="search-admissions-bar-container">
+    <div className={styles.searchAdmissionsContainer}>
+      <div className={styles.searchAdmissionsBar}>
         {!isInputVisible && (
-          <p onClick={handleTextClick} class="search-admissions-input">
+          <p onClick={handleTextClick} className={styles.searchAdmissionsInput}>
             Vyhledávač vypsaných příjmacích řízení
           </p>
         )}
         {isInputVisible && (
           <div ref={inputRef}
-            class="search-admissions-bar"
-          >
+            className={styles.searchAdmissionsBar}>
             <input
               type="text"
               defaultValue=""
               onChange={handleInputChange}
-              className="form-control"
+              className={ styles.searchAdmissionsInput}
               placeholder="Zadejte název programu"
-              class="search-admissions-bar-input"
             />
           </div>
         )}
       </div>
       {isInputVisible && admissions && admissions.length > 0 && (
         <div
-          class="search-admissions-results"
+          className={styles.searchAdmissionsResults}
         >
           {admissions.map((admission) => (
-            <div key={admission.id} class="search-admissions-result">
+            <div key={admission.id} className={styles.searchAdmissionsResult} onMouseDown={e => e.stopPropagation()}>
               <NewApplicationButton admission={admission} user={user} editable={editable}/>
             </div>
           ))}

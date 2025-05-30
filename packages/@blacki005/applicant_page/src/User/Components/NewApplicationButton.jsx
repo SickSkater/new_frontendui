@@ -7,6 +7,7 @@ import {
     UserReadAsyncAction,
     ProgramLink
 } from "@blacki005/applicant_page";
+import styles from "./NewApplicationButton.module.css";
 
 /**
  * A React component that renders a button for submitting a new application.
@@ -66,12 +67,12 @@ export const NewApplicationButton = ({ user, admission, editable }) => {
     return null;
   }
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', border: '1px solid #ccc', padding: '0.5rem', margin: '0.5rem', backgroundColor: "whitesmoke" }}>
+    <div className={styles.applicationButtonContainer}>
       <span>
         <ProgramLink program={admission.program}/>
       </span>
       <Button 
-        style={{ padding: '0.25rem 0.5rem', fontSize: 'inherit' }} 
+        className={styles.applicationButton}
         onClick={onClick}
         disabled={!editable}
       >

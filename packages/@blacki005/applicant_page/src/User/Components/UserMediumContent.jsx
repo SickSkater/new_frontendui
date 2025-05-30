@@ -1,6 +1,7 @@
 import { Table } from "react-bootstrap"
 import React from "react";
 import { AdmissionsList } from "./AdmissionsList"
+import styles from "./UserMediumEditableContent.module.css" // stejný modul jako editable verze
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -25,59 +26,37 @@ import { AdmissionsList } from "./AdmissionsList"
  *   <p>Additional information about the entity.</p>
  * </UserMediumEditableContent>
  */
-export const UserMediumContent = ({user, children}) => {
+export const UserMediumContent = ({ user, children }) => {
     return (
-        <div>
-            <Table striped bordered hover >
+        <div className={styles.user_medium_editable_container}>
+            <Table className={styles.tableContainer}>
                 <tbody>
                     <tr>
-                        <td>
-                            ID:
-                        </td>
-                        <td>
-                            {user.id}
-                        </td>
+                        <td>ID:</td>
+                        <td>{user.id}</td>
                     </tr>
                     <tr>
-                        <td>
-                            Jméno:
-                        </td>
-                        <td>
-                            {user.name}
-                        </td>
+                        <td>Jméno:</td>
+                        <td>{user.name}</td>
                     </tr>
                     <tr>
-                        <td>
-                            Příjmení:
-                        </td>
-                        <td>
-                            {user.surname}
-                        </td>
+                        <td>Příjmení:</td>
+                        <td>{user.surname}</td>
                     </tr>
                     <tr>
-                        <td>
-                            Email:
-                        </td>
-                        <td>
-                            {user.email}
-                        </td>
+                        <td>Email:</td>
+                        <td>{user.email}</td>
                     </tr>
                     {user.studies.map((study) => (
                         <tr key={study.id}>
-
-                                <td>
-                                    Přihláška:
-                                </td>
-                                <td>
-                                    {study.program.name}
-                                </td>
+                            <td>Přihláška:</td>
+                            <td>{study.program.name}</td>
                         </tr>
                     ))}
-
                 </tbody>
             </Table>
-            <AdmissionsList user={user} editable={false}/>
+            <AdmissionsList user={user} editable={false} />
+            {children}
         </div>
     );
 }
-

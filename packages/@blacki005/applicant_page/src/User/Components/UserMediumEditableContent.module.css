@@ -1,0 +1,31 @@
+
+.user_medium_editable_container {
+    max-Width: 400;
+    margin: "0 auto"
+}
+
+.tableContainer {
+    margin-Bottom: 16;
+    table-Layout: "fixed";
+    width: "100%"
+}
+
+.tableContainer td:nth-child(odd) {
+    width: "40%";
+    word-Break: "break-word"
+}
+
+.tableContainer td:nth-child(even) {
+    width: "60%";
+    word-Break: "break-word"
+}
+
+.tableContainer2 {
+    table-Layout: "fixed";
+    width: "100%";
+    margin-Bottom: 0
+}
+
+.searchAdmissionsContainer {
+    padding: 8px
+}
