@@ -1,6 +1,5 @@
 import { UserCardCapsule } from "./UserCardCapsule"
-import { UserMediumEditableContent } from "@blacki005/applicant_page"
-import { SearchAdmissions } from "./SearchAdmissions"
+import { UserMediumEditableContent, UserMediumContent } from "@blacki005/applicant_page"
 
 
 /**
@@ -28,12 +27,18 @@ import { SearchAdmissions } from "./SearchAdmissions"
  *   <p>Additional details or actions for the entity.</p>
  * </UserMediumCard>
  */
-export const UserMediumCard = ({user, children}) => {
+export const UserMediumCard = ({user, children, editable}) => {
     return (
         <UserCardCapsule title="Informace o uživateli">
-            <UserMediumEditableContent user={user}>
-                {children}
-            </UserMediumEditableContent>
+            {editable ? (
+                <UserMediumEditableContent user={user}>
+                    {children}
+                </UserMediumEditableContent>
+            ) : (
+                <UserMediumContent user={user}>
+                    {children}
+                </UserMediumContent>
+            )}
         </UserCardCapsule>
     )
 }

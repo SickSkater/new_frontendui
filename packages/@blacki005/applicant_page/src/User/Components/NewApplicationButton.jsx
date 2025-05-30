@@ -4,7 +4,8 @@ import {
     PaymentInsertAsyncAction,
     StudentInsertAsyncAction,
     EvaluationInsertAsyncAction,
-    UserReadAsyncAction
+    UserReadAsyncAction,
+    ProgramLink
 } from "@blacki005/applicant_page";
 
 /**
@@ -19,11 +20,16 @@ import {
  *
  * @returns {JSX.Element} A styled button component for submitting a new application.
  */
-export const NewApplicationButton = ({ user, admission }) => {
+export const NewApplicationButton = ({ user, admission, editable }) => {
   const { fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchEvaluationInsert } = useAsyncAction(EvaluationInsertAsyncAction, {}, { deffered: true });
   const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
+
+  //returns true if the user already has an application for the given admission
+  const hasApplication = ({user, admission}) => {
+    return user.studies.some(study => study.payments?.paymentInfo?.admission?.id === admission.id);
+  }
 
   //called when the user selects an admission
   const onClick = async () => {
@@ -56,10 +62,21 @@ export const NewApplicationButton = ({ user, admission }) => {
     refetchUser({ id: user.id })
   };
 
+  if (hasApplication({ user, admission })) {
+    return null;
+  }
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', border: '1px solid #ccc', padding: '0.5rem', margin: '0.5rem', backgroundColor: "whitesmoke" }}>
-      <span>{admission.program.name}</span>
-      <Button style={{ padding: '0.25rem 0.5rem', fontSize: 'inherit' }} onClick={onClick}>Podat přihlášku</Button>
+      <span>
+        <ProgramLink program={admission.program}/>
+      </span>
+      <Button 
+        style={{ padding: '0.25rem 0.5rem', fontSize: 'inherit' }} 
+        onClick={onClick}
+        disabled={!editable}
+      >
+        Podat přihlášku
+      </Button>
     </div>
-  )
+  );
 }

@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { useParams } from "react-router"
-
 import { CreateDelayer, ErrorHandler, LoadingSpinner } from "@hrbolek/uoisfrontend-shared"
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import { Row } from "react-bootstrap"
-import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
-import { UserStudentsAttribute, UserCardCapsule, UserMediumContent, UserReadAsyncAction, UserPageNavbar } from "@blacki005/applicant_page"
+import {
+    UserLargeCard,
+    UserReadAsyncAction,
+    UserPageNavbar
+} from "@blacki005/applicant_page"
 
 /**
  * A page content component for displaying detailed information about an user entity.
@@ -27,24 +28,12 @@ import { UserStudentsAttribute, UserCardCapsule, UserMediumContent, UserReadAsyn
  * 
  * <UserPageContent user={userEntity} />
  */
-const UserPageContent = ({user, onChange, onBlur}) => {
+const UserPageContent = ({user, onChange, onBlur, editable}) => {
     return (<>
         <UserPageNavbar user={user}>
         </UserPageNavbar>
-        <UserCardCapsule user={user} >
-            <Row>
-                <LeftColumn>
-                    <UserCardCapsule title="Informace o uživateli">
-                        <UserMediumContent user={user}/>
-                    </UserCardCapsule>
-                </LeftColumn>
-
-                <MiddleColumn>
-                    <UserStudentsAttribute studies={user.studies} user={user} readonly={true} />
-                </MiddleColumn>
-
-            </Row>
-        </UserCardCapsule>
+        <UserLargeCard user={user} editable={editable}>
+        </UserLargeCard>
     </>)
 }
 
@@ -71,7 +60,7 @@ const UserPageContent = ({user, onChange, onBlur}) => {
  *
  * <UserPageContentLazy user={userId} />
  */
-const UserPageContentLazy = ({user}) => {
+const UserPageContentLazy = ({user, editable}) => {
     const { error, loading, entity, fetch } = useAsyncAction(UserReadAsyncAction, user)
     const [delayer] = useState(() => CreateDelayer())
 
@@ -91,7 +80,7 @@ const UserPageContentLazy = ({user}) => {
     return (<>
         {loading && <LoadingSpinner />}
         {error && <ErrorHandler errors={error} />}
-        {entity && <UserPageContent user={entity}  onChange={handleChange} onBlur={handleBlur} />}
+        {entity && <UserPageContent user={entity} editable={editable} onChange={handleChange} onBlur={handleBlur} />}
     </>)
 }
 
@@ -111,8 +100,8 @@ const UserPageContentLazy = ({user}) => {
  *
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
-export const UserPage = () => {
+export const UserPage = ({editable}) => {
     const {id} = useParams()
-    const user = {id}
-    return <UserPageContentLazy user={user} />
+    const user = { id }
+    return <UserPageContentLazy user={user} editable={editable}/>
 }
