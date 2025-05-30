@@ -3,6 +3,7 @@ import { ProxyLink, MyNavbar, useHash } from '@hrbolek/uoisfrontend-shared';
 
 import { UserURI } from '../Components'
 
+import {EditButton} from "../Components/EditButton"
 
 
 /**
@@ -85,6 +86,7 @@ export const UserPageNavbar = ({ user, onSearchChange, children }) => {
     return (
         <div className='screen-only'>
         <MyNavbar onSearchChange={onSearchChange} >
+            <EditButton/>
             {user && segments.map(({ segment, label }) => (
                 <Nav.Item key={segment} >
                     <TitleNavButton
