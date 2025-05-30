@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useAsyncAction, createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-gql-shared";
 import { CreateDelayer} from "@hrbolek/uoisfrontend-shared";
 import { NewApplicationButton } from "@blacki005/applicant_page";
+import './styles.css'
 
 //query for searching admissions by pattern in the name
 const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
@@ -100,24 +101,16 @@ export const SearchAdmissions = ({ user, onChange }) => {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
-      <div style={{ display: "block", width: "100%" }}>
+    <div class="search-admissions-root">
+      <div class="search-admissions-bar-container">
         {!isInputVisible && (
-          <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue", margin: 0, width: "100%", textAlign: "center" }}>
+          <p onClick={handleTextClick} class="search-admissions-input">
             Vyhledávač vypsaných příjmacích řízení
           </p>
         )}
         {isInputVisible && (
           <div ref={inputRef}
-            style={{
-              position: "relative",
-              width: "100%",
-              backgroundColor: "white",
-              zIndex: 1000,
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "8px",
-              padding: 8,
-            }}
+            class="search-admissions-bar"
           >
             <input
               type="text"
@@ -125,30 +118,17 @@ export const SearchAdmissions = ({ user, onChange }) => {
               onChange={handleInputChange}
               className="form-control"
               placeholder="Zadejte název programu"
-              style={{ width: "100%" }}
+              class="search-admissions-bar-input"
             />
           </div>
         )}
       </div>
       {isInputVisible && admissions && admissions.length > 0 && (
         <div
-          id="search-admissions-results"
-          style={{
-            position: "absolute",
-            top: "-20rem",
-            left: "100%",
-            marginLeft: 40,
-            minWidth: 220,
-            maxWidth: 320,
-            background: "#fff",
-            borderRadius: 8,
-            boxShadow: "0px 4px 6px rgba(0,0,0,0.10)",
-            padding: 8,
-            zIndex: 2000
-          }}
+          class="search-admissions-results"
         >
           {admissions.map((admission) => (
-            <div key={admission.id} style={{ marginBottom: 8 }}>
+            <div key={admission.id} class="search-admissions-result">
               <NewApplicationButton admission={admission} user={user} />
             </div>
           ))}

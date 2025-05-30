@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { createAsyncGraphQLAction, createQueryStrLazy, transformAndCacheGraphQLVectorResult, updateItemsFromGraphQLResult, useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
 import { CreateDelayer, ErrorHandler, Input, LoadingSpinner, SimpleCardCapsule } from "@hrbolek/uoisfrontend-shared"
-import { PlusLg } from 'react-bootstrap-icons'
-
+import './styles.css'
 const UserReadPageQuery = createQueryStrLazy(
 `query UserQueryRead($skip: Int, $limit: Int, $orderby: String = "surname", $where: UserInputWhereFilter) {
   result: userPage(skip: $skip, limit: $limit, orderby: $orderby, where: $where) {
@@ -57,7 +56,7 @@ export const InputUser = ({onChange=(user)=>null, onBlur=(user)=>null, id, label
     const classnames = className.split(" ")
     const buttonclassnames = ["btn btn-outline-success"].concat(classnames).filter((item, index, self) => self.indexOf(item) === index);
     const buttomclassname = buttonclassnames.join(" ")
-    return (<div id="userdynamicselect" style={{ position: "relative" }}>
+    return (<div id="userdynamicselect" class="user-input-root">
         {loading && <LoadingSpinner />}
         {error && <ErrorHandler errors={error} />}
         {selected && (<SimpleCardCapsule title={label}>
@@ -68,28 +67,12 @@ export const InputUser = ({onChange=(user)=>null, onBlur=(user)=>null, id, label
         </SimpleCardCapsule>)}
         {!selected && <>
             <Input id={id} label={label} className={className} {...props} defaultValue={searchStr} onChange={handleChange} onBlur={handleChange} />
-            <div id="userhints" 
-                style={{
-                    position: "absolute",
-                    top: "100%", // Positioned below the input
-                    left: 0,
-                    right: 0,
-                    zIndex: 1000, // Ensure it's above other elements
-                    backgroundColor: "white",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                }}
-            >
+            <div id="userhints" class="user-input-hints">
                 {users.map(user => 
                 <div 
                     key={user.id}
                     onClick={() => handleSelectUser(user)}
-                    style={{
-                        padding: "8px",
-                        cursor: "pointer",
-                        borderBottom: "1px solid #f0f0f0",
-                    }}
+                    class="user-input-content"
                     onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f9f9f9")}
                     onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "white")}
                 >
