@@ -1,7 +1,4 @@
 import { CardCapsule } from "@hrbolek/uoisfrontend-shared"
-import { PersonFill } from "react-bootstrap-icons"
-import { UserLink } from "./UserLink"
-
 /**
  * A specialized card component that displays an `UserLink` as its title and encapsulates additional content.
  *
@@ -29,7 +26,7 @@ import { UserLink } from "./UserLink"
  *   <Button variant="primary">Click Me</Button>
  * </UserCardCapsule>
  */
-export const UserCardCapsule = ({user, children, title="UserCardCapsuleTitle"}) => {
+export const UserCardCapsule = ({user, children, title="Stránka uchazeče"}) => {
     return (
         <CardCapsule title={title}>
 

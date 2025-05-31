@@ -28,12 +28,11 @@ import {
  * 
  * <UserPageContent user={userEntity} />
  */
-const UserPageContent = ({user, onChange, onBlur, editable}) => {
+const UserPageContent = ({user, onChange, onBlur, ...props}) => {
     return (<>
         <UserPageNavbar user={user}>
         </UserPageNavbar>
-        <UserLargeCard user={user} editable={editable}>
-        </UserLargeCard>
+        <UserLargeCard user={user} {...props}/>
     </>)
 }
 
@@ -60,7 +59,9 @@ const UserPageContent = ({user, onChange, onBlur, editable}) => {
  *
  * <UserPageContentLazy user={userId} />
  */
-const UserPageContentLazy = ({user, editable}) => {
+
+//({user, ...props}) ..., v props jsou i children
+const UserPageContentLazy = ({user, ...props}) => {
     const { error, loading, entity, fetch } = useAsyncAction(UserReadAsyncAction, user)
     const [delayer] = useState(() => CreateDelayer())
 
@@ -80,7 +81,7 @@ const UserPageContentLazy = ({user, editable}) => {
     return (<>
         {loading && <LoadingSpinner />}
         {error && <ErrorHandler errors={error} />}
-        {entity && <UserPageContent user={entity} editable={editable} onChange={handleChange} onBlur={handleBlur} />}
+        {entity && <UserPageContent {...props} user={entity} onChange={handleChange} onBlur={handleBlur} />}
     </>)
 }
 
@@ -100,8 +101,8 @@ const UserPageContentLazy = ({user, editable}) => {
  *
  * // Navigating to "/user/12345" will render the page for the user entity with ID 12345.
  */
-export const UserPage = ({editable}) => {
+export const UserPage = ({...props}) => {
     const {id} = useParams()
     const user = { id }
-    return <UserPageContentLazy user={user} editable={editable}/>
+    return <UserPageContentLazy user={user} {...props}/>
 }

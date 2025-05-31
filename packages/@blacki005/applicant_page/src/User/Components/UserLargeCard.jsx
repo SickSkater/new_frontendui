@@ -32,15 +32,17 @@ import { SearchAdmissions } from "./SearchAdmissions"
  */
 
 
-export const UserLargeCard = ({ user, children, editable }) => {
+export const UserLargeCard = ({ user, children, ...props}) => {
     return (
         <UserCardCapsule user={user} >
             <Row>
                 <LeftColumn>
-                    <UserMediumCard user={user} editable={editable} />
+                    <UserMediumCard user={user} editable={props.editable} />
                 </LeftColumn>
+
                 <MiddleColumn>
-                    <UserStudentsAttribute studies={user.studies} user={user} editable={editable} />
+                    <UserStudentsAttribute studies={user.studies} user={user} editable={props.editable} />
+                    {children}
                 </MiddleColumn>
             </Row>
         </UserCardCapsule>

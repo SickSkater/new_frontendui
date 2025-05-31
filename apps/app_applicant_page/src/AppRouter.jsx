@@ -12,9 +12,15 @@ export const Routes = [
         path: "/applicant/user/edit/:id",
         element: <UserPage editable={true}/>
     },
+    //misto children bezparam. komp. - useparams()
+    //inject usera do children
     { 
         path: "/applicant/user/view/:id",
-        element: <UserPage editable={false}/>
+        element: (
+        <UserPage editable={false}>
+           Children
+        </UserPage>
+        )
     },
     {
         //data generator:
