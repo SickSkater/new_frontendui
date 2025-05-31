@@ -5,6 +5,8 @@ import { AdmissionInsertAsyncAction } from "../../Admission"
 import { PaymentInfoInsertAsyncAction } from "../../PaymentInfo"
 import { ProgramReadPageAsyncAction } from "../../Program"
 import { ProgramInsertAsyncAction } from "../../Program"
+import styles from "./DataGenerator.module.css"
+
 
 
 /**
@@ -138,30 +140,28 @@ export const DataGenerator = () => {
     };
 
     return (
-        <div style={{ maxWidth: 600, margin: "32px auto", padding: 24, background: "#f8f9fa", borderRadius: 16, boxShadow: "0 2px 16px rgba(0,0,0,0.08)" }}>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
-                <Button onClick={GenerateAdmission}>
-                    Generovat přijímací řízení
-                </Button>
+        <div className={styles.dataGeneratorRoot}>
+            <div className={styles.dataGeneratorCenter}>
+                <Button onClick={GenerateAdmission}>Generovat přijímací řízení</Button>
             </div>
             {paymentInfo && (
-                <div style={{ marginBottom: 32, background: "#fff", borderRadius: 12, boxShadow: "0 1px 6px rgba(0,0,0,0.06)", padding: 20 }}>
-                    <h4 style={{ color: "#1976d2", marginBottom: 16 }}>Platební informace</h4>
-                    <div style={{ overflowX: 'auto' }}>
-                        <table className="table table-bordered" style={{ background: "#fafdff", borderRadius: 8, minWidth: 600 }}>
+                <div className={styles.dataGeneratorSection}>
+                    <h4 className={styles.dataGeneratorHeading}>Platební informace</h4>
+                    <div className={styles.dataGeneratorTableScroll}>
+                        <table className={styles.dataGeneratorTable}>
                             <thead>
                                 <tr>
-                                    <th style={{ width: "30%", whiteSpace: 'nowrap' }}>Název</th>
-                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>Hodnota</th>
-                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>JSON</th>
+                                    <th>Název</th>
+                                    <th>Hodnota</th>
+                                    <th>JSON</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {Object.entries(paymentInfo).map(([key, value]) => (
                                     <tr key={key}>
-                                        <th style={{ width: "30%", background: "#f0f4fa", fontWeight: 600, textTransform: "capitalize", whiteSpace: 'nowrap' }}>{keyLabels[key] || key}</th>
-                                        <td style={{ width: "35%", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{String(value)}</td>
-                                        <td style={{ width: "35%", color: "#888", fontStyle: "italic", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{key}</td>
+                                        <th>{keyLabels[key] || key}</th>
+                                        <td>{String(value)}</td>
+                                        <td>{key}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -170,23 +170,23 @@ export const DataGenerator = () => {
                 </div>
             )}
             {admission && (
-                <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 1px 6px rgba(0,0,0,0.06)", padding: 20, marginBottom: 32 }}>
-                    <h4 style={{ color: "#1976d2", marginBottom: 16 }}>Přijímací řízení</h4>
-                    <div style={{ overflowX: 'auto' }}>
-                        <table className="table table-bordered" style={{ background: "#fafdff", borderRadius: 8, minWidth: 600 }}>
+                <div className={styles.dataGeneratorSection}>
+                    <h4 className={styles.dataGeneratorHeading}>Přijímací řízení</h4>
+                    <div className={styles.dataGeneratorTableScroll}>
+                        <table className={styles.dataGeneratorTable}>
                             <thead>
                                 <tr>
-                                    <th style={{ width: "30%", whiteSpace: 'nowrap' }}>Popis</th>
-                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>Hodnota</th>
-                                    <th style={{ width: "35%", whiteSpace: 'nowrap' }}>Klíč</th>
+                                    <th>Popis</th>
+                                    <th>Hodnota</th>
+                                    <th>Klíč</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {Object.entries(admission).map(([key, value]) => (
                                     <tr key={key}>
-                                        <th style={{ width: "30%", background: "#f0f4fa", fontWeight: 600, textTransform: "capitalize", whiteSpace: 'nowrap' }}>{keyLabels[key] || key}</th>
-                                        <td style={{ width: "35%", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{String(value)}</td>
-                                        <td style={{ width: "35%", color: "#888", fontStyle: "italic", whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: 0 }}>{key}</td>
+                                        <th>{keyLabels[key] || key}</th>
+                                        <td>{String(value)}</td>
+                                        <td>{key}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -195,5 +195,5 @@ export const DataGenerator = () => {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};

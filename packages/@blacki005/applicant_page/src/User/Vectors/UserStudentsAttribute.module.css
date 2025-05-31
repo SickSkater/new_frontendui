@@ -1,0 +1,33 @@
+.studentCardWrapper {
+  width: 60%;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.studentTable {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.studentTable td {
+  padding: 1rem;
+  word-break: break-word;
+}
+
+.studentTable td:nth-child(1) {
+  width: 30%;
+  font-weight: bold;
+  background-color: #f0f4fa;
+}
+
+.studentTable td:nth-child(2) {
+  width: 70%;
+}
+
+.paid {
+  background-color: #d4edda;
+}
+
+.unpaid {
+  background-color: #f8d7da;
+}

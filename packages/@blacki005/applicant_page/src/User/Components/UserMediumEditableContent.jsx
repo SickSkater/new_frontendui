@@ -4,6 +4,7 @@ import {
     SearchAdmissions,
     AdmissionsList
  } from "@blacki005/applicant_page";
+ import styles from "./userMediumEditableContent.module.css"
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -30,59 +31,59 @@ import {
  */
 export const UserMediumEditableContent = ({ user, children }) => {
     return (
-        <div style={{ maxWidth: 400, margin: "0 auto" }}>
-            <Table striped bordered hover style={{ marginBottom: 16, tableLayout: "fixed", width: "100%" }}>
+        <div className = {styles.user_medium_editable_container}>
+            <Table className={styles.tableContainer} >
                 <tbody>
                     <tr>
-                        <td style={{ width: "40%", wordBreak: "break-word" }}>
+                        <td >
                             ID:
                         </td>
-                        <td style={{ width: "60%", wordBreak: "break-word" }}>
+                        <td >
                             {user.id}
                         </td>
                     </tr>
                     <tr>
-                        <td style={{ width: "40%", wordBreak: "break-word" }}>
+                        <td >
                             Jméno:
                         </td>
-                        <td style={{ width: "60%", wordBreak: "break-word" }}>
+                        <td >
                             {user.name}
                         </td>
                     </tr>
                     <tr>
-                        <td style={{ width: "40%", wordBreak: "break-word" }}>
+                        <td >
                             Příjmení:
                         </td>
-                        <td style={{ width: "60%", wordBreak: "break-word" }}>
+                        <td >
                             {user.surname}
                         </td>
                     </tr>
                     <tr>
-                        <td style={{ width: "40%", wordBreak: "break-word" }}>
+                        <td >
                             Email:
                         </td>
-                        <td style={{ width: "60%", wordBreak: "break-word" }}>
+                        <td >
                             {user.email}
                         </td>
                     </tr>
                     {user.studies.map((study) => (
                         <tr key={study.id}>
-                            <td style={{ width: "40%", wordBreak: "break-word" }}>
+                            <td >
                                 Přihláška:
                             </td>
-                            <td style={{ width: "60%", wordBreak: "break-word" }}>
+                            <td >
                                 {study.program.name}
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            <Table striped bordered hover style={{ tableLayout: "fixed", width: "100%", marginBottom: 0 }}>
+            <Table striped bordered hover className={styles.tableContainer2}>
                 <thead>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style={{ padding: 8 }} colSpan={2}>
+                        <td className={styles.searchAdmissionsContainer} colSpan={2}>
                             <SearchAdmissions user={user} editable={true}/>
                         </td>
                     </tr>

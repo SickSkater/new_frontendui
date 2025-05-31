@@ -10,37 +10,16 @@ import {
     DeleteApplication,
     PaymentStatus
 } from "@blacki005/applicant_page"
+import styles from "./UserStudentsAttribute.module.css";
+
 /**
  * A component for displaying the `students` attribute of an user entity.
- *
- * This component checks if the `students` attribute exists on the `user` object. If `students` is undefined or invalid,
- * the component returns `null` and renders nothing. Otherwise, it maps over the `students` array and
- * displays a placeholder message and a JSON representation for each item in the `students`.
- *
- * @component
- * @param {Object} props - The props for the UserStudentsAttribute component.
- * @param {Object} props.user - The object representing the user entity.
- * @param {Array} [props.user.students] - An array of students items associated with the user entity.
- * Each item is expected to have a unique `id` property.
- *
- * @returns {JSX.Element|null} A JSX element displaying the `students` items or `null` if the attribute is undefined.
- *
- * @example
- * // Example usage:
- * const userEntity = { 
- *   students: [
- *     { id: 1, name: "Student Item 1" }, 
- *     { id: 2, name: "Student Item 2" }
- *   ] 
- * };
- *
- * <UserStudentsAttribute user={userEntity} />
  */
-export const UserStudentsAttribute = ({ studies, user, editable}) => {
+export const UserStudentsAttribute = ({ studies, user, editable }) => {
     if (typeof studies === 'undefined') return null
 
     // Filter out students with invalid data
-    studies = studies.filter(student =>
+    const filteredStudies = studies.filter(student =>
         student.id &&
         student.program &&
         student.payments &&
@@ -48,63 +27,56 @@ export const UserStudentsAttribute = ({ studies, user, editable}) => {
         student.payments?.paymentInfo?.admission
     )
 
-    if (studies.length === 0) {
+    if (filteredStudies.length === 0) {
         return null
     }
 
     return (
         <>
-            {
-                studies.map(
-                    student => <div id={student.id} key={student.id} style={{width: "60%", margin: "auto", padding: "1rem"}}>
-                        <CardCapsule title={`${student.program.name}`}>
-                            <Table striped bordered hover style={{ tableLayout: 'fixed', width: '100%' }}>
-                                <tbody>
-                                    <tr>
-                                        <td style={{ padding: "1rem", width: "30%" }}>
-                                            Přihláška:
-                                        </td>
-                                        <td style={{ padding: "1rem", width: "70%" }}>
-                                            <AdmissionLink admission={student.payments.paymentInfo.admission} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ padding: "1rem", width: "30%" }}>
-                                            Výsledky:
-                                        </td>
-                                        <td style={{ padding: "1rem", width: "70%" }}>
-                                            <EvaluationLink evaluation={student?.evaluations[0]} /><br />
-                                            Termín: {student?.payments?.paymentInfo?.admission?.examStartDate} - {student?.payments?.paymentInfo?.admission?.examLastDate} <br />
-                                            Splneno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ padding: "1rem", width: "30%" }}>
-                                            Platba:
-                                        </td>
-                                        <td
-                                            style={{
-                                                padding: "1rem",
-                                                width: "70%",
-                                                backgroundColor: student.payments?.status === "paid" ? "#d4edda" : "#f8d7da",
-                                            }}
-                                        >
-                                            <PaymentStatus payment={student.payments} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ padding: "1rem", width: "30%" }}>
-                                            Smazat přihlášku:
-                                        </td>
-                                        <td style={{ padding: "1rem", width: "70%" }}>
-                                            <DeleteApplication student={student} user={user} editable={editable} />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </CardCapsule>
-                    </div >
-                )}
+            {filteredStudies.map(student =>
+                <div id={student.id} key={student.id} className={styles.studentCardWrapper}>
+                    <CardCapsule title={`${student.program.name}`}>
+                        <Table striped bordered hover className={styles.studentTable}>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Přihláška:
+                                    </td>
+                                    <td>
+                                        <AdmissionLink admission={student.payments.paymentInfo.admission} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Výsledky:
+                                    </td>
+                                    <td>
+                                        <EvaluationLink evaluation={student?.evaluations[0]} /><br />
+                                        Termín: {student?.payments?.paymentInfo?.admission?.examStartDate} - {student?.payments?.paymentInfo?.admission?.examLastDate} <br />
+                                        Splneno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Platba:
+                                    </td>
+                                    <td className={student.payments?.status === "paid" ? styles.paid : styles.unpaid}>
+                                        <PaymentStatus payment={student.payments} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Smazat přihlášku:
+                                    </td>
+                                    <td>
+                                        <DeleteApplication student={student} user={user} editable={editable} />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </CardCapsule>
+                </div>
+            )}
         </>
     )
 }

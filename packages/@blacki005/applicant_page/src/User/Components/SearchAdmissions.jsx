@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useAsyncAction, createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-gql-shared";
 import { CreateDelayer} from "@hrbolek/uoisfrontend-shared";
 import { NewApplicationButton } from "@blacki005/applicant_page";
+import styles from "./SearchAdmissions.module.css";
+
 
 //query for searching admissions by pattern in the name
 const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
@@ -100,55 +102,32 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
-      <div style={{ display: "block", width: "100%" }}>
+    <div className={styles.searchAdmissionsContainer}>
+      <div className={styles.searchAdmissionsBar}>
         {!isInputVisible && (
-          <p onClick={handleTextClick} style={{ cursor: "pointer", color: "blue", margin: 0, width: "100%", textAlign: "center" }}>
+          <p onClick={handleTextClick} className={styles.searchAdmissionsInput}>
             Vyhledávač vypsaných příjmacích řízení
           </p>
         )}
         {isInputVisible && (
           <div ref={inputRef}
-            style={{
-              position: "relative",
-              width: "100%",
-              backgroundColor: "white",
-              zIndex: 1000,
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "8px",
-              padding: 8,
-            }}
-          >
+            className={styles.searchAdmissionsBar}>
             <input
               type="text"
               defaultValue=""
               onChange={handleInputChange}
-              className="form-control"
+              className={ styles.searchAdmissionsInput}
               placeholder="Zadejte název programu"
-              style={{ width: "100%" }}
             />
           </div>
         )}
       </div>
       {isInputVisible && admissions && admissions.length > 0 && (
         <div
-          id="search-admissions-results"
-          style={{
-            position: "absolute",
-            top: "-20rem",
-            left: "100%",
-            marginLeft: 40,
-            minWidth: 220,
-            maxWidth: 320,
-            background: "#fff",
-            borderRadius: 8,
-            boxShadow: "0px 4px 6px rgba(0,0,0,0.10)",
-            padding: 8,
-            zIndex: 2000
-          }}
+          className={styles.searchAdmissionsResults}
         >
           {admissions.map((admission) => (
-            <div key={admission.id} style={{ marginBottom: 8 }}>
+            <div key={admission.id} className={styles.searchAdmissionsResult} onMouseDown={e => e.stopPropagation()}>
               <NewApplicationButton admission={admission} user={user} editable={editable}/>
             </div>
           ))}

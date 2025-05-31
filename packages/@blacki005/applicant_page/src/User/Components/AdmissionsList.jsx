@@ -4,22 +4,17 @@ import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
 import {
     NewApplicationButton,
     AdmissionReadPageAsyncAction
- } from "@blacki005/applicant_page";
+} from "@blacki005/applicant_page";
+import styles from "./AdmissionsList.module.css";
 
- /**
- * Component for displaying a list of admissions with infinite scrolling.
- *
- * @param {Object} props - The component props.
- * @param {Object} props.user - The user object containing user-specific information for displaying NewApplication component.
- * @returns {JSX.Element} The rendered InfiniteScroll of all admissions with admission searching feature.
- */
-export const AdmissionsList = ({user, editable}) => {
+//TODO: frontend - podat prihlasku pri klepnuti na odkaz
+
+export const AdmissionsList = ({ user, editable }) => {
     const { fetch } = useAsyncAction(AdmissionReadPageAsyncAction, {}, { defferred: true });
 
-    //returns promise that resolves to array of admissions - asyncAction for InfiniteScroll
+    // Returns promise that resolves to array of admissions - asyncAction for InfiniteScroll
     const fetchItems = ({ skip, limit }) => async (dispatch) => {
-        const response = await fetch({ limit, skip});
-        // Check if the response contains the expected data
+        const response = await fetch({ limit, skip });
         if (response?.data?.admissionPage) {
             return response.data.admissionPage;
         } else {
@@ -28,38 +23,41 @@ export const AdmissionsList = ({user, editable}) => {
         }
     };
 
-    //visualizer for displaying items in InfiniteScroll
+    // Visualizer for displaying items in InfiniteScroll
     const ItemsVisualizer = ({ items }) => {
-
-        //admissions must have name, program and paymentInfo
-        items = items.filter(item =>
-            item.name &&
-            item.paymentInfo &&
-            item.program
-        )
+        // Admissions must have name, program, and paymentInfo
+        const filteredItems = items.filter(
+            (item) => item.name && item.paymentInfo && item.program
+        );
 
         return (
-        <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <table className="table table-striped table-bordered table-hover" style={{ width: "80%", margin: "24px auto 0 auto", background: "#fff", borderRadius: 12, boxShadow: "0 2px 12px rgba(0,0,0,0.07)" }}>
-                <thead>
-                    <tr>
-                        <th style={{ textAlign: "center", fontSize: 18, background: "#f0f4fa", borderTopLeftRadius: 12, borderTopRightRadius: 12 }}>
-                            Seznam příjímacích řízení
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {items.map((item) => (
-                        <tr key={item.id}>
-                            <td style={{ textAlign: "center", fontWeight: 500, fontSize: 16, padding: "12px 0" }}>
-                                <NewApplicationButton user={user} admission={item} editable={editable}/>
-                            </td>
+            <div className={styles.admissionsListContainer}>
+                <table className={styles.admissionsListTable}>
+                    <thead>
+                        <tr>
+                            <th className={styles.admissionsListTableTh}>
+                                Seznam příjímacích řízení
+                            </th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-        )
+                    </thead>
+                    <tbody>
+                        {filteredItems.map((item) => (
+                            <tr key={item.id}>
+                                <td className={styles.admissionsListTableTd}>
+                                    <div className={styles.admissionsListButtonContainer}>
+                                        <NewApplicationButton
+                                            user={user}
+                                            admission={item}
+                                            editable={editable}
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
     };
 
     return (
@@ -70,5 +68,5 @@ export const AdmissionsList = ({user, editable}) => {
                 asyncAction={fetchItems}
             />
         </div>
-    )
-}
+    );
+};
