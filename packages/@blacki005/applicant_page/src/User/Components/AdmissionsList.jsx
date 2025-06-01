@@ -3,12 +3,12 @@ import { InfiniteScroll } from "@hrbolek/uoisfrontend-shared";
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
 import {
     NewApplicationButton,
-    AdmissionReadPageAsyncAction
+    AdmissionReadPageAsyncAction,
+    ProgramLink
 } from "@blacki005/applicant_page";
 import styles from "./AdmissionsList.module.css";
 
-//TODO: frontend - podat prihlasku pri klepnuti na odkaz
-
+//TODO: jsdoc
 export const AdmissionsList = ({ user, editable }) => {
     const { fetch } = useAsyncAction(AdmissionReadPageAsyncAction, {}, { defferred: true });
 
@@ -45,11 +45,14 @@ export const AdmissionsList = ({ user, editable }) => {
                             <tr key={item.id}>
                                 <td className={styles.admissionsListTableTd}>
                                     <div className={styles.admissionsListButtonContainer}>
-                                        <NewApplicationButton
-                                            user={user}
-                                            admission={item}
-                                            editable={editable}
-                                        />
+                                        {editable ?
+                                            <NewApplicationButton
+                                                user={user}
+                                                admission={item}
+                                            />
+                                            :
+                                            <ProgramLink program={item.program} />
+                                        }
                                     </div>
                                 </td>
                             </tr>

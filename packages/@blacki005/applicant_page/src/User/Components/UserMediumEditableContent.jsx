@@ -1,11 +1,4 @@
-import { Table } from "react-bootstrap"
-import React from "react";
-import {
-    SearchAdmissions,
-    AdmissionsList
- } from "@blacki005/applicant_page";
- import styles from "./userMediumEditableContent.module.css"
-
+import { Input } from "@hrbolek/uoisfrontend-shared"
 /**
  * A component that displays medium-level content for an user entity.
  *
@@ -29,68 +22,12 @@ import {
  *   <p>Additional information about the entity.</p>
  * </UserMediumContent>
  */
-export const UserMediumEditableContent = ({ user, children }) => {
+export const UserMediumEditableContent = ({user, onChange=(e)=>null, onBlur=(e)=>null, children}) => {
     return (
-        <div className = {styles.user_medium_editable_container}>
-            <Table className={styles.tableContainer} >
-                <tbody>
-                    <tr>
-                        <td >
-                            ID:
-                        </td>
-                        <td >
-                            {user.id}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Jméno:
-                        </td>
-                        <td >
-                            {user.name}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Příjmení:
-                        </td>
-                        <td >
-                            {user.surname}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Email:
-                        </td>
-                        <td >
-                            {user.email}
-                        </td>
-                    </tr>
-                    {user.studies.map((study) => (
-                        <tr key={study.id}>
-                            <td >
-                                Přihláška:
-                            </td>
-                            <td >
-                                {study.program.name}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-            <Table striped bordered hover className={styles.tableContainer2}>
-                <thead>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className={styles.searchAdmissionsContainer} colSpan={2}>
-                            <SearchAdmissions user={user} editable={true}/>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
-            <AdmissionsList user={user} editable={true} />
-        </div>
-    );
+        <>           
+            <Input id={"name"} label={"Název"} className="form-control" defaultValue={user?.name|| "Název"} onChange={onChange} onBlur={onBlur} />
+            <Input id={"name_en"} label={"Anglický název"} className="form-control" defaultValue={user?.name_en|| "Anglický název"} onChange={onChange} onBlur={onBlur} />
+            {children}
+        </>
+    )
 }
-

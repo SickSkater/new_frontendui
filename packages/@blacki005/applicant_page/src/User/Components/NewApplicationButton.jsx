@@ -21,7 +21,7 @@ import styles from "./NewApplicationButton.module.css";
  *
  * @returns {JSX.Element} A styled button component for submitting a new application.
  */
-export const NewApplicationButton = ({ user, admission, editable }) => {
+export const NewApplicationButton = ({ user, admission }) => {
   const { fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchEvaluationInsert } = useAsyncAction(EvaluationInsertAsyncAction, {}, { deffered: true });
@@ -62,7 +62,7 @@ export const NewApplicationButton = ({ user, admission, editable }) => {
     // Instead of onChange, UserReadAsyncAction is executed here as it has the same effect
     refetchUser({ id: user.id })
   };
-
+  //don't show admissions user has already applied to
   if (hasApplication({ user, admission })) {
     return null;
   }
@@ -74,7 +74,6 @@ export const NewApplicationButton = ({ user, admission, editable }) => {
       <Button 
         className={styles.applicationButton}
         onClick={onClick}
-        disabled={!editable}
       >
         Podat přihlášku
       </Button>

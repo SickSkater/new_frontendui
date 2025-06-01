@@ -1,46 +1,53 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { UserRouterSegment} from "@blacki005/applicant_page";
-import { UserPage } from "@blacki005/applicant_page";
-import { PaymentInfoPage, PaymentInfoRouterSegment } from "@blacki005/applicant_page";
-import {AdmissionPage, AdmissionRouterSegment} from "@blacki005/applicant_page";
-import {EvaluationPage, EvaluationRouterSegment} from "@blacki005/applicant_page";
-import { DataGenerator } from "@blacki005/applicant_page";
+import { UserRouterSegment } from "@blacki005/applicant_page";
+import {
+    UserPage,
+    PaymentInfoPage,
+    PaymentInfoRouterSegment,
+    AdmissionPage,
+    AdmissionRouterSegment,
+    EvaluationPage,
+    EvaluationRouterSegment,
+    DataGenerator
+} from "@blacki005/applicant_page";
+
 
 export const Routes = [
     {
         //editable:
         path: "/applicant/user/edit/:id",
-        element: <UserPage editable={true}/>
+        element: <UserPage editable={true} />
     },
     //misto children bezparam. komp. - useparams()
     //inject usera do children
-    { 
+    {
         path: "/applicant/user/view/:id",
         element: (
-        <UserPage editable={false}>
-           Children
-        </UserPage>
+            <UserPage editable={false}>
+                Children
+            </UserPage>
         )
     },
     {
         //data generator:
         path: "/applicant/user/generate",
-        element: <DataGenerator/>
+        element: <DataGenerator />
     },
+    //placeholders:
     {
         // http://localhost:5173/paymentinfo/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/paymentinfo/:id",
-        element: <PaymentInfoPage/>
+        element: <PaymentInfoPage />
     },
     {
         // http://localhost:5173/admission/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/admission/:id",
-        element: <AdmissionPage/>
+        element: <AdmissionPage />
     },
     {
         // http://localhost:5173/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/evaluation/:id",
-        element: <EvaluationPage/>
+        element: <EvaluationPage />
     },
     UserRouterSegment,
     PaymentInfoRouterSegment,

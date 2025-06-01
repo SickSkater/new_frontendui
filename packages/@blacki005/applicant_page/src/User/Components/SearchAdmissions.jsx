@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useAsyncAction, createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-gql-shared";
-import { CreateDelayer} from "@hrbolek/uoisfrontend-shared";
-import { NewApplicationButton } from "@blacki005/applicant_page";
+import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
+import {
+  NewApplicationButton,
+  ProgramLink
+} from "@blacki005/applicant_page";
 import styles from "./SearchAdmissions.module.css";
 
 
@@ -60,9 +63,9 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
     const data = e.target.value;
     if (data.length > 2) {
       //fetch is called after 500ms
-      delayer(() => fetchAdmissionRead({pattern: `%${data}%` }).then(
+      delayer(() => fetchAdmissionRead({ pattern: `%${data}%` }).then(
         json => {
-            // Extracting admissions from the JSON, returning an empty array if JSON is null
+          // Extracting admissions from the JSON, returning an empty array if JSON is null
           const admissions = json?.data?.admissionPage || []
           setAdmissions(admissions);
           return json;
@@ -116,7 +119,7 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
               type="text"
               defaultValue=""
               onChange={handleInputChange}
-              className={ styles.searchAdmissionsInput}
+              className={styles.searchAdmissionsInput}
               placeholder="Zadejte název programu"
             />
           </div>
@@ -128,7 +131,11 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
         >
           {admissions.map((admission) => (
             <div key={admission.id} className={styles.searchAdmissionsResult} onMouseDown={e => e.stopPropagation()}>
-              <NewApplicationButton admission={admission} user={user} editable={editable}/>
+              {editable ?
+                <NewApplicationButton admission={admission} user={user}/>
+              :
+                <ProgramLink program={admission.program}/>
+              }
             </div>
           ))}
         </div>

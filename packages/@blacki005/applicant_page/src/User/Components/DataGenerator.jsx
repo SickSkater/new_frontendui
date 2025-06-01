@@ -1,10 +1,14 @@
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
 import {Button} from "react-bootstrap"
 import { useState } from "react"
-import { AdmissionInsertAsyncAction } from "../../Admission"
-import { PaymentInfoInsertAsyncAction } from "../../PaymentInfo"
-import { ProgramReadPageAsyncAction } from "../../Program"
-import { ProgramInsertAsyncAction } from "../../Program"
+import {
+    AdmissionInsertAsyncAction,
+    PaymentInfoInsertAsyncAction,
+    ProgramReadPageAsyncAction,
+    ProgramInsertAsyncAction,
+    GeneratePaymentInfoInsertParams,
+    GenerateAdmissionInsertParams
+} from "@blacki005/applicant_page"
 import styles from "./DataGenerator.module.css"
 
 
@@ -53,14 +57,12 @@ export const DataGenerator = () => {
 
     //get available programs
     if (programsLoading) {
-        return <div>Loading...</div>
+        return <div>Loading programs...</div>
     }
     if (programsError) {
         return <div>Error fetching study programs: {programsError.message}</div>
     }
     const n_programs = programs?.data?.result?.length || 0;
-
-
 
     const GenerateAdmission = async () => {
         var program = null;
@@ -77,30 +79,10 @@ export const DataGenerator = () => {
             program = programs?.data?.result[Math.floor(Math.random() * n_programs)];
         }
 
-
-    
-        //TODO:
-        //fce - param=program
-        //button co prepne editable a view 
-        const admissionInsertParams = {
-            id: crypto.randomUUID(),
-            programId : program.id,
-            paymentInfoId: paymentInfoInsertParams.id,
-            name: program.name,
-            nameEn: program.nameEn,
-            applicationStartDate: new Date().toISOString().slice(0, -1), // Odstranění "Z"
-            applicationLastDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().slice(0, -1),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 60)).toISOString().slice(0, -1),
-            conditionDate: new Date(new Date().setDate(new Date().getDate() + 45)).toISOString().slice(0, -1),
-            paymentDate: new Date(new Date().setDate(new Date().getDate() + 15)).toISOString().slice(0, -1),
-            conditionExtendedDate: null,
-            requestConditionExtendDate: null,
-            requestExtraConditionsDate: null,
-            requestExtraDateDate: null,
-            examStartDate: new Date(new Date().setDate(new Date().getDate() + 50)).toISOString().slice(0, -1), // Odstranění "Z"
-            examLastDate: new Date(new Date().setDate(new Date().getDate() + 55)).toISOString().slice(0, -1), // Odstranění "Z"
-        }
-
+        //await creating insert parameters
+        const paymentInfoInsertParams = await GeneratePaymentInfoInsertParams();
+        const admissionInsertParams = await GenerateAdmissionInsertParams(program, paymentInfoInsertParams);
+        
         //insert payment info and admission, set hooks so the values are displayed
         const fetchedPaymentInfo = await fetchPaymentInfoInsert(paymentInfoInsertParams);
         const fetchedAdmission = await fetchAdmissionInsert(admissionInsertParams);

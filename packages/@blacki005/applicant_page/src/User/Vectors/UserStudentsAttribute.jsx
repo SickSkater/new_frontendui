@@ -64,14 +64,18 @@ export const UserStudentsAttribute = ({ studies, user, editable }) => {
                                         <PaymentStatus payment={student.payments} />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        Smazat přihlášku:
-                                    </td>
-                                    <td>
-                                        <DeleteApplication student={student} user={user} editable={editable} />
-                                    </td>
-                                </tr>
+                                {editable ?
+                                    <tr>
+                                        <td>
+                                            Smazat přihlášku:
+                                        </td>
+                                        <td>
+                                            <DeleteApplication student={student} user={user}/>
+                                        </td>
+                                    </tr>
+                                    :
+                                    <></>
+                                }
                             </tbody>
                         </Table>
                     </CardCapsule>

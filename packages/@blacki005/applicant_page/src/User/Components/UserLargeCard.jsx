@@ -1,11 +1,10 @@
 import Row from "react-bootstrap/Row"
 import { LeftColumn, MiddleColumn } from "@hrbolek/uoisfrontend-shared"
-import { UserCardCapsule } from "./UserCardCapsule"
-import { UserMediumCard } from "./UserMediumCard"
-import { UserStudentsAttribute, UserStudentsAttributeInifite } from "../Vectors/UserStudentsAttribute"
-import { AdmissionsList } from "./AdmissionsList"
-import { Search, Table } from "react-bootstrap-icons"
-import { SearchAdmissions } from "./SearchAdmissions"
+import {
+    UserCardCapsule,
+    UserMediumCard,
+    UserStudentsAttribute
+} from "@blacki005/applicant_page"
 /**
  * A large card component for displaying detailed content and layout for an user entity.
  *

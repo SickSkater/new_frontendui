@@ -24,7 +24,7 @@ import {
  * @example
  * <DeleteAdmissionButton student={studentData} user={userData} />
  */
-export const DeleteApplication = ({student, user, editable}) => {
+export const DeleteApplication = ({student, user}) => {
     const {fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
     const {fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
     const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
@@ -53,17 +53,6 @@ export const DeleteApplication = ({student, user, editable}) => {
           onDelete();
         }
       };
-      
-      if (!editable) {
-        return (
-          <Button 
-            variant="primary" 
-            disabled
-          >
-            Smazat přihlášku
-          </Button>
-        )
-      }
       return (
         <Button 
           onClick={handleToggle}

@@ -1,6 +1,3 @@
-
-
-
 const generateRandomSWIFT = () => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let swift = "";
@@ -15,9 +12,8 @@ const generateRandomAmount = () => {
     return amounts[Math.floor(Math.random() * amounts.length)];
 }
 
-
-
-export const GenerateAdmissionInsertParams = () => {
+//TODO: jsdoc
+export const GeneratePaymentInfoInsertParams = () => {
     return {
         id: crypto.randomUUID(),
         accountNumber: Math.floor(100000000 + Math.random() * 900000000).toString() + "/" + Math.floor(1000 + Math.random() * 9000).toString(),
