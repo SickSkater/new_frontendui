@@ -81,7 +81,6 @@ export const UserMediumContent = ({ user, children, editable }) => {
                     </tr>
                 </tbody>
             </Table>
-            <AdmissionsList user={user} editable={editable} />
         </div>
     );
 }

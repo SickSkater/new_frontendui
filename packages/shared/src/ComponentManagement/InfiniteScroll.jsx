@@ -194,7 +194,7 @@ export const InfiniteScroll = ({
                 {/* {JSON.stringify(_state)} */}
                 {/* {!_state.hasMore && <div>Více toho není.</div>} */}
                 {_state.errors && <ErrorHandler errors={_state.errors} />}
-                {_state.loading && <LoadingSpinner text="Nahrávám další..."/>}
+                {/* {_state.loading && <LoadingSpinner text="Nahrávám další..."/>} */}
                 {_state.hasMore && <div ref={containerRef} style={{ height: "50px" }} />}
             </>
         );

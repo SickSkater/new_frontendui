@@ -22,9 +22,7 @@
 }
 
 .searchAdmissionsResults {
-  position: absolute;
-  top: -23.3rem;
-  left: 100%;
+  position: relative;
   margin-left: 40px;
   min-width: 220px;
   max-width: 320px;

@@ -3,7 +3,8 @@ import { useAsyncAction, createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-
 import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
 import {
   NewApplicationButton,
-  ProgramLink
+  ProgramLink,
+  AdmissionsList
 } from "@blacki005/applicant_page";
 import styles from "./SearchAdmissions.module.css";
 
@@ -107,6 +108,7 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
   return (
     <div className={styles.searchAdmissionsContainer}>
       <div className={styles.searchAdmissionsBar}>
+
         {!isInputVisible && (
           <p onClick={handleTextClick} className={styles.searchAdmissionsInput}>
             Vyhledávač vypsaných příjmacích řízení
@@ -138,6 +140,11 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
               }
             </div>
           ))}
+        </div>
+      )}
+      {!admissions || admissions.length === 0 && (
+        <div>
+           <AdmissionsList user={user} editable={editable} />
         </div>
       )}
     </div>
