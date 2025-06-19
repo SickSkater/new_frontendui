@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: User/Components/SearchAdmissions.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: User/Components/SearchAdmissions.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useRef, useEffect } from "react";
+import { useAsyncAction, createAsyncGraphQLAction } from "@hrbolek/uoisfrontend-gql-shared";
+import { CreateDelayer } from "@hrbolek/uoisfrontend-shared";
+import {
+  NewApplicationButton,
+  ProgramLink,
+  AdmissionsList
+} from "@blacki005/applicant_page";
+import styles from "./SearchAdmissions.module.css";
+
+
+//query for searching admissions by pattern in the name
+const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
+  query ($pattern: String!) {
+    admissionPage(where: {name: {_ilike: $pattern}}) {
+      __typename
+      id
+      name
+      program {
+        __typename
+        id
+        name
+        nameEn
+      }
+      paymentInfo {
+        __typename
+        id
+      }
+    }
+  }
+`)
+
+
+/**
+ * SearchAdmissions component allows users to search for admissions by typing a pattern into an input field.
+ * It fetches admissions data from a GraphQL API and displays the results dynamically.
+ *
+ * @component
+ * @param {Object} props - The props object.
+ * @param {Object} props.user - The user object containing user-related information.
+ * @param {Function} props.onChange - Callback function triggered when the component state changes.
+ *
+ * Features:
+ * - Displays a clickable text that toggles the visibility of the input field.
+ * - Fetches admissions data from the server based on the user's input with a 500ms delay.
+ * - Dynamically updates the list of admissions as the user types.
+ * - Hides the input field and clears the admissions list when clicking outside the component.
+ * 
+ * @returns {JSX.Element} Text field for searching admissions and list of admissions corresponding with pattern in searchbox.
+ */
+export const SearchAdmissions = ({ user, onChange, editable }) => {
+  const { fetch: fetchAdmissionRead } = useAsyncAction(QueryAdmissionAsyncAction, {}, { deffered: true });
+
+  //hooks
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const inputRef = useRef(null);
+  const [admissions, setAdmissions] = useState([]);
+
+  // Delayer - it needs to be implemented as a function
+  const [delayer, setDelayer] = useState(() => CreateDelayer(500));
+
+  const handleInputChange = (e) => {
+    // data = what the user typed into the input
+    const data = e.target.value;
+    if (data.length > 2) {
+      //fetch is called after 500ms
+      delayer(() => fetchAdmissionRead({ pattern: `%${data}%` }).then(
+        json => {
+          // Extracting admissions from the JSON, returning an empty array if JSON is null
+          const admissions = json?.data?.admissionPage || []
+          setAdmissions(admissions);
+          return json;
+        }
+      ))
+
+    }
+    else {
+      // If the input is shorter than 3 characters, clear the admissions list
+      setAdmissions([]);
+    }
+  }
+
+  const handleTextClick = () => {
+    setIsInputVisible(true);
+  };
+
+  const handleClickOutside = (event) => {
+    // Pokud je inputRef nebo box s výsledky, zůstaň otevřené pokud klik uvnitř jednoho z nich
+    const inputBox = inputRef.current;
+    const resultsBox = document.getElementById("search-admissions-results");
+    if (
+      (inputBox &amp;&amp; inputBox.contains(event.target)) ||
+      (resultsBox &amp;&amp; resultsBox.contains(event.target))
+    ) {
+      return;
+    }
+    setIsInputVisible(false);
+    setAdmissions([]); // Clear the programs list when hiding
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    &lt;div className={styles.searchAdmissionsContainer}>
+      &lt;div className={styles.searchAdmissionsBar}>
+
+        {!isInputVisible &amp;&amp; (
+          &lt;p onClick={handleTextClick} className={styles.searchAdmissionsInput}>
+            Vyhledávač vypsaných příjmacích řízení
+          &lt;/p>
+        )}
+        {isInputVisible &amp;&amp; (
+          &lt;div ref={inputRef}
+            className={styles.searchAdmissionsBar}>
+            &lt;input
+              type="text"
+              defaultValue=""
+              onChange={handleInputChange}
+              className={styles.searchAdmissionsInput}
+              placeholder="Zadejte název programu"
+            />
+          &lt;/div>
+        )}
+      &lt;/div>
+      {isInputVisible &amp;&amp; admissions &amp;&amp; admissions.length > 0 &amp;&amp; (
+        &lt;div
+          className={styles.searchAdmissionsResults}
+        >
+          {admissions.map((admission) => (
+            &lt;div key={admission.id} className={styles.searchAdmissionsResult} onMouseDown={e => e.stopPropagation()}>
+              {editable ?
+                &lt;NewApplicationButton admission={admission} user={user}/>
+              :
+                &lt;ProgramLink program={admission.program}/>
+              }
+            &lt;/div>
+          ))}
+        &lt;/div>
+      )}
+      {!admissions || admissions.length === 0 &amp;&amp; (
+        &lt;div>
+           &lt;AdmissionsList user={user} editable={editable} />
+        &lt;/div>
+      )}
+    &lt;/div>
+  )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AdmissionButton">AdmissionButton</a></li><li><a href="global.html#AdmissionCardCapsule">AdmissionCardCapsule</a></li><li><a href="global.html#AdmissionChildren">AdmissionChildren</a></li><li><a href="global.html#AdmissionEvaluationsAttribute">AdmissionEvaluationsAttribute</a></li><li><a href="global.html#AdmissionLink">AdmissionLink</a></li><li><a href="global.html#AdmissionMediumCard">AdmissionMediumCard</a></li><li><a href="global.html#AdmissionMediumEditableContent">AdmissionMediumEditableContent</a></li><li><a href="global.html#AdmissionPage">AdmissionPage</a></li><li><a href="global.html#AdmissionPageContent">AdmissionPageContent</a></li><li><a href="global.html#AdmissionPageContentLazy">AdmissionPageContentLazy</a></li><li><a href="global.html#AdmissionPageNavbar">AdmissionPageNavbar</a></li><li><a href="global.html#AdmissionReadAsyncAction">AdmissionReadAsyncAction</a></li><li><a href="global.html#AdmissionRouterSegment">AdmissionRouterSegment</a></li><li><a href="global.html#AdmissionScalarAttribute">AdmissionScalarAttribute</a></li><li><a href="global.html#AdmissionVectorsAttribute">AdmissionVectorsAttribute</a></li><li><a href="global.html#AdmissionsList">AdmissionsList</a></li><li><a href="global.html#DataGenerator">DataGenerator</a></li><li><a href="global.html#DeleteApplicationButton">DeleteApplicationButton</a></li><li><a href="global.html#EditButton">EditButton</a></li><li><a href="global.html#EvaluationButton">EvaluationButton</a></li><li><a href="global.html#EvaluationCardCapsule">EvaluationCardCapsule</a></li><li><a href="global.html#EvaluationChildren">EvaluationChildren</a></li><li><a href="global.html#EvaluationLink">EvaluationLink</a></li><li><a href="global.html#EvaluationMediumCard">EvaluationMediumCard</a></li><li><a href="global.html#EvaluationMediumContent">EvaluationMediumContent</a></li><li><a href="global.html#EvaluationMediumEditableContent">EvaluationMediumEditableContent</a></li><li><a href="global.html#EvaluationPage">EvaluationPage</a></li><li><a href="global.html#EvaluationPageContent">EvaluationPageContent</a></li><li><a href="global.html#EvaluationPageContentLazy">EvaluationPageContentLazy</a></li><li><a href="global.html#EvaluationPageNavbar">EvaluationPageNavbar</a></li><li><a href="global.html#EvaluationReadAsyncAction">EvaluationReadAsyncAction</a></li><li><a href="global.html#EvaluationRouterSegment">EvaluationRouterSegment</a></li><li><a href="global.html#EvaluationScalarAttribute">EvaluationScalarAttribute</a></li><li><a href="global.html#EvaluationVectorsAttribute">EvaluationVectorsAttribute</a></li><li><a href="global.html#GenerateAdmissionInsertParams">GenerateAdmissionInsertParams</a></li><li><a href="global.html#GeneratePaymentInfoInsertParams">GeneratePaymentInfoInsertParams</a></li><li><a href="global.html#NewApplicationButton">NewApplicationButton</a></li><li><a href="global.html#PaymentButton">PaymentButton</a></li><li><a href="global.html#PaymentCardCapsule">PaymentCardCapsule</a></li><li><a href="global.html#PaymentChildren">PaymentChildren</a></li><li><a href="global.html#PaymentInfoButton">PaymentInfoButton</a></li><li><a href="global.html#PaymentInfoCardCapsule">PaymentInfoCardCapsule</a></li><li><a href="global.html#PaymentInfoChildren">PaymentInfoChildren</a></li><li><a href="global.html#PaymentInfoLargeCard">PaymentInfoLargeCard</a></li><li><a href="global.html#PaymentInfoLink">PaymentInfoLink</a></li><li><a href="global.html#PaymentInfoMediumCard">PaymentInfoMediumCard</a></li><li><a href="global.html#PaymentInfoMediumContent">PaymentInfoMediumContent</a></li><li><a href="global.html#PaymentInfoMediumEditableContent">PaymentInfoMediumEditableContent</a></li><li><a href="global.html#PaymentInfoPageContent">PaymentInfoPageContent</a></li><li><a href="global.html#PaymentInfoPageContentLazy">PaymentInfoPageContentLazy</a></li><li><a href="global.html#PaymentInfoPageNavbar">PaymentInfoPageNavbar</a></li><li><a href="global.html#PaymentInfoReadAsyncAction">PaymentInfoReadAsyncAction</a></li><li><a href="global.html#PaymentInfoRouterSegment">PaymentInfoRouterSegment</a></li><li><a href="global.html#PaymentInfoScalarAttribute">PaymentInfoScalarAttribute</a></li><li><a href="global.html#PaymentLargeCard">PaymentLargeCard</a></li><li><a href="global.html#PaymentLink">PaymentLink</a></li><li><a href="global.html#PaymentMediumCard">PaymentMediumCard</a></li><li><a href="global.html#PaymentMediumContent">PaymentMediumContent</a></li><li><a href="global.html#PaymentMediumEditableContent">PaymentMediumEditableContent</a></li><li><a href="global.html#PaymentPage">PaymentPage</a></li><li><a href="global.html#PaymentPageContent">PaymentPageContent</a></li><li><a href="global.html#PaymentPageContentLazy">PaymentPageContentLazy</a></li><li><a href="global.html#PaymentPageNavbar">PaymentPageNavbar</a></li><li><a href="global.html#PaymentReadAsyncAction">PaymentReadAsyncAction</a></li><li><a href="global.html#PaymentRouterSegment">PaymentRouterSegment</a></li><li><a href="global.html#PaymentScalarAttribute">PaymentScalarAttribute</a></li><li><a href="global.html#PaymentStatus">PaymentStatus</a></li><li><a href="global.html#PaymentVectorsAttribute">PaymentVectorsAttribute</a></li><li><a href="global.html#ProgramButton">ProgramButton</a></li><li><a href="global.html#ProgramCardCapsule">ProgramCardCapsule</a></li><li><a href="global.html#ProgramChildren">ProgramChildren</a></li><li><a href="global.html#ProgramLargeCard">ProgramLargeCard</a></li><li><a href="global.html#ProgramLink">ProgramLink</a></li><li><a href="global.html#ProgramMediumCard">ProgramMediumCard</a></li><li><a href="global.html#ProgramMediumContent">ProgramMediumContent</a></li><li><a href="global.html#ProgramMediumEditableContent">ProgramMediumEditableContent</a></li><li><a href="global.html#ProgramPage">ProgramPage</a></li><li><a href="global.html#ProgramPageContent">ProgramPageContent</a></li><li><a href="global.html#ProgramPageContentLazy">ProgramPageContentLazy</a></li><li><a href="global.html#ProgramPageNavbar">ProgramPageNavbar</a></li><li><a href="global.html#ProgramReadAsyncAction">ProgramReadAsyncAction</a></li><li><a href="global.html#ProgramRouterSegment">ProgramRouterSegment</a></li><li><a href="global.html#ProgramScalarAttribute">ProgramScalarAttribute</a></li><li><a href="global.html#ProgramVectorsAttribute">ProgramVectorsAttribute</a></li><li><a href="global.html#SearchAdmissions">SearchAdmissions</a></li><li><a href="global.html#StudentButton">StudentButton</a></li><li><a href="global.html#StudentCardCapsule">StudentCardCapsule</a></li><li><a href="global.html#StudentChildren">StudentChildren</a></li><li><a href="global.html#StudentLargeCard">StudentLargeCard</a></li><li><a href="global.html#StudentLink">StudentLink</a></li><li><a href="global.html#StudentMediumCard">StudentMediumCard</a></li><li><a href="global.html#StudentMediumContent">StudentMediumContent</a></li><li><a href="global.html#StudentMediumEditableContent">StudentMediumEditableContent</a></li><li><a href="global.html#StudentPage">StudentPage</a></li><li><a href="global.html#StudentPageContent">StudentPageContent</a></li><li><a href="global.html#StudentPageContentLazy">StudentPageContentLazy</a></li><li><a href="global.html#StudentPageNavbar">StudentPageNavbar</a></li><li><a href="global.html#StudentReadAsyncAction">StudentReadAsyncAction</a></li><li><a href="global.html#StudentRouterSegment">StudentRouterSegment</a></li><li><a href="global.html#StudentScalarAttribute">StudentScalarAttribute</a></li><li><a href="global.html#StudentVectorsAttribute">StudentVectorsAttribute</a></li><li><a href="global.html#TitleNavButton">TitleNavButton</a></li><li><a href="global.html#UserButton">UserButton</a></li><li><a href="global.html#UserCardCapsule">UserCardCapsule</a></li><li><a href="global.html#UserChildren">UserChildren</a></li><li><a href="global.html#UserLargeCard">UserLargeCard</a></li><li><a href="global.html#UserLink">UserLink</a></li><li><a href="global.html#UserMediumCard">UserMediumCard</a></li><li><a href="global.html#UserMediumContent">UserMediumContent</a></li><li><a href="global.html#UserMediumEditableContent">UserMediumEditableContent</a></li><li><a href="global.html#UserPage">UserPage</a></li><li><a href="global.html#UserPageContent">UserPageContent</a></li><li><a href="global.html#UserPageContentLazy">UserPageContentLazy</a></li><li><a href="global.html#UserPageNavbar">UserPageNavbar</a></li><li><a href="global.html#UserReadAsyncAction">UserReadAsyncAction</a></li><li><a href="global.html#UserRouterSegment">UserRouterSegment</a></li><li><a href="global.html#UserScalarAttribute">UserScalarAttribute</a></li><li><a href="global.html#UserStudentsAttribute">UserStudentsAttribute</a></li><li><a href="global.html#UserVectorsAttribute">UserVectorsAttribute</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Jun 19 2025 13:57:06 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -21,7 +21,6 @@ import styles from "./DataGenerator.module.css"
  * displays the generated data in a structured format.
  * 
  * @component
- * 
  * @returns {JSX.Element} Button for generating data, displays generated data/error when pressed.
  * 
  * @example

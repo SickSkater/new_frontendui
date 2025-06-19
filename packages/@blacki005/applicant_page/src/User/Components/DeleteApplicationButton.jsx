@@ -24,7 +24,7 @@ import {
  * @example
  * <DeleteAdmissionButton student={studentData} user={userData} />
  */
-export const DeleteApplication = ({student, user}) => {
+export const DeleteApplicationButton = ({student, user}) => {
     const {fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
     const {fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
     const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});

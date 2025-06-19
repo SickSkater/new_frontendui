@@ -12,7 +12,19 @@ const generateRandomAmount = () => {
     return amounts[Math.floor(Math.random() * amounts.length)];
 }
 
-//TODO: jsdoc
+/**
+ * Generates payment information parameters for insertion.
+ * 
+ * @component GeneratePaymentInfoInsertParams
+ * @returns {Object} An object containing randomly generated payment information:
+ * - `id` {string}: A unique identifier generated using `crypto.randomUUID()`.
+ * - `accountNumber` {string}: A randomly generated account number in the format "XXXXXXXXX/YYYY".
+ * - `specificSymbol` {string}: A randomly generated specific symbol (6 digits).
+ * - `constantSymbol` {string}: A randomly generated constant symbol (4 digits).
+ * - `IBAN` {string}: A randomly generated IBAN starting with "CZ" followed by 16 digits.
+ * - `SWIFT` {string}: A randomly generated SWIFT code consisting of 8 uppercase letters.
+ * - `amount` {number}: A randomly selected amount from the predefined list [400, 500, 600, 700].
+ */
 export const GeneratePaymentInfoInsertParams = () => {
     return {
         id: crypto.randomUUID(),

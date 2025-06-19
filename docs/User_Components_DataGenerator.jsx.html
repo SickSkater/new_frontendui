@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: User/Components/DataGenerator.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: User/Components/DataGenerator.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
+import {Button} from "react-bootstrap"
+import { useState } from "react"
+import {
+    AdmissionInsertAsyncAction,
+    PaymentInfoInsertAsyncAction,
+    ProgramReadPageAsyncAction,
+    ProgramInsertAsyncAction,
+    GeneratePaymentInfoInsertParams,
+    GenerateAdmissionInsertParams
+} from "@blacki005/applicant_page"
+import styles from "./DataGenerator.module.css"
+
+
+
+/**
+ * DataGenerator Component
+ * 
+ * This component provides functionality to generate random admissions and payment information
+ * for a study program. It interacts with asynchronous actions to fetch or insert data and 
+ * displays the generated data in a structured format.
+ * 
+ * @component
+ * @returns {JSX.Element} Button for generating data, displays generated data/error when pressed.
+ * 
+ * @example
+ * &lt;DataGenerator />
+ * 
+ * @description
+ * - Fetches available study programs using `ProgramReadPageAsyncAction`.
+ * - Generates random payment information and admissions data.
+ * - Inserts new program if no programs are available.
+ * - Displays the generated payment information and admission details.
+ *
+ * @functions
+ * - `generateRandomSWIFT`: Generates a random SWIFT code.
+ * - `generateRandomAmount`: Generates a random payment amount.
+ * - `GenerateAdmission`: Handles the generation and insertion of admission and payment info.
+ * 
+ * @loadingState
+ * - Displays a loading message while fetching programs.
+ * - Displays an error message if fetching programs fails.
+ * 
+ * @display
+ * - Renders a button to trigger the generation process.
+ * - Displays the generated payment information and admission details in JSON format.
+ */
+export const DataGenerator = () => {
+    const { fetch: fetchAdmissionInsert } = useAsyncAction(AdmissionInsertAsyncAction, {}, { deffered: true });
+    const { fetch: fetchPaymentInfoInsert } = useAsyncAction(PaymentInfoInsertAsyncAction, {}, { deffered: true });
+    const { loading: programsLoading, error: programsError, dispatchResult: programs } = useAsyncAction(ProgramReadPageAsyncAction, {});
+    const { fetch: fetchProgramInsert } = useAsyncAction(ProgramInsertAsyncAction, {}, { deffered: true });
+    var [paymentInfo, setPaymentInfo] = useState(null);
+    var [admission, setAdmission] = useState(null);
+
+
+    //get available programs
+    if (programsLoading) {
+        return &lt;div>Loading programs...&lt;/div>
+    }
+    if (programsError) {
+        return &lt;div>Error fetching study programs: {programsError.message}&lt;/div>
+    }
+    const n_programs = programs?.data?.result?.length || 0;
+
+    const GenerateAdmission = async () => {
+        var program = null;
+        if (n_programs === 0) {
+            //insert new program when there are no programs
+            program = await fetchProgramInsert({
+                id: crypto.randomUUID(),
+                name: "Program " + Math.floor(Math.random() * 1000),
+                nameEn: "Program EN " + Math.floor(Math.random() * 1000),
+            });
+        }
+        else {
+            //random program from the array of programs
+            program = programs?.data?.result[Math.floor(Math.random() * n_programs)];
+        }
+
+        //await creating insert parameters
+        const paymentInfoInsertParams = await GeneratePaymentInfoInsertParams();
+        const admissionInsertParams = await GenerateAdmissionInsertParams(program, paymentInfoInsertParams);
+        
+        //insert payment info and admission, set hooks so the values are displayed
+        const fetchedPaymentInfo = await fetchPaymentInfoInsert(paymentInfoInsertParams);
+        const fetchedAdmission = await fetchAdmissionInsert(admissionInsertParams);
+        setPaymentInfo(fetchedPaymentInfo);
+        setAdmission(fetchedAdmission);
+    }
+
+    // Překlad klíčů pro hezčí popisky v tabulce
+    const keyLabels = {
+        id: "Identifikátor",
+        programId: "Program",
+        paymentInfoId: "Platební info",
+        name: "Název",
+        nameEn: "Název (EN)",
+        applicationStartDate: "Začátek přihlášek",
+        applicationLastDate: "Konec přihlášek",
+        endDate: "Konec řízení",
+        conditionDate: "Datum splnění podmínek",
+        paymentDate: "Datum platby",
+        conditionExtendedDate: "Prodloužené podmínky",
+        requestConditionExtendDate: "Žádost o prodloužení podmínek",
+        requestExtraConditionsDate: "Žádost o extra podmínky",
+        requestExtraDateDate: "Žádost o extra datum",
+        examStartDate: "Začátek zkoušek",
+        examLastDate: "Konec zkoušek",
+        accountNumber: "Číslo účtu",
+        specificSymbol: "Specifický symbol",
+        constantSymbol: "Konstantní symbol",
+        IBAN: "IBAN",
+        SWIFT: "SWIFT",
+        amount: "Částka",
+        studentEntryDate: "Datum přijetí studenta",
+        admission: "Přijímací řízení",
+        paymentInfo: "Platební informace",
+        lastchange: "Poslední změna",
+
+    };
+
+    return (
+        &lt;div className={styles.dataGeneratorRoot}>
+            &lt;div className={styles.dataGeneratorCenter}>
+                &lt;Button onClick={GenerateAdmission}>Generovat přijímací řízení&lt;/Button>
+            &lt;/div>
+            {paymentInfo &amp;&amp; (
+                &lt;div className={styles.dataGeneratorSection}>
+                    &lt;h4 className={styles.dataGeneratorHeading}>Platební informace&lt;/h4>
+                    &lt;div className={styles.dataGeneratorTableScroll}>
+                        &lt;table className={styles.dataGeneratorTable}>
+                            &lt;thead>
+                                &lt;tr>
+                                    &lt;th>Název&lt;/th>
+                                    &lt;th>Hodnota&lt;/th>
+                                    &lt;th>JSON&lt;/th>
+                                &lt;/tr>
+                            &lt;/thead>
+                            &lt;tbody>
+                                {Object.entries(paymentInfo).map(([key, value]) => (
+                                    &lt;tr key={key}>
+                                        &lt;th>{keyLabels[key] || key}&lt;/th>
+                                        &lt;td>{String(value)}&lt;/td>
+                                        &lt;td>{key}&lt;/td>
+                                    &lt;/tr>
+                                ))}
+                            &lt;/tbody>
+                        &lt;/table>
+                    &lt;/div>
+                &lt;/div>
+            )}
+            {admission &amp;&amp; (
+                &lt;div className={styles.dataGeneratorSection}>
+                    &lt;h4 className={styles.dataGeneratorHeading}>Přijímací řízení&lt;/h4>
+                    &lt;div className={styles.dataGeneratorTableScroll}>
+                        &lt;table className={styles.dataGeneratorTable}>
+                            &lt;thead>
+                                &lt;tr>
+                                    &lt;th>Popis&lt;/th>
+                                    &lt;th>Hodnota&lt;/th>
+                                    &lt;th>Klíč&lt;/th>
+                                &lt;/tr>
+                            &lt;/thead>
+                            &lt;tbody>
+                                {Object.entries(admission).map(([key, value]) => (
+                                    &lt;tr key={key}>
+                                        &lt;th>{keyLabels[key] || key}&lt;/th>
+                                        &lt;td>{String(value)}&lt;/td>
+                                        &lt;td>{key}&lt;/td>
+                                    &lt;/tr>
+                                ))}
+                            &lt;/tbody>
+                        &lt;/table>
+                    &lt;/div>
+                &lt;/div>
+            )}
+        &lt;/div>
+    );
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AdmissionButton">AdmissionButton</a></li><li><a href="global.html#AdmissionCardCapsule">AdmissionCardCapsule</a></li><li><a href="global.html#AdmissionChildren">AdmissionChildren</a></li><li><a href="global.html#AdmissionEvaluationsAttribute">AdmissionEvaluationsAttribute</a></li><li><a href="global.html#AdmissionLink">AdmissionLink</a></li><li><a href="global.html#AdmissionMediumCard">AdmissionMediumCard</a></li><li><a href="global.html#AdmissionMediumEditableContent">AdmissionMediumEditableContent</a></li><li><a href="global.html#AdmissionPage">AdmissionPage</a></li><li><a href="global.html#AdmissionPageContent">AdmissionPageContent</a></li><li><a href="global.html#AdmissionPageContentLazy">AdmissionPageContentLazy</a></li><li><a href="global.html#AdmissionPageNavbar">AdmissionPageNavbar</a></li><li><a href="global.html#AdmissionReadAsyncAction">AdmissionReadAsyncAction</a></li><li><a href="global.html#AdmissionRouterSegment">AdmissionRouterSegment</a></li><li><a href="global.html#AdmissionScalarAttribute">AdmissionScalarAttribute</a></li><li><a href="global.html#AdmissionVectorsAttribute">AdmissionVectorsAttribute</a></li><li><a href="global.html#AdmissionsList">AdmissionsList</a></li><li><a href="global.html#DataGenerator">DataGenerator</a></li><li><a href="global.html#DeleteApplicationButton">DeleteApplicationButton</a></li><li><a href="global.html#EditButton">EditButton</a></li><li><a href="global.html#EvaluationButton">EvaluationButton</a></li><li><a href="global.html#EvaluationCardCapsule">EvaluationCardCapsule</a></li><li><a href="global.html#EvaluationChildren">EvaluationChildren</a></li><li><a href="global.html#EvaluationLink">EvaluationLink</a></li><li><a href="global.html#EvaluationMediumCard">EvaluationMediumCard</a></li><li><a href="global.html#EvaluationMediumContent">EvaluationMediumContent</a></li><li><a href="global.html#EvaluationMediumEditableContent">EvaluationMediumEditableContent</a></li><li><a href="global.html#EvaluationPage">EvaluationPage</a></li><li><a href="global.html#EvaluationPageContent">EvaluationPageContent</a></li><li><a href="global.html#EvaluationPageContentLazy">EvaluationPageContentLazy</a></li><li><a href="global.html#EvaluationPageNavbar">EvaluationPageNavbar</a></li><li><a href="global.html#EvaluationReadAsyncAction">EvaluationReadAsyncAction</a></li><li><a href="global.html#EvaluationRouterSegment">EvaluationRouterSegment</a></li><li><a href="global.html#EvaluationScalarAttribute">EvaluationScalarAttribute</a></li><li><a href="global.html#EvaluationVectorsAttribute">EvaluationVectorsAttribute</a></li><li><a href="global.html#GenerateAdmissionInsertParams">GenerateAdmissionInsertParams</a></li><li><a href="global.html#GeneratePaymentInfoInsertParams">GeneratePaymentInfoInsertParams</a></li><li><a href="global.html#NewApplicationButton">NewApplicationButton</a></li><li><a href="global.html#PaymentButton">PaymentButton</a></li><li><a href="global.html#PaymentCardCapsule">PaymentCardCapsule</a></li><li><a href="global.html#PaymentChildren">PaymentChildren</a></li><li><a href="global.html#PaymentInfoButton">PaymentInfoButton</a></li><li><a href="global.html#PaymentInfoCardCapsule">PaymentInfoCardCapsule</a></li><li><a href="global.html#PaymentInfoChildren">PaymentInfoChildren</a></li><li><a href="global.html#PaymentInfoLargeCard">PaymentInfoLargeCard</a></li><li><a href="global.html#PaymentInfoLink">PaymentInfoLink</a></li><li><a href="global.html#PaymentInfoMediumCard">PaymentInfoMediumCard</a></li><li><a href="global.html#PaymentInfoMediumContent">PaymentInfoMediumContent</a></li><li><a href="global.html#PaymentInfoMediumEditableContent">PaymentInfoMediumEditableContent</a></li><li><a href="global.html#PaymentInfoPageContent">PaymentInfoPageContent</a></li><li><a href="global.html#PaymentInfoPageContentLazy">PaymentInfoPageContentLazy</a></li><li><a href="global.html#PaymentInfoPageNavbar">PaymentInfoPageNavbar</a></li><li><a href="global.html#PaymentInfoReadAsyncAction">PaymentInfoReadAsyncAction</a></li><li><a href="global.html#PaymentInfoRouterSegment">PaymentInfoRouterSegment</a></li><li><a href="global.html#PaymentInfoScalarAttribute">PaymentInfoScalarAttribute</a></li><li><a href="global.html#PaymentLargeCard">PaymentLargeCard</a></li><li><a href="global.html#PaymentLink">PaymentLink</a></li><li><a href="global.html#PaymentMediumCard">PaymentMediumCard</a></li><li><a href="global.html#PaymentMediumContent">PaymentMediumContent</a></li><li><a href="global.html#PaymentMediumEditableContent">PaymentMediumEditableContent</a></li><li><a href="global.html#PaymentPage">PaymentPage</a></li><li><a href="global.html#PaymentPageContent">PaymentPageContent</a></li><li><a href="global.html#PaymentPageContentLazy">PaymentPageContentLazy</a></li><li><a href="global.html#PaymentPageNavbar">PaymentPageNavbar</a></li><li><a href="global.html#PaymentReadAsyncAction">PaymentReadAsyncAction</a></li><li><a href="global.html#PaymentRouterSegment">PaymentRouterSegment</a></li><li><a href="global.html#PaymentScalarAttribute">PaymentScalarAttribute</a></li><li><a href="global.html#PaymentStatus">PaymentStatus</a></li><li><a href="global.html#PaymentVectorsAttribute">PaymentVectorsAttribute</a></li><li><a href="global.html#ProgramButton">ProgramButton</a></li><li><a href="global.html#ProgramCardCapsule">ProgramCardCapsule</a></li><li><a href="global.html#ProgramChildren">ProgramChildren</a></li><li><a href="global.html#ProgramLargeCard">ProgramLargeCard</a></li><li><a href="global.html#ProgramLink">ProgramLink</a></li><li><a href="global.html#ProgramMediumCard">ProgramMediumCard</a></li><li><a href="global.html#ProgramMediumContent">ProgramMediumContent</a></li><li><a href="global.html#ProgramMediumEditableContent">ProgramMediumEditableContent</a></li><li><a href="global.html#ProgramPage">ProgramPage</a></li><li><a href="global.html#ProgramPageContent">ProgramPageContent</a></li><li><a href="global.html#ProgramPageContentLazy">ProgramPageContentLazy</a></li><li><a href="global.html#ProgramPageNavbar">ProgramPageNavbar</a></li><li><a href="global.html#ProgramReadAsyncAction">ProgramReadAsyncAction</a></li><li><a href="global.html#ProgramRouterSegment">ProgramRouterSegment</a></li><li><a href="global.html#ProgramScalarAttribute">ProgramScalarAttribute</a></li><li><a href="global.html#ProgramVectorsAttribute">ProgramVectorsAttribute</a></li><li><a href="global.html#SearchAdmissions">SearchAdmissions</a></li><li><a href="global.html#StudentButton">StudentButton</a></li><li><a href="global.html#StudentCardCapsule">StudentCardCapsule</a></li><li><a href="global.html#StudentChildren">StudentChildren</a></li><li><a href="global.html#StudentLargeCard">StudentLargeCard</a></li><li><a href="global.html#StudentLink">StudentLink</a></li><li><a href="global.html#StudentMediumCard">StudentMediumCard</a></li><li><a href="global.html#StudentMediumContent">StudentMediumContent</a></li><li><a href="global.html#StudentMediumEditableContent">StudentMediumEditableContent</a></li><li><a href="global.html#StudentPage">StudentPage</a></li><li><a href="global.html#StudentPageContent">StudentPageContent</a></li><li><a href="global.html#StudentPageContentLazy">StudentPageContentLazy</a></li><li><a href="global.html#StudentPageNavbar">StudentPageNavbar</a></li><li><a href="global.html#StudentReadAsyncAction">StudentReadAsyncAction</a></li><li><a href="global.html#StudentRouterSegment">StudentRouterSegment</a></li><li><a href="global.html#StudentScalarAttribute">StudentScalarAttribute</a></li><li><a href="global.html#StudentVectorsAttribute">StudentVectorsAttribute</a></li><li><a href="global.html#TitleNavButton">TitleNavButton</a></li><li><a href="global.html#UserButton">UserButton</a></li><li><a href="global.html#UserCardCapsule">UserCardCapsule</a></li><li><a href="global.html#UserChildren">UserChildren</a></li><li><a href="global.html#UserLargeCard">UserLargeCard</a></li><li><a href="global.html#UserLink">UserLink</a></li><li><a href="global.html#UserMediumCard">UserMediumCard</a></li><li><a href="global.html#UserMediumContent">UserMediumContent</a></li><li><a href="global.html#UserMediumEditableContent">UserMediumEditableContent</a></li><li><a href="global.html#UserPage">UserPage</a></li><li><a href="global.html#UserPageContent">UserPageContent</a></li><li><a href="global.html#UserPageContentLazy">UserPageContentLazy</a></li><li><a href="global.html#UserPageNavbar">UserPageNavbar</a></li><li><a href="global.html#UserReadAsyncAction">UserReadAsyncAction</a></li><li><a href="global.html#UserRouterSegment">UserRouterSegment</a></li><li><a href="global.html#UserScalarAttribute">UserScalarAttribute</a></li><li><a href="global.html#UserStudentsAttribute">UserStudentsAttribute</a></li><li><a href="global.html#UserVectorsAttribute">UserVectorsAttribute</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Jun 19 2025 13:57:06 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

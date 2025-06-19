@@ -35,7 +35,7 @@ const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
  * SearchAdmissions component allows users to search for admissions by typing a pattern into an input field.
  * It fetches admissions data from a GraphQL API and displays the results dynamically.
  *
- * Props:
+ * @component
  * @param {Object} props - The props object.
  * @param {Object} props.user - The user object containing user-related information.
  * @param {Function} props.onChange - Callback function triggered when the component state changes.

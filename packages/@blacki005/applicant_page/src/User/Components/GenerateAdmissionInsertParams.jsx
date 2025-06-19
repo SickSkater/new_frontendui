@@ -1,4 +1,12 @@
-//TODO: dodelat jsdoc
+
+/**
+ * Generates admission insert parameters for a given program and payment information.
+ *
+ * @param {Object} program - The program object containing details about the program.
+ * @param {Object} paymentInfo - The payment information object.
+ * @returns {Object} An object containing admission insert parameters, including IDs, dates, and program details.
+ * @throws Will log an error to the console if the required arguments are invalid.
+ */
 export const GenerateAdmissionInsertParams = (program, paymentInfo) => {
     if (!(
             program?.id &&
