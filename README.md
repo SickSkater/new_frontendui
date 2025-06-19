@@ -7,84 +7,112 @@ This document outlines the timeline of commits, problems encountered, discoverie
 ## Timeline of Commits and Problem Resolution
 
 ### **1. Incorrect Entity Name Format**
-- **Problem Definition**:  
+- **Date**: **April 3, 2025**
+- **Problem Definition**:
   We initially believed that we could freely choose the names of entities. This misunderstanding stemmed from insufficient knowledge of using the `create:component` script.
 - **Resolution**:  
-  The issue was resolved by creating a new entity with the correct naming conventions in the commit on **Apr. 3, 2025**.
+  The issue was resolved by creating a new entity with the correct naming conventions.
+
 
 ### **2. PaymentInfo Entity Naming Issue**
-- **Problem Definition**:  
+- **Date**: **April 6, 2025**
+- **Problem Definition**:
   The `PaymentInfo` entity had inconsistent naming conventions due to improper camelCase usage. Specifically, the letter "I" in `Info` was sometimes uppercase and sometimes lowercase, causing issues during entity generation.
 - **Resolution**:  
-  We resolved this by finding and replacing all occurrences of `Paymentinfo` with `PaymentInfo` across all files and names using a Bash script. This was completed on **Apr. 6, 2025**.
+  We resolved this by finding and replacing all occurrences of `Paymentinfo` with `PaymentInfo` across all files and names using a Bash script.
 
----
 
-### **3. Incomplete Database**
+### **1. Backend Bugs and Placeholder Data**
+- **Date**: **April 8, 2025**
 - **Problem Definition**:  
-  The database was incomplete, and certain data that would normally be provided by `UserReadSyncAction` was missing.
+  A bug in the backend prevented `insert` mutations from working correctly. There also was an initial misunderstanding that we were supposed to display individual pages for all entities mentioned in our assignment.
 - **Resolution**:  
-  We introduced a new variable in `UserPage` called `temp_data` to hold the missing data, simulating what would typically be provided by the database.
+  As a temporary workaround, we implemented placeholder data to simulate responses from the backend, allowing frontend development to proceed. This was fully resolved on **May 2, 2025**, when the backend error was fixed, and the project was transitioned to use real data.
 
----
-
-### **4. Indirect Querying of Admissions**
-- **Problem Definition**:  
-  It was not possible to directly query the database for admissions associated with a specific user. Instead, we had to:
-  1. Query the user for their `studies`.
-  2. From `studies`, query the `payments` for each study.
-  3. From each `Payment`, query the `PaymentInfo`.
-  4. Finally, from `PaymentInfo`, retrieve the `admission`.
-  
-  This issue stems from the structure of the database itself.
-- **Resolution**:  
-  Although this approach is far from ideal, we proceeded with this multi-step querying process to retrieve the required data.
-
----
-
-### **5. Vector Attribute for Admissions**
-- **Date**: **Apr. 9, 2025**  
+### **2. Vector Attribute for Admissions**
+- **Date**: **April 9, 2025**  
 - **Achievement**:  
-  We successfully implemented a vector attribute for users that displays their admissions. Additionally, we learned how to pass an entity and use the `me` query to retrieve the user again.
+  We successfully implemented a vector attribute for users that displays links to all admissions they have applied for.
+
+### **3. Shared Repository Setup**
+- **Date**: **April 16, 2025**
+- **Milestone**:
+  Transitioned to a shared GitHub repository to facilitate collaboration.
+
+### **4. Transition to Real Data**
+- **Date**: **May 2, 2025**
+- **Milestone**:
+  With the backend bug fixed, the project began working with real data. A temporary `UserData` component was created to fetch data based on a specific pattern, which later served as a template for other components. User queries were updated accordingly.
+
+### **5. Functional Mutations**
+- **Date**: **May 5, 2025**
+- **Achievement**:
+  Mutations became functional. We created `NewAdmission` (later `NewApplicationButton`) and `DeleteAdmission` (later `DeleteApplicationButton`) components, allowing users to add and remove entities defining their relationship with admission (application). All placeholder data was subsequently removed.
+
+### **6. UI Improvement: Data Tables**
+- **Date**: **May 6, 2025**
+- **Milestone**:
+  Introduced tables for a clearer and more organized presentation of data.
+
+### **7. Correcting Application Logic**
+- **Date**: **May 9, 2025**
+- **Problem Definition**:
+  The `NewAdmission` component was incorrectly creating new admission processes instead of creating an application for an existing one. This was due to a misunderstanding of the entity relationships.
+- **Resolution**:
+  The component's functionality was corrected to only create `PaymentInfo` and `Student` entities, which correctly represent a user's application to an admission process. A `BreadCrumbNavigation` component was also added but later removed upon realizing that we only needed to provide links to entities, not display their full pages.
+
+### **8. Data Generator Component**
+- **Date**: **May 10, 2025**
+- **Milestone**:
+  A `DataGenerator` component was added to create test data for `Admission` and `PaymentInfo` entities.
+
+### **9. Component Renaming and Documentation**
+- **Date**: **May 11, 2025**
+- **Milestone**:
+  The components `NewAdmission` and `DeleteAdmission` were renamed to `NewApplication` and `DeleteApplication` for clarity. We began generating JSDoc documentation for components.
+
+### **10. Application and Package Renaming**
+- **Date**: **May 20, 2025**
+- **Milestone**:
+  The application was renamed to the globally unique name `@blacki005/app_applicant_page`, and the package was renamed to `@blacki005/applicant_page` (from `candidate_page`) to be more descriptive.
+
+### **11. Infinite Scroll and Component Decomposition**
+- **Date**: **May 21, 2025**
+- **Achievement**:
+  - The `AdmissionsList` component was created, using infinite scroll to display all available admissions.
+  - The `InfiniteScroll` component was fixed with the assistance of JVFlasar and Gemini AI to correctly handle cases where no more data is available, preventing an infinite loop.
+  - The `NewApplication` component was decomposed into `SearchAdmissions` and `NewApplicationButton` for better separation of concerns.
+  - Preparations for `readonly` and `editable` modes began with the creation of `UserPageEditable` and new routes in `AppRouter`.
+
+### **12. Readonly Mode and Advanced Filtering**
+- **Date**: **May 22, 2025**
+- **Achievement**:
+  - `readonly` parameters were added to several components to control their behavior.
+  - Functionality was added to display only those admission processes for which the user has not yet submitted an application.
+
+### **13. Final UI and Functionality Enhancements**
+- **Date**: **June 1, 2025**
+- **Achievement**:
+  - In `readonly` mode, action buttons are now displayed as simple links.
+  - The search functionality was improved to show either results matching a search query or all admissions via infinite scroll.
+  - New components were created to generate insert parameters for mutations within the data generator.
 
 ---
 
-### **6. Incomplete `studentInsert` Mutation**
-- **Problem Definition**:  
-  The `studentInsert` mutation was incomplete, which resulted in the inability to add new users to the database.
-- **Resolution**:  
-  The issue was resolved by updating the Docker containers to ensure all necessary components were properly configured.
+## Unresolved Issues and Workarounds
 
----
+- **Indirect Querying of Admissions**:  
+  It is not possible to directly query the database for admissions associated with a specific user. The current workaround involves a multi-step query process: User -> Studies -> Payments -> PaymentInfo -> Admission. This is a structural issue with the database schema that would require a redesign to fully resolve.
 
-### **7. Inability to Get ID of Inserted Entity**
-- **Problem Definition**:  
-  After inserting a new entity, it was not possible to retrieve its ID, which caused issues in subsequent operations.
-- **Resolution**:  
-  We resolved this by generating the ID on the client side and storing it in a variable before performing the insertion.
-
----
-
-### **8. Infinite Scroll Issue**
-- **Date**: **May 20, 2025**  
-- **Problem Definition**:  
-  The `InfiniteScroll` component encountered two issues:
-  1. An infinite loop occurred because the `hasMore` variable was not correctly set to `false` when the fetch operation returned an array of size 0.
-  2. A missing condition in the `useEffect` function caused unintended behavior during component updates.
-- **Resolution**:  
-  The issue was resolved on **May 21, 2025** with the assistance of JVFlasar and Gemini AI. The `hasMore` variable was properly updated, and the missing condition was added to the `useEffect` dependency array.
-  
----
-
-## Problems That Could Not Be Resolved
-- The indirect querying of admissions remains a structural issue with the database. While we implemented a workaround, the underlying problem persists and would require a redesign of the database schema to resolve fully.
+- **Inability to Get ID of Inserted Entity**:  
+  After inserting a new entity, it was not possible to retrieve its ID from the mutation response. We resolved this by generating the ID on the client side and storing it in a variable before performing the insertion.
 
 ---
 
 ## Lessons Learned
-- Proper naming conventions and adherence to camelCase are critical when working with entity generation scripts.
-- Understanding the structure of the database and the relationships between entities is essential for efficient querying.
-
----
-
-
+- **Naming Conventions**: Proper naming conventions and adherence to camelCase are critical when working with entity generation scripts.
+- **Database Structure**: Understanding the structure of the database and the relationships between entities is essential for efficient querying and correct application logic.
+- **Team Collaboration**: Establishing a functional system where team members can work independently without interfering with each other's progress is crucial. Using tools like shared repositories, clear documentation, and modular components ensures smooth collaboration and minimizes conflicts during development.
+- **Setting Clear Goals**: Defining clear objectives at the start of each development phase ensures that the team remains focused and aligned. Breaking down larger tasks into smaller, actionable items helps track progress and identify potential blockers early.
+- **Code Reviews**: Regular code reviews helped identify bugs, improve code quality, and ensure adherence to best practices. Peer feedback fostered a collaborative environment and enhanced the team's overall productivity.
+- **Incremental Development**: Starting with placeholder data allowed for parallel frontend and backend development. Iteratively replacing mock data with real data and refining components proved to be an effective strategy.
