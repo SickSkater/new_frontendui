@@ -1,8 +1,5 @@
 import { Table } from "react-bootstrap"
-import {
-    createAsyncGraphQLAction,
-    processVectorAttributeFromGraphQLResult
-} from "@hrbolek/uoisfrontend-gql-shared"
+import { createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult } from "@hrbolek/uoisfrontend-gql-shared"
 import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
 import {
     AdmissionLink,
