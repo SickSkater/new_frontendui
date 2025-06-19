@@ -22,61 +22,61 @@ This document outlines the timeline of commits, problems encountered, discoverie
   We resolved this by finding and replacing all occurrences of `Paymentinfo` with `PaymentInfo` across all files and names using a Bash script.
 
 
-### **1. Backend Bugs and Placeholder Data**
+### **3. Backend Bugs and Placeholder Data**
 - **Date**: **April 8, 2025**
 - **Problem Definition**:  
   A bug in the backend prevented `insert` mutations from working correctly. There also was an initial misunderstanding that we were supposed to display individual pages for all entities mentioned in our assignment.
 - **Resolution**:  
   As a temporary workaround, we implemented placeholder data to simulate responses from the backend, allowing frontend development to proceed. This was fully resolved on **May 2, 2025**, when the backend error was fixed, and the project was transitioned to use real data.
 
-### **2. Vector Attribute for Admissions**
+### **4. Vector Attribute for Admissions**
 - **Date**: **April 9, 2025**  
 - **Achievement**:  
   We successfully implemented a vector attribute for users that displays links to all admissions they have applied for.
 
-### **3. Shared Repository Setup**
+### **5. Shared Repository Setup**
 - **Date**: **April 16, 2025**
 - **Milestone**:
   Transitioned to a shared GitHub repository to facilitate collaboration.
 
-### **4. Transition to Real Data**
+### **6. Transition to Real Data**
 - **Date**: **May 2, 2025**
 - **Milestone**:
   With the backend bug fixed, the project began working with real data. A temporary `UserData` component was created to fetch data based on a specific pattern, which later served as a template for other components. User queries were updated accordingly.
 
-### **5. Functional Mutations**
+### **7. Functional Mutations**
 - **Date**: **May 5, 2025**
 - **Achievement**:
   Mutations became functional. We created `NewAdmission` (later `NewApplicationButton`) and `DeleteAdmission` (later `DeleteApplicationButton`) components, allowing users to add and remove entities defining their relationship with admission (application). All placeholder data was subsequently removed.
 
-### **6. UI Improvement: Data Tables**
+### **8. UI Improvement: Data Tables**
 - **Date**: **May 6, 2025**
 - **Milestone**:
   Introduced tables for a clearer and more organized presentation of data.
 
-### **7. Correcting Application Logic**
+### **9. Correcting Application Logic**
 - **Date**: **May 9, 2025**
 - **Problem Definition**:
   The `NewAdmission` component was incorrectly creating new admission processes instead of creating an application for an existing one. This was due to a misunderstanding of the entity relationships.
 - **Resolution**:
   The component's functionality was corrected to only create `PaymentInfo` and `Student` entities, which correctly represent a user's application to an admission process. A `BreadCrumbNavigation` component was also added but later removed upon realizing that we only needed to provide links to entities, not display their full pages.
 
-### **8. Data Generator Component**
+### **10. Data Generator Component**
 - **Date**: **May 10, 2025**
 - **Milestone**:
   A `DataGenerator` component was added to create test data for `Admission` and `PaymentInfo` entities.
 
-### **9. Component Renaming and Documentation**
+### **11. Component Renaming and Documentation**
 - **Date**: **May 11, 2025**
 - **Milestone**:
   The components `NewAdmission` and `DeleteAdmission` were renamed to `NewApplication` and `DeleteApplication` for clarity. We began generating JSDoc documentation for components.
 
-### **10. Application and Package Renaming**
+### **12. Application and Package Renaming**
 - **Date**: **May 20, 2025**
 - **Milestone**:
   The application was renamed to the globally unique name `@blacki005/app_applicant_page`, and the package was renamed to `@blacki005/applicant_page` (from `candidate_page`) to be more descriptive.
 
-### **11. Infinite Scroll and Component Decomposition**
+### **13. Infinite Scroll and Component Decomposition**
 - **Date**: **May 21, 2025**
 - **Achievement**:
   - The `AdmissionsList` component was created, using infinite scroll to display all available admissions.
@@ -84,13 +84,13 @@ This document outlines the timeline of commits, problems encountered, discoverie
   - The `NewApplication` component was decomposed into `SearchAdmissions` and `NewApplicationButton` for better separation of concerns.
   - Preparations for `readonly` and `editable` modes began with the creation of `UserPageEditable` and new routes in `AppRouter`.
 
-### **12. Readonly Mode and Advanced Filtering**
+### **14. Readonly Mode and Advanced Filtering**
 - **Date**: **May 22, 2025**
 - **Achievement**:
   - `readonly` parameters were added to several components to control their behavior.
   - Functionality was added to display only those admission processes for which the user has not yet submitted an application.
 
-### **13. Final UI and Functionality Enhancements**
+### **15. Final UI and Functionality Enhancements**
 - **Date**: **June 1, 2025**
 - **Achievement**:
   - In `readonly` mode, action buttons are now displayed as simple links.
