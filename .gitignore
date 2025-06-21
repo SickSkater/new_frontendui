@@ -55,4 +55,3 @@ Thumbs.db
 
 # Package manager lock files (if using one)
 yarn.lock
-package-lock.json

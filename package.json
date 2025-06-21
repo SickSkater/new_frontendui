@@ -7,16 +7,16 @@
     "create:component": "node scripts/createcomponent.js",
     "create:scalar": "node scripts/createscalar.js",
     "create:vector": "node scripts/createvector.js",
-    "build:apps": "npm workspaces foreach --include=apps/* npm run build",
-    "publish:packages": "npm workspaces foreach --include=packages/* npm publish --access public"
+    "build:apps": "npm run build --workspaces --if-present",
+    "publish:packages": "npm publish --workspaces --access public"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/app_applicant_page",
+    "packages/@blacki005/applicant_page"
   ],
   "devDependencies": {
     "jsdoc": "^4.0.4",

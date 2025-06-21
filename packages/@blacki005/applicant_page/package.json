@@ -1,6 +1,9 @@
 {
   "name": "@blacki005/applicant_page",
-  "version": "*",
+  "version": "0.0.1",
+  "publishConfig" : {
+    "access": "public"
+  },
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -4,7 +4,7 @@ import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
 import {
     AdmissionLink,
     EvaluationLink,
-    DeleteApplication,
+    DeleteApplicationButton,
     PaymentStatus
 } from "@blacki005/applicant_page"
 import styles from "./UserStudentsAttribute.module.css";
@@ -67,7 +67,7 @@ export const UserStudentsAttribute = ({ studies, user, editable }) => {
                                             Smazat přihlášku:
                                         </td>
                                         <td>
-                                            <DeleteApplication student={student} user={user}/>
+                                            <DeleteApplicationButton student={student} user={user}/>
                                         </td>
                                     </tr>
                                     :
