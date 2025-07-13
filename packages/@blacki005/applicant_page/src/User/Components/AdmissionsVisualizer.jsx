@@ -3,7 +3,6 @@ import {
     ProgramLink
 } from "@blacki005/applicant_page";
 import styles from "./AdmissionsVisualizer.module.css";
-
 /**
  * AdmissionsVisualizer component renders a table displaying a list of admissions.
  * Filters the provided items to ensure each admission has a name, program, and paymentInfo.
@@ -16,10 +15,10 @@ import styles from "./AdmissionsVisualizer.module.css";
  *
  * @returns {JSX.Element} A table displaying the filtered admissions list.
  */
-export const AdmissionsVisualizer = ({ items, ...props}) => {
+export const AdmissionsVisualizer = ({ items, ...props }) => {
     // Admissions must have name, program, and paymentInfo
     const filteredItems = items.filter(
-    (item) => item.name && item.paymentInfo && item.program
+        (item) => item.name && item.paymentInfo && item.program
     );
 
     //returns list of admissions that user didn't applied to with buttons to apply or links (if in RO mode)
@@ -39,9 +38,9 @@ export const AdmissionsVisualizer = ({ items, ...props}) => {
                             <td className={styles.admissionsListTableTd}>
                                 <div className={styles.admissionsListButtonContainer}>
                                     {props.editable ?
-                                        <NewApplicationButton user={props.user} admission={admission}/>
+                                        <NewApplicationButton user={props.user} admission={admission} />
                                         :
-                                        <ProgramLink program={admission.program}/>
+                                        <ProgramLink program={admission.program} />
                                     }
                                 </div>
                             </td>

@@ -1,5 +1,5 @@
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared"
-import {Button} from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { useState } from "react"
 import {
     AdmissionInsertAsyncAction,
@@ -10,9 +10,6 @@ import {
     GenerateAdmissionInsertParams
 } from "@blacki005/applicant_page"
 import styles from "./DataGenerator.module.css"
-
-
-
 /**
  * DataGenerator Component
  * 
@@ -81,7 +78,7 @@ export const DataGenerator = () => {
         //await creating insert parameters
         const paymentInfoInsertParams = await GeneratePaymentInfoInsertParams();
         const admissionInsertParams = await GenerateAdmissionInsertParams(program, paymentInfoInsertParams);
-        
+
         //insert payment info and admission, set hooks so the values are displayed
         const fetchedPaymentInfo = await fetchPaymentInfoInsert(paymentInfoInsertParams);
         const fetchedAdmission = await fetchAdmissionInsert(admissionInsertParams);

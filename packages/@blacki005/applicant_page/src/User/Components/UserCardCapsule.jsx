@@ -26,7 +26,7 @@ import { CardCapsule } from "@hrbolek/uoisfrontend-shared"
  *   <Button variant="primary">Click Me</Button>
  * </UserCardCapsule>
  */
-export const UserCardCapsule = ({user, children, title="Stránka uchazeče"}) => {
+export const UserCardCapsule = ({ user, children, title = "Stránka uchazeče" }) => {
     return (
         <CardCapsule title={title}>
             {children}

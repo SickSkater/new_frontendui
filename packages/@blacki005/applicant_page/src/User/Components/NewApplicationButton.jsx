@@ -1,14 +1,13 @@
 import { Button } from "react-bootstrap";
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
 import {
-    PaymentInsertAsyncAction,
-    StudentInsertAsyncAction,
-    EvaluationInsertAsyncAction,
-    UserReadAsyncAction,
-    ProgramLink
+  PaymentInsertAsyncAction,
+  StudentInsertAsyncAction,
+  EvaluationInsertAsyncAction,
+  UserReadAsyncAction,
+  ProgramLink
 } from "@blacki005/applicant_page";
 import styles from "./NewApplicationButton.module.css";
-
 /**
  * A React component that renders a button for submitting a new application.
  * When clicked, it triggers a series of asynchronous actions to insert a new student,
@@ -25,10 +24,10 @@ export const NewApplicationButton = ({ user, admission }) => {
   const { fetch: fetchPaymentInsert } = useAsyncAction(PaymentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchStudentInsert } = useAsyncAction(StudentInsertAsyncAction, {}, { deffered: true });
   const { fetch: fetchEvaluationInsert } = useAsyncAction(EvaluationInsertAsyncAction, {}, { deffered: true });
-  const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
+  const { fetch: refetchUser } = useAsyncAction(UserReadAsyncAction, {}, { deffered: true });
 
   //returns true if the user already has an application for the given admission
-  const hasApplication = ({user, admission}) => {
+  const hasApplication = ({ user, admission }) => {
     return user.studies.some(study => study.payments?.paymentInfo?.admission?.id === admission.id);
   }
 
@@ -50,9 +49,9 @@ export const NewApplicationButton = ({ user, admission }) => {
     };
     const evaluationInsertParams = {
       id: crypto.randomUUID(),
-      points: 0, 
-      passed: false, 
-      description: "Příjmací zkouška", 
+      points: 0,
+      passed: false,
+      description: "Příjmací zkouška",
       studentId: studentInsertParams.id,
     };
 
@@ -69,9 +68,9 @@ export const NewApplicationButton = ({ user, admission }) => {
   return (
     <div className={styles.applicationButtonContainer}>
       <span>
-        <ProgramLink program={admission.program}/>
+        <ProgramLink program={admission.program} />
       </span>
-      <Button 
+      <Button
         className={styles.applicationButton}
         onClick={onClick}
       >

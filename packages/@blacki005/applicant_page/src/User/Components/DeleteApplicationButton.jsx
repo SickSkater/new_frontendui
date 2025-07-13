@@ -1,10 +1,10 @@
 import { useAsyncAction } from "@hrbolek/uoisfrontend-gql-shared";
 import { useState } from "react";
-import { Button} from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import {
   UserReadAsyncAction
-  ,StudentDeleteAsyncAction
-  ,PaymentDeleteAsyncAction
+  , StudentDeleteAsyncAction
+  , PaymentDeleteAsyncAction
 } from "@blacki005/applicant_page";
 
 /**
@@ -24,49 +24,49 @@ import {
  * @example
  * <DeleteAdmissionButton student={studentData} user={userData} />
  */
-export const DeleteApplicationButton = ({student, user}) => {
-    const {fetch: fetchPaymentDelete} = useAsyncAction(PaymentDeleteAsyncAction, {}, {deffered: true});
-    const {fetch: fetchStudentDelete} = useAsyncAction(StudentDeleteAsyncAction, {}, {deffered: true});
-    const {fetch : refetchUser} = useAsyncAction(UserReadAsyncAction, {}, {deffered: true});
+export const DeleteApplicationButton = ({ student, user }) => {
+  const { fetch: fetchPaymentDelete } = useAsyncAction(PaymentDeleteAsyncAction, {}, { deffered: true });
+  const { fetch: fetchStudentDelete } = useAsyncAction(StudentDeleteAsyncAction, {}, { deffered: true });
+  const { fetch: refetchUser } = useAsyncAction(UserReadAsyncAction, {}, { deffered: true });
 
-    const onDelete = async () => {
-        const studentDeleteParams = {
-            id: student.id,
-            lastchange: student.lastchange
-        };
-        const paymentDeleteParams = {
-            id: student.payments.id,
-            lastchange: student.payments.lastchange
-        };
+  const onDelete = async () => {
+    const studentDeleteParams = {
+      id: student.id,
+      lastchange: student.lastchange
+    };
+    const paymentDeleteParams = {
+      id: student.payments.id,
+      lastchange: student.payments.lastchange
+    };
 
-        await fetchPaymentDelete(paymentDeleteParams)
-        await fetchStudentDelete(studentDeleteParams)
-        //reload User data after deletion
-        refetchUser({ id: student.student.id })
-    }
+    await fetchPaymentDelete(paymentDeleteParams)
+    await fetchStudentDelete(studentDeleteParams)
+    //reload User data after deletion
+    refetchUser({ id: student.student.id })
+  }
 
-    function toggleButton() {
-      const [isToggled, setIsToggled] = useState(false);
-    
-      const handleToggle = () => {
-        setIsToggled(toggle => !toggle);
-        if (isToggled) {
-          onDelete();
-        }
-      };
-      return (
-        <Button 
-          onClick={handleToggle}
-          variant={isToggled ? 'primary' : 'danger'}
-        >
-          {isToggled ? 'Potvrdit smazání' : ' Smazat přihlášku'}
-        </Button>
-      );
-    }
+  function toggleButton() {
+    const [isToggled, setIsToggled] = useState(false);
 
+    const handleToggle = () => {
+      setIsToggled(toggle => !toggle);
+      if (isToggled) {
+        onDelete();
+      }
+    };
     return (
-        <div>
-            {toggleButton()}
-        </div>
-    )
+      <Button
+        onClick={handleToggle}
+        variant={isToggled ? 'primary' : 'danger'}
+      >
+        {isToggled ? 'Potvrdit smazání' : ' Smazat přihlášku'}
+      </Button>
+    );
+  }
+
+  return (
+    <div>
+      {toggleButton()}
+    </div>
+  )
 }

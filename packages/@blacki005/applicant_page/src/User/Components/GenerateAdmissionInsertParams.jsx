@@ -9,11 +9,10 @@
  */
 export const GenerateAdmissionInsertParams = (program, paymentInfo) => {
     if (!(
-            program?.id &&
-            program.name &&
-            paymentInfo?.id
-        ))
-    {
+        program?.id &&
+        program.name &&
+        paymentInfo?.id
+    )) {
         console.error("Unable to generate AdmissionInsertParams, invalid arguments.")
     }
     return {

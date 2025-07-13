@@ -2,8 +2,8 @@ import { Table } from "react-bootstrap"
 import React from "react";
 import {
     SearchAdmissions,
- } from "@blacki005/applicant_page";
- import styles from "./UserMediumEditableContent.module.css"
+} from "@blacki005/applicant_page";
+import styles from "./UserMediumEditableContent.module.css"
 
 /**
  * A component that displays medium-level content for an user entity.
@@ -30,7 +30,7 @@ import {
  */
 export const UserMediumContent = ({ user, children, editable }) => {
     return (
-        <div className = {styles.user_medium_editable_container}>
+        <div className={styles.user_medium_editable_container}>
             <Table className={styles.tableContainer} >
                 <tbody>
                     <tr>
@@ -75,7 +75,7 @@ export const UserMediumContent = ({ user, children, editable }) => {
                 <tbody>
                     <tr>
                         <td className={styles.searchAdmissionsContainer} colSpan={2}>
-                            <SearchAdmissions user={user} editable={editable}/>
+                            <SearchAdmissions user={user} editable={editable} />
                         </td>
                     </tr>
                 </tbody>

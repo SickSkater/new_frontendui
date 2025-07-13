@@ -8,7 +8,6 @@ import {
 } from "@blacki005/applicant_page";
 import styles from "./SearchAdmissions.module.css";
 
-
 //query for searching admissions by pattern in the name
 const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
   query ($pattern: String!) {
@@ -29,7 +28,6 @@ const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
     }
   }
 `)
-
 
 /**
  * SearchAdmissions component allows users to search for admissions by typing a pattern into an input field.
@@ -57,7 +55,7 @@ export const SearchAdmissions = ({ user, editable }) => {
   const [admissions, setAdmissions] = useState([]);
 
   // Delayer - it needs to be implemented as a function
-  const [delayer, setDelayer] = useState(() => CreateDelayer(500));
+  const [delayer] = useState(() => CreateDelayer(500));
 
   const handleInputChange = (e) => {
     // data = what the user typed into the input
@@ -134,7 +132,7 @@ export const SearchAdmissions = ({ user, editable }) => {
           {admissions.map((admission) => (
             <div key={admission.id} className={styles.searchAdmissionsResult} onMouseDown={e => e.stopPropagation()}>
               {editable ?
-                <NewApplicationButton user={user} admission={admission}/>
+                <NewApplicationButton user={user} admission={admission} />
                 :
                 <ProgramLink program={admission.program} />
               }

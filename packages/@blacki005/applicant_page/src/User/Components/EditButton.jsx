@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import styles from "./EditButton.module.css";
-
 /**
  * EditButton Component
  * 
