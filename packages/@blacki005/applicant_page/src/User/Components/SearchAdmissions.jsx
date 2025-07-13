@@ -48,7 +48,7 @@ const QueryAdmissionAsyncAction = createAsyncGraphQLAction(`
  * 
  * @returns {JSX.Element} Text field for searching admissions and list of admissions corresponding with pattern in searchbox.
  */
-export const SearchAdmissions = ({ user, onChange, editable }) => {
+export const SearchAdmissions = ({ user, editable }) => {
   const { fetch: fetchAdmissionRead } = useAsyncAction(QueryAdmissionAsyncAction, {}, { deffered: true });
 
   //hooks
@@ -134,9 +134,9 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
           {admissions.map((admission) => (
             <div key={admission.id} className={styles.searchAdmissionsResult} onMouseDown={e => e.stopPropagation()}>
               {editable ?
-                <NewApplicationButton admission={admission} user={user}/>
-              :
-                <ProgramLink program={admission.program}/>
+                <NewApplicationButton user={user} admission={admission}/>
+                :
+                <ProgramLink program={admission.program} />
               }
             </div>
           ))}
@@ -144,7 +144,7 @@ export const SearchAdmissions = ({ user, onChange, editable }) => {
       )}
       {!admissions || admissions.length === 0 && (
         <div>
-           <AdmissionsList user={user} editable={editable} />
+          <AdmissionsList user={user} editable={editable} />
         </div>
       )}
     </div>

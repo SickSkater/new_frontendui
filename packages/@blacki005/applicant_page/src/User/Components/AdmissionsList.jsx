@@ -8,6 +8,43 @@ import {
 } from "@blacki005/applicant_page";
 import styles from "./AdmissionsList.module.css";
 
+
+// Visualizer for displaying items in InfiniteScroll
+const ItemsVisualizer = ({ items, ...props}) => {
+    // Admissions must have name, program, and paymentInfo
+    const filteredItems = items.filter(
+    (item) => item.name && item.paymentInfo && item.program
+    );
+
+return (
+    <div className={styles.admissionsListContainer}>
+        <table className={styles.admissionsListTable}>
+            <thead>
+                <tr>
+                    <th className={styles.admissionsListTableTh}>
+                        Seznam příjímacích řízení
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {filteredItems.map((admission) => (
+                    <tr key={admission.id}>
+                        <td className={styles.admissionsListTableTd}>
+                            <div className={styles.admissionsListButtonContainer}>
+                                {props.editable ?
+                                    <NewApplicationButton user={props.user} admission={admission}/>
+                                    :
+                                    <ProgramLink program={admission.program}/>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+);
+};
 /**
  * AdmissionsList Component
  * 
@@ -46,52 +83,15 @@ export const AdmissionsList = ({ user, editable }) => {
         }
     };
 
-    // Visualizer for displaying items in InfiniteScroll
-    const ItemsVisualizer = ({ items }) => {
-        // Admissions must have name, program, and paymentInfo
-        const filteredItems = items.filter(
-            (item) => item.name && item.paymentInfo && item.program
-        );
-
-        return (
-            <div className={styles.admissionsListContainer}>
-                <table className={styles.admissionsListTable}>
-                    <thead>
-                        <tr>
-                            <th className={styles.admissionsListTableTh}>
-                                Seznam příjímacích řízení
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredItems.map((item) => (
-                            <tr key={item.id}>
-                                <td className={styles.admissionsListTableTd}>
-                                    <div className={styles.admissionsListButtonContainer}>
-                                        {editable ?
-                                            <NewApplicationButton
-                                                user={user}
-                                                admission={item}
-                                            />
-                                            :
-                                            <ProgramLink program={item.program} />
-                                        }
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        );
-    };
-
     return (
         <div>
             <InfiniteScroll
                 Visualiser={ItemsVisualizer}
                 actionParams={{ skip: 0, limit: 10 }}
                 asyncAction={fetchItems}
+                //passing user and editable as props, they are passed to ItemsVisualizer
+                user={user}
+                editable={editable}
             />
         </div>
     );

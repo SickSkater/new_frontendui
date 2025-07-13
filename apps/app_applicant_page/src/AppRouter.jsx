@@ -22,18 +22,14 @@ export const Routes = [
     //inject usera do children
     {
         path: "/applicant/user/view/:id",
-        element: (
-            <UserPage editable={false}>
-                Children
-            </UserPage>
-        )
+        element: <UserPage editable={false}/>
     },
     {
         //data generator:
         path: "/applicant/user/generate",
         element: <DataGenerator />
     },
-    //placeholders:
+    //placeholders, ostatni nedodali uri segmenty
     {
         // http://localhost:5173/paymentinfo/6a6ca6e9-2222-498f-b270-b7b07c2afa41
         path: "/paymentinfo/:id",

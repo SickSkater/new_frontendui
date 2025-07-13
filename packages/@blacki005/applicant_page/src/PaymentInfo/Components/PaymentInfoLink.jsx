@@ -1,5 +1,4 @@
 import { ProxyLink } from "@hrbolek/uoisfrontend-shared"
-import { uri_btn } from "../../../URI_btn"
 export const PaymentInfoURI = '/paymentinfo/';
 
 /**

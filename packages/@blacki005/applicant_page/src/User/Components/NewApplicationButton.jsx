@@ -32,7 +32,7 @@ export const NewApplicationButton = ({ user, admission }) => {
     return user.studies.some(study => study.payments?.paymentInfo?.admission?.id === admission.id);
   }
 
-  //called when the user selects an admission
+  //called when the user clicks on the admission button
   const onClick = async () => {
     const studentInsertParams = {
       id: crypto.randomUUID(),
@@ -45,14 +45,14 @@ export const NewApplicationButton = ({ user, admission }) => {
       studentId: studentInsertParams.id,
       bankUniqueData: "bank unique data",
       variableSymbol: "variable symbol",
-      amount: 0,
+      amount: 0, //how much has been payed - determines wheter payment has been completed
       paymentInfoId: admission.paymentInfo.id
     };
     const evaluationInsertParams = {
       id: crypto.randomUUID(),
       points: 0, 
       passed: false, 
-      description: "Prijmaci zkouska", 
+      description: "Příjmací zkouška", 
       studentId: studentInsertParams.id,
     };
 
