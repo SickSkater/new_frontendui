@@ -1,6 +1,6 @@
 {
   "name": "@blacki005/app_applicant_page",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
