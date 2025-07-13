@@ -33,7 +33,9 @@ export const AdmissionsVisualizer = ({ items, ...props }) => {
                     </tr>
                 </thead>
                 <tbody>
+                    {/* Map through the filtered items and render each admission */}
                     {filteredItems.map((admission) => (
+                        // Each admission is rendered in a table row
                         <tr key={admission.id}>
                             <td className={styles.admissionsListTableTd}>
                                 <div className={styles.admissionsListButtonContainer}>

@@ -29,6 +29,7 @@ import styles from "./EditButton.module.css";
  * - The button navigates to `/applicant/user/view/:id` or `/applicant/user/edit/:id` 
  *   depending on the current mode.
  */
+
 export const EditButton = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -49,3 +50,8 @@ export const EditButton = () => {
         </Button>
     );
 };
+
+// This button switches between edit and view mode for the user by changing the URL.
+// When in edit mode, the URL contains "/edit/", and the button text is "read-only mode".
+// When in view mode, the URL contains "/view/", and the button text is "edit mode".
+// The component uses React Router's hooks to navigate between the two modes.
