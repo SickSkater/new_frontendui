@@ -51,9 +51,6 @@ export const Routes = [
     EvaluationRouterSegment
 ]
 
-// const router = createBrowserRouter(Routes, {basename: "/ug"});
 const router = createBrowserRouter(Routes);
-// const router = createProxyBrowseRouter(Routes, {basename: "/ug"});
-
 export const AppRouter = () => <RouterProvider router={router} />
 

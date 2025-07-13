@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: User/Vectors/UserStudentsAttribute.jsx</title>
+    <title>JSDoc: Source: User/Components/AdmissionsVisualizer.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: User/Vectors/UserStudentsAttribute.jsx</h1>
+    <h1 class="page-title">Source: User/Components/AdmissionsVisualizer.jsx</h1>
 
     
 
@@ -26,119 +26,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Table } from "react-bootstrap"
-import { createAsyncGraphQLAction, processVectorAttributeFromGraphQLResult } from "@hrbolek/uoisfrontend-gql-shared"
-import { CardCapsule, InfiniteScroll } from "@hrbolek/uoisfrontend-shared"
-import {
-    AdmissionLink,
-    EvaluationLink,
-    DeleteApplicationButton,
-    PaymentStatus
-} from "@blacki005/applicant_page"
-import styles from "./UserStudentsAttribute.module.css";
+            <pre class="prettyprint source linenums"><code>import {
+    NewApplicationButton,
+    ProgramLink
+} from "@blacki005/applicant_page";
+import styles from "./AdmissionsVisualizer.module.css";
 
 /**
- * A component for displaying the `students` attribute of an user entity.
+ * AdmissionsVisualizer component renders a table displaying a list of admissions.
+ * Filters the provided items to ensure each admission has a name, program, and paymentInfo.
+ * Depending on the `editable` prop, it either renders a button for creating a new application
+ * or a link to the program associated with the admission.
+ *
+ * @param {Array} items - Array of admission objects to be displayed.
+ * @param {boolean} [editable=false] - Determines if the component is in editable mode.
+ * @param {Object} [user] - User object passed to the NewApplicationButton component.
+ *
+ * @returns {JSX.Element} A table displaying the filtered admissions list.
  */
-export const UserStudentsAttribute = ({ studies, user, editable }) => {
-    if (typeof studies === 'undefined') return null
+export const AdmissionsVisualizer = ({ items, ...props}) => {
+    // Admissions must have name, program, and paymentInfo
+    const filteredItems = items.filter(
+    (item) => item.name &amp;&amp; item.paymentInfo &amp;&amp; item.program
+    );
 
-    // Filter out students with invalid data
-    const filteredStudies = studies.filter(student =>
-        student.id &amp;&amp;
-        student.program &amp;&amp;
-        student.payments &amp;&amp;
-        student.payments?.paymentInfo &amp;&amp;
-        student.payments?.paymentInfo?.admission
-    )
-
-    if (filteredStudies.length === 0) {
-        return null
-    }
-
+    //returns list of admissions that user didn't applied to with buttons to apply or links (if in RO mode)
     return (
-        &lt;>
-            {filteredStudies.map(student =>
-                &lt;div id={student.id} key={student.id} className={styles.studentCardWrapper}>
-                    &lt;CardCapsule title={`${student.program.name}`}>
-                        &lt;Table striped bordered hover className={styles.studentTable}>
-                            &lt;tbody>
-                                &lt;tr>
-                                    &lt;td>
-                                        Přihláška:
-                                    &lt;/td>
-                                    &lt;td>
-                                        &lt;AdmissionLink admission={student.payments.paymentInfo.admission} />
-                                    &lt;/td>
-                                &lt;/tr>
-                                &lt;tr>
-                                    &lt;td>
-                                        Výsledky:
-                                    &lt;/td>
-                                    &lt;td>
-                                        &lt;EvaluationLink evaluation={student?.evaluations[0]} />&lt;br />
-                                        Termín: {student?.payments?.paymentInfo?.admission?.examStartDate} - {student?.payments?.paymentInfo?.admission?.examLastDate} &lt;br />
-                                        Splneno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"}
-                                    &lt;/td>
-                                &lt;/tr>
-                                &lt;tr>
-                                    &lt;td>
-                                        Platba:
-                                    &lt;/td>
-                                    &lt;td className={student.payments?.status === "paid" ? styles.paid : styles.unpaid}>
-                                        &lt;PaymentStatus payment={student.payments} />
-                                    &lt;/td>
-                                &lt;/tr>
-                                {editable ?
-                                    &lt;tr>
-                                        &lt;td>
-                                            Smazat přihlášku:
-                                        &lt;/td>
-                                        &lt;td>
-                                            &lt;DeleteApplicationButton student={student} user={user}/>
-                                        &lt;/td>
-                                    &lt;/tr>
-                                    :
-                                    &lt;>&lt;/>
-                                }
-                            &lt;/tbody>
-                        &lt;/Table>
-                    &lt;/CardCapsule>
-                &lt;/div>
-            )}
-        &lt;/>
-    )
-}
-
-const StudentsAttributeQuery = `
-query UserQueryRead($id: id, $where: StudentInputFilter, $skip: Int, $limit: Int) {
-    result: userById(id: $id) {
-        __typename
-        id
-        students(skip: $skip, limit: $limit, where: $where) {
-            __typename
-            id
-        }
-    }
-}
-`
-
-const StudentsAttributeAsyncAction = createAsyncGraphQLAction(
-    StudentsAttributeQuery,
-    processVectorAttributeFromGraphQLResult("students")
-)
-
-export const UserStudentsAttributeInifite = ({ user }) => {
-    const { students } = user
-
-    return (
-        &lt;InfiniteScroll
-            Visualiser={'StudentMediumCard'}
-            actionParams={{ skip: 0, limit: 10 }}
-            asyncAction={StudentsAttributeAsyncAction}
-        />
-    )
-}</code></pre>
+        &lt;div className={styles.admissionsListContainer}>
+            &lt;table className={styles.admissionsListTable}>
+                &lt;thead>
+                    &lt;tr>
+                        &lt;th className={styles.admissionsListTableTh}>
+                            Seznam příjímacích řízení
+                        &lt;/th>
+                    &lt;/tr>
+                &lt;/thead>
+                &lt;tbody>
+                    {filteredItems.map((admission) => (
+                        &lt;tr key={admission.id}>
+                            &lt;td className={styles.admissionsListTableTd}>
+                                &lt;div className={styles.admissionsListButtonContainer}>
+                                    {props.editable ?
+                                        &lt;NewApplicationButton user={props.user} admission={admission}/>
+                                        :
+                                        &lt;ProgramLink program={admission.program}/>
+                                    }
+                                &lt;/div>
+                            &lt;/td>
+                        &lt;/tr>
+                    ))}
+                &lt;/tbody>
+            &lt;/table>
+        &lt;/div>
+    );
+};</code></pre>
         </article>
     </section>
 
