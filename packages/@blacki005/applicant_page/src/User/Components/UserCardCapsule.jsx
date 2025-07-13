@@ -29,7 +29,6 @@ import { CardCapsule } from "@hrbolek/uoisfrontend-shared"
 export const UserCardCapsule = ({user, children, title="Stránka uchazeče"}) => {
     return (
         <CardCapsule title={title}>
-
             {children}
         </CardCapsule>
     )

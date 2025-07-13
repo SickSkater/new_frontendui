@@ -63,7 +63,7 @@ export const SearchAdmissions = ({ user, editable }) => {
     // data = what the user typed into the input
     const data = e.target.value;
     if (data.length > 2) {
-      //fetch is called after 500ms
+      //fetch is called after 500ms delay to prevent DoS
       delayer(() => fetchAdmissionRead({ pattern: `%${data}%` }).then(
         json => {
           // Extracting admissions from the JSON, returning an empty array if JSON is null
@@ -75,7 +75,7 @@ export const SearchAdmissions = ({ user, editable }) => {
 
     }
     else {
-      // If the input is shorter than 3 characters, clear the admissions list
+      //clear the admissions list if the input is shorter than 3 characters, 
       setAdmissions([]);
     }
   }

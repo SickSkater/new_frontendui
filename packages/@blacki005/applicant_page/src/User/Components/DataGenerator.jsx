@@ -54,7 +54,7 @@ export const DataGenerator = () => {
     var [admission, setAdmission] = useState(null);
 
 
-    //get available programs
+    //try to get available programs
     if (programsLoading) {
         return <div>Loading programs...</div>
     }

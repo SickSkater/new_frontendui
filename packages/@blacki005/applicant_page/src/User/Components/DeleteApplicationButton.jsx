@@ -41,6 +41,7 @@ export const DeleteApplicationButton = ({student, user}) => {
 
         await fetchPaymentDelete(paymentDeleteParams)
         await fetchStudentDelete(studentDeleteParams)
+        //reload User data after deletion
         refetchUser({ id: student.student.id })
     }
 

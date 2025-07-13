@@ -46,7 +46,7 @@ export const EditButton = () => {
 
     return (
         <Button className={styles.editButton} onClick={handleClick}>
-            {isEdit ? "Zobrazit" : "Upravit"}
+            {isEdit ? "read-only mode" : "edit mode"}
         </Button>
     );
 };

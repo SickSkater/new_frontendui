@@ -32,12 +32,12 @@ export const UserStudentsAttribute = ({ studies, user, editable }) => {
         <>
             {filteredStudies.map(student =>
                 <div id={student.id} key={student.id} className={styles.studentCardWrapper}>
-                    <CardCapsule title={`${student.program.name}`}>
+                    <CardCapsule title={`Přihláška: ${student.program.name}`}>
                         <Table striped bordered hover className={styles.studentTable}>
                             <tbody>
                                 <tr>
                                     <td>
-                                        Přihláška:
+                                        Příjmací řízení:
                                     </td>
                                     <td>
                                         <AdmissionLink admission={student.payments.paymentInfo.admission} />
@@ -49,8 +49,8 @@ export const UserStudentsAttribute = ({ studies, user, editable }) => {
                                     </td>
                                     <td>
                                         <EvaluationLink evaluation={student?.evaluations[0]} /><br />
-                                        Termín: {student?.payments?.paymentInfo?.admission?.examStartDate} - {student?.payments?.paymentInfo?.admission?.examLastDate} <br />
-                                        Splneno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"}
+                                        Termín: {new Date(student?.payments?.paymentInfo?.admission?.examStartDate).toLocaleDateString('cs-CZ', { day: '2-digit', month: 'long', year: 'numeric' })} - {new Date(student?.payments?.paymentInfo?.admission?.examLastDate).toLocaleDateString('cs-CZ', { day: '2-digit', month: 'long', year: 'numeric' })} <br />
+                                        Splněno: {student?.evaluations[0]?.passed ? "Ano" : "Ne"}
                                     </td>
                                 </tr>
                                 <tr>

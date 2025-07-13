@@ -2,7 +2,6 @@ import { Table } from "react-bootstrap"
 import React from "react";
 import {
     SearchAdmissions,
-    AdmissionsList
  } from "@blacki005/applicant_page";
  import styles from "./UserMediumEditableContent.module.css"
 
